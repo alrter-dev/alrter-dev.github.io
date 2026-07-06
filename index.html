@@ -472,6 +472,37 @@
   .dl-target { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: 12px; color: var(--tx-2); }
   .dl-target b { color: var(--tx-1); font-weight: 600; }
 
+  /* ---- Aide déblocage macOS (« app endommagée » = Gatekeeper) ---- */
+  .dl-help { margin-top: 16px; display: none; }
+  .dl-help.show { display: block; animation: dlKeyIn 0.25s var(--ease); }
+  .dl-help-toggle {
+    display: inline-flex; align-items: center; gap: 7px; cursor: pointer;
+    background: none; border: none; font-family: inherit; padding: 0;
+    color: var(--warn); font-size: 12.5px; letter-spacing: 0.02em;
+  }
+  .dl-help-toggle .chev { transition: transform 0.2s var(--ease); }
+  .dl-help-toggle[aria-expanded="true"] .chev { transform: rotate(90deg); }
+  .dl-help-body {
+    margin-top: 12px; border: 1px solid var(--line-mid); border-left: 2px solid var(--warn);
+    border-radius: var(--radius); padding: 14px 16px; background: var(--bg-0);
+    font-size: 12.5px; color: var(--tx-1); line-height: 1.6;
+  }
+  .dl-help-body p { margin: 0 0 10px; }
+  .dl-cmd { display: flex; gap: 8px; align-items: stretch; margin: 10px 0; }
+  .dl-cmd code {
+    flex: 1 1 auto; min-width: 0; overflow-x: auto; white-space: nowrap;
+    background: var(--bg-1); border: 1px solid var(--line-hair); border-radius: var(--radius);
+    padding: 9px 11px; font-family: inherit; font-size: 12px; color: var(--tx-0);
+  }
+  .dl-copy {
+    flex: none; cursor: pointer; font-family: inherit; font-size: 12px; font-weight: 600;
+    border: 1px solid var(--line-mid); border-radius: var(--radius); background: var(--line-soft);
+    color: var(--tx-0); padding: 0 14px; transition: border-color 0.15s var(--ease);
+  }
+  .dl-copy:hover { border-color: var(--lime); }
+  .dl-copy.done { color: var(--good); border-color: var(--good); }
+  .dl-help-body .alt { margin-top: 4px; font-size: 12px; color: var(--tx-2); }
+
   /* ============ FOOTER ============ */
   footer.ft { border-top: 1px solid var(--line-hair); margin-top: 70px; padding: 34px 0 46px; }
   .ft-in { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; }
@@ -768,6 +799,22 @@
           </div>
           <p class="dl-msg" id="dlMsg" role="status" aria-live="polite"></p>
           <span class="dl-target" id="dlTarget"></span>
+
+          <!-- Aide déblocage macOS (Gatekeeper : « app endommagée ») -->
+          <div class="dl-help" id="dlHelp">
+            <button type="button" class="dl-help-toggle" id="dlHelpToggle" aria-expanded="false" aria-controls="dlHelpBody">
+              <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+              <span data-i18n="dl.help.toggle">macOS affiche « endommagé » à l'ouverture ?</span>
+            </button>
+            <div class="dl-help-body" id="dlHelpBody" hidden>
+              <p data-i18n="dl.help.intro">macOS bloque les apps non signées téléchargées sur Internet (message « endommagée »). L'application est saine — voici comment l'autoriser. Placez d'abord Navaway dans le dossier Applications, puis collez cette commande dans le Terminal :</p>
+              <div class="dl-cmd">
+                <code id="dlCmd">xattr -dr com.apple.quarantine "/Applications/Navaway V2.app"</code>
+                <button type="button" class="dl-copy" id="dlCopy" data-i18n="dl.help.copy">Copier</button>
+              </div>
+              <p class="alt" data-i18n="dl.help.alt">Autre méthode : dans le dossier Applications, faites un clic droit sur Navaway V2 → Ouvrir → Ouvrir.</p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -895,6 +942,11 @@
       "dl.empty": "Saisissez votre clé bêta pour continuer.",
       "dl.targetMac": "Cible : macOS (Apple Silicon · .dmg)",
       "dl.targetWin": "Cible : Windows (installeur .exe)",
+      "dl.help.toggle": "macOS affiche « endommagé » à l'ouverture ?",
+      "dl.help.intro": "macOS bloque les apps non signées téléchargées sur Internet (message « endommagée »). L'application est saine — voici comment l'autoriser. Placez d'abord Navaway dans le dossier Applications, puis collez cette commande dans le Terminal :",
+      "dl.help.copy": "Copier",
+      "dl.help.copied": "Copié !",
+      "dl.help.alt": "Autre méthode : dans le dossier Applications, faites un clic droit sur Navaway V2 → Ouvrir → Ouvrir.",
       "ft.legal": "Logiciel de navigation · bêta privée"
     },
     en: {
@@ -947,6 +999,11 @@
       "dl.empty": "Enter your beta key to continue.",
       "dl.targetMac": "Target: macOS (Apple Silicon · .dmg)",
       "dl.targetWin": "Target: Windows (installer .exe)",
+      "dl.help.toggle": "macOS says the app is “damaged”?",
+      "dl.help.intro": "macOS blocks unsigned apps downloaded from the web (the “damaged” message). The app is fine — here's how to allow it. First move Navaway to your Applications folder, then paste this command into Terminal:",
+      "dl.help.copy": "Copy",
+      "dl.help.copied": "Copied!",
+      "dl.help.alt": "Alternative: in the Applications folder, right-click Navaway V2 → Open → Open.",
       "ft.legal": "Navigation software · private beta"
     }
   };
@@ -1054,6 +1111,12 @@
     }
     window.__nwDlRefresh = refreshTarget;
 
+    var help = document.getElementById("dlHelp");
+    var helpToggle = document.getElementById("dlHelpToggle");
+    var helpBody = document.getElementById("dlHelpBody");
+    var copyBtn = document.getElementById("dlCopy");
+    var cmdEl = document.getElementById("dlCmd");
+
     document.querySelectorAll(".dl-os").forEach(function (b) {
       b.addEventListener("click", function () {
         selectedOs = b.getAttribute("data-os");
@@ -1063,9 +1126,48 @@
         keyBox.classList.add("open");
         setMsg("", "");
         refreshTarget();
+        // L'aide déblocage ne concerne que macOS (Gatekeeper « endommagé »).
+        if (help) help.classList.toggle("show", selectedOs === "mac");
         input.focus();
       });
     });
+
+    // Dépliable de l'aide macOS
+    if (helpToggle && helpBody) {
+      helpToggle.addEventListener("click", function () {
+        var open = helpToggle.getAttribute("aria-expanded") === "true";
+        helpToggle.setAttribute("aria-expanded", String(!open));
+        helpBody.hidden = open;
+      });
+    }
+    // Copier la commande Terminal
+    if (copyBtn && cmdEl) {
+      copyBtn.addEventListener("click", function () {
+        var text = cmdEl.textContent;
+        var done = function () {
+          copyBtn.classList.add("done");
+          copyBtn.textContent = t("dl.help.copied");
+          setTimeout(function () {
+            copyBtn.classList.remove("done");
+            copyBtn.textContent = t("dl.help.copy");
+          }, 1800);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done, function () {
+            // Fallback si l'API clipboard échoue (ex. contexte non sécurisé)
+            fallbackCopy(text); done();
+          });
+        } else { fallbackCopy(text); done(); }
+      });
+    }
+    function fallbackCopy(text) {
+      try {
+        var ta = document.createElement("textarea");
+        ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        document.execCommand("copy"); ta.remove();
+      } catch (e) {}
+    }
 
     function attempt() {
       if (!selectedOs) return;
