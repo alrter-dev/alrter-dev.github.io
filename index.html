@@ -431,6 +431,47 @@
   .beta-card .cta-row { justify-content: center; margin-top: 26px; }
   .beta-foot { font-size: 12px; color: var(--tx-2); margin-top: 18px !important; letter-spacing: 0.02em; }
 
+  /* ---- Téléchargement gated par clé ---- */
+  .dl-panel {
+    margin: 30px auto 0; max-width: 560px; text-align: left;
+    border: 1px solid var(--line-mid); border-radius: var(--radius-lg);
+    padding: 24px 24px 26px; background: var(--line-soft);
+  }
+  .dl-panel h3 {
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--lime); margin: 0 0 4px; text-align: center;
+  }
+  .dl-panel .dl-sub { font-size: 13px; color: var(--tx-1); margin: 0 auto 18px; text-align: center; max-width: 46ch; }
+  .dl-platforms { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .dl-os {
+    display: inline-flex; align-items: center; gap: 9px; cursor: pointer;
+    border: 1px solid var(--line-mid); border-radius: var(--radius-lg);
+    background: var(--bg-1); color: var(--tx-0);
+    padding: 12px 20px; font-family: inherit; font-size: 14px; font-weight: 600;
+    letter-spacing: 0.02em; transition: transform 0.15s var(--ease), border-color 0.15s var(--ease);
+  }
+  .dl-os:hover { border-color: var(--lime); transform: translateY(-1px); }
+  .dl-os[aria-pressed="true"] { border-color: var(--lime); background: var(--line-soft); box-shadow: 0 0 0 1px var(--lime) inset; }
+  .dl-os svg { flex: none; }
+  /* Zone clé — révélée après choix plateforme */
+  .dl-key { margin-top: 20px; display: none; }
+  .dl-key.open { display: block; animation: dlKeyIn 0.25s var(--ease); }
+  @keyframes dlKeyIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+  .dl-key-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .dl-key input {
+    flex: 1 1 240px; min-width: 0; font-family: inherit; font-size: 14px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--tx-0); background: var(--bg-0);
+    border: 1px solid var(--line-mid); border-radius: var(--radius); padding: 12px 14px;
+  }
+  .dl-key input::placeholder { color: var(--tx-2); text-transform: none; letter-spacing: normal; }
+  .dl-key input:focus { outline: none; border-color: var(--lime); }
+  .dl-key .btn { flex: none; }
+  .dl-msg { margin-top: 12px; font-size: 12.5px; min-height: 1em; letter-spacing: 0.02em; }
+  .dl-msg.err { color: var(--warn); }
+  .dl-msg.ok { color: var(--good); }
+  .dl-target { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: 12px; color: var(--tx-2); }
+  .dl-target b { color: var(--tx-1); font-weight: 600; }
+
   /* ============ FOOTER ============ */
   footer.ft { border-top: 1px solid var(--line-hair); margin-top: 70px; padding: 34px 0 46px; }
   .ft-in { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; }
@@ -704,9 +745,34 @@
         <span data-i18n="beta.badge">Bêta privée en cours</span>
       </div>
       <h2 data-i18n="beta.title">Navaway est en test auprès de navigateurs.</h2>
-      <p data-i18n="beta.p">L'application n'est pas encore ouverte au téléchargement libre. Elle est éprouvée sur macOS et Windows par un cercle restreint de bêta testeurs. Vous naviguez et vous voulez la mettre à l'épreuve en mer ? Demandez votre accès — chaque retour compte.</p>
+      <p data-i18n="beta.p">L'application est en bêta privée, éprouvée sur macOS et Windows par un cercle restreint de bêta testeurs. Vous avez reçu une clé ? Téléchargez votre version ci-dessous. Sinon, demandez votre accès — chaque retour compte.</p>
+
+      <!-- Téléchargement gated par clé -->
+      <div class="dl-panel">
+        <h3 data-i18n="dl.title">Télécharger l'application</h3>
+        <p class="dl-sub" data-i18n="dl.sub">Choisissez votre système, puis saisissez votre clé bêta pour lancer le téléchargement de la dernière version.</p>
+        <div class="dl-platforms">
+          <button type="button" class="dl-os" data-os="mac" aria-pressed="false">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.417 2.2-1.11 2.98-.834.94-2.203 1.66-3.34 1.57-.14-1.11.42-2.29 1.09-3.02.76-.83 2.13-1.46 3.36-1.53zM20.94 17.02c-.53 1.23-.78 1.78-1.46 2.87-.95 1.53-2.29 3.43-3.95 3.44-1.47.02-1.85-.96-3.85-.95-2 .01-2.42.97-3.9.95-1.66-.01-2.93-1.72-3.88-3.25C1.36 15.9.9 11.1 2.46 8.6c1.11-1.78 2.86-2.82 4.5-2.82 1.67 0 2.72.96 4.1.96 1.34 0 2.15-.96 4.1-.96 1.46 0 3.01.8 4.12 2.18-3.62 1.98-3.03 7.15.66 9.06z"/></svg>
+            <span data-i18n="dl.mac">macOS</span>
+          </button>
+          <button type="button" class="dl-os" data-os="win" aria-pressed="false">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5.1 10.4 4v7.6H3V5.1zM10.4 12.6V20L3 18.9v-6.3h7.4zM11.3 3.9 21 2.5v9.1h-9.7V3.9zM21 12.6v9.1l-9.7-1.4v-7.7H21z"/></svg>
+            <span data-i18n="dl.win">Windows</span>
+          </button>
+        </div>
+        <div class="dl-key" id="dlKey">
+          <div class="dl-key-row">
+            <input type="text" id="dlKeyInput" autocomplete="off" spellcheck="false" placeholder="NAVAWAY-XXXX-XXXX-XXXX" aria-label="Clé bêta" data-i18n-ph="dl.placeholder" />
+            <button type="button" class="btn btn-primary" id="dlKeyBtn" data-i18n="dl.download">Télécharger</button>
+          </div>
+          <p class="dl-msg" id="dlMsg" role="status" aria-live="polite"></p>
+          <span class="dl-target" id="dlTarget"></span>
+        </div>
+      </div>
+
       <div class="cta-row">
-        <a class="btn btn-primary" id="betaMail" href="#" data-i18n="beta.cta">Demander à être bêta testeur</a>
+        <a class="btn btn-ghost" id="betaMail" href="#" data-i18n="beta.cta">Pas encore de clé ? Demander un accès</a>
       </div>
       <p class="beta-foot" data-i18n="beta.foot">Ouvre votre messagerie vers alrter@gmail.com. Dites-nous votre programme de navigation et votre système (macOS / Windows).</p>
     </div>
@@ -815,9 +881,20 @@
       "route.spot.d": "Le moteur intègre vent, courant et vagues, respecte la sécurité des côtes et arbitre voile ou moteur le long du parcours. Cinq profils — d'Aperçu rapide à Régate fin — et un pas de temps adaptatif. Affichez la route en Simple ou Annoté (barbules WMO, couleur selon le vent) et comparez plusieurs routages côte à côte.",
       "beta.badge": "Bêta privée en cours",
       "beta.title": "Navaway est en test auprès de navigateurs.",
-      "beta.p": "L'application n'est pas encore ouverte au téléchargement libre. Elle est éprouvée sur macOS et Windows par un cercle restreint de bêta testeurs. Vous naviguez et vous voulez la mettre à l'épreuve en mer ? Demandez votre accès — chaque retour compte.",
-      "beta.cta": "Demander à être bêta testeur",
+      "beta.p": "L'application est en bêta privée, éprouvée sur macOS et Windows par un cercle restreint de bêta testeurs. Vous avez reçu une clé ? Téléchargez votre version ci-dessous. Sinon, demandez votre accès — chaque retour compte.",
+      "beta.cta": "Pas encore de clé ? Demander un accès",
       "beta.foot": "Ouvre votre messagerie vers alrter@gmail.com. Dites-nous votre programme de navigation et votre système (macOS / Windows).",
+      "dl.title": "Télécharger l'application",
+      "dl.sub": "Choisissez votre système, puis saisissez votre clé bêta pour lancer le téléchargement de la dernière version.",
+      "dl.mac": "macOS", "dl.win": "Windows",
+      "dl.placeholder": "NAVAWAY-XXXX-XXXX-XXXX",
+      "dl.download": "Télécharger",
+      "dl.checking": "Vérification de la clé…",
+      "dl.ok": "Clé valide — téléchargement en cours…",
+      "dl.invalid": "Clé non reconnue. Vérifiez la saisie ou demandez un accès.",
+      "dl.empty": "Saisissez votre clé bêta pour continuer.",
+      "dl.targetMac": "Cible : macOS (Apple Silicon · .dmg)",
+      "dl.targetWin": "Cible : Windows (installeur .exe)",
       "ft.legal": "Logiciel de navigation · bêta privée"
     },
     en: {
@@ -856,9 +933,20 @@
       "route.spot.d": "The engine factors in wind, current and waves, respects coastline safety and decides sail or motor along the way. Five profiles — from quick Preview to fine Race — with an adaptive time step. Show the route Simple or Annotated (WMO barbs, colored by wind) and compare several routings side by side.",
       "beta.badge": "Private beta in progress",
       "beta.title": "Navaway is being tested by sailors.",
-      "beta.p": "The app isn't open for public download yet. It's being put through its paces on macOS and Windows by a small circle of beta testers. You sail, and you want to test it at sea? Request access — every bit of feedback counts.",
-      "beta.cta": "Request beta access",
+      "beta.p": "The app is in private beta, put through its paces on macOS and Windows by a small circle of beta testers. Got a key? Download your build below. Otherwise, request access — every bit of feedback counts.",
+      "beta.cta": "No key yet? Request access",
       "beta.foot": "Opens your mail app to alrter@gmail.com. Tell us your sailing program and your platform (macOS / Windows).",
+      "dl.title": "Download the app",
+      "dl.sub": "Pick your platform, then enter your beta key to start downloading the latest build.",
+      "dl.mac": "macOS", "dl.win": "Windows",
+      "dl.placeholder": "NAVAWAY-XXXX-XXXX-XXXX",
+      "dl.download": "Download",
+      "dl.checking": "Checking key…",
+      "dl.ok": "Valid key — download starting…",
+      "dl.invalid": "Key not recognized. Check your entry or request access.",
+      "dl.empty": "Enter your beta key to continue.",
+      "dl.targetMac": "Target: macOS (Apple Silicon · .dmg)",
+      "dl.targetWin": "Target: Windows (installer .exe)",
       "ft.legal": "Navigation software · private beta"
     }
   };
@@ -877,9 +965,15 @@
         el.textContent = val;
       }
     });
+    document.querySelectorAll("[data-i18n-ph]").forEach(function (el) {
+      var v = dict[el.getAttribute("data-i18n-ph")];
+      if (v != null) el.setAttribute("placeholder", v);
+    });
     document.querySelectorAll(".pill-toggle button[data-lang]").forEach(function (b) {
       b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === lang));
     });
+    // re-render the download-target line if a platform is selected
+    if (window.__nwDlRefresh) window.__nwDlRefresh();
     // mailto beta request — localized subject/body
     var mail = document.getElementById("betaMail");
     if (mail) {
@@ -901,6 +995,110 @@
   document.querySelectorAll(".pill-toggle button[data-lang]").forEach(function (b) {
     b.addEventListener("click", function () { applyLang(b.getAttribute("data-lang")); });
   });
+
+  /* ---------- Téléchargement gated par clé bêta ----------
+     ⚠️ Rappel de conception : la validation ci-dessous est côté client.
+     C'est une FRICTION/dissuasion, PAS un verrou — les URLs latest/download
+     du dépôt public restent accessibles directement. Le vrai verrou est
+     l'écran de garde DANS l'application (la clé y est revalidée au 1er lancement).
+     On n'embarque QUE les empreintes SHA-256, jamais les clés en clair. */
+  (function () {
+    var RELEASE_BASE = "https://github.com/alrter-dev/Navaway-V2-Releases/releases/latest/download/";
+    var ASSET = {
+      mac: "Navaway.V2_0.1.0_aarch64.dmg",
+      win: "Navaway.V2_0.1.0_x64-setup.exe"
+    };
+    var HASHES = ["cbed0fc2335a87c2897cf2943ce294c1a25ca5ecf33b7589f81e21398736fe7f","be05b79eb487a34132cd61d82cc2adddb62f32ff7a7d49a4b6912e31646ff593","f87bb0ae88467f24a560a1b23788155c19db6299fe2cbdb1e7388f690ddfb7e0","38846958a106e36afa943458141d058a6b054fe5315baba76860e7c01f5d937f","01f8722551aed17722049b3ba9ee1ce27d30e6deda654538253f92605842362b","6174388691506d9ef69ffb061ab8bbd5d88cec06e0ba249df99d7c9e377ba371","c2345ce57b0e4c7daad2420d0525c3bb273cab6a244d9af9b5dbe57d0093a836","76f5d3696f30824d5c16130699ca2be8158b83beba45edb52e9779955c45456e","fa30e692dcfd81ca8be5c97eeaba676f6359e55b21ec419bf88acd5752c2c068","bd354d5dffbf8db6b62e4ad93f7d09c183cc2491723dd1070b88d1fe2b721fd0","27b6a8f147db27dce0b474caf7d03e510886aaccf17d3cd477ec49d755f0578c","fba691f8941a1bccf1cd74bfc2a0c1e08ffd789ad9f7f67c5af1ba523d117036","02fec99e115261277f8ec1e7ea0903cd2e874577c47f1baaaae449341fa06990","dc4f2bae7d6314acd5f8128d84bd1d1c255ebb00e273f7f6b844dc9b769e584a","5a759dcd14538194c2c41d36e606bce7eb0a22bc86068ab87d60a554c04632c7","d06abd887e4947d2faf60e62c8b41d83b44a204cdbd7bd9aa24b3f53b4668c21","f5279296a9132710b3a5c3f2dc5bcd5eeb71a08316840ea5bf3c0f0881ec11b5","04b04e84ce390349fa59cb9eec4427f1b78e5c416d5f0ff49ecbf84838faa15f","eaf8fadbccf0f8bbf37da88e59d68048f86a6b8f3ddcd62aced9327e26879e06","a0b6b160cedd664696f5f5c167e8ea2cbb733d00c39a18e445dacd503c938d1e","5e6485112e7a415ee3a346cdeafde077751e77f6eca512caba532441e1f72656","e77ff16ab29290b62360c924a9f5c7e146924e4ad56197cc4475d5e3b7c86d65","2a33f157b9b25eb24d34a8197a1aa4e5a1f1731fbf681b0697b1815eb4815f06","ba78e819f9d4d29731b5b670a730693664429ba256927ba1a5319c6e93e4328e","240466b2abdc465b2facbaf2246ab3a3465b7d963a7ff34e919ffd8858a3dcf9","bf99ddd377674dcedd9055bc418a70e44b9950ccde0f3c73d4ef89442745f70e","2ff271c81c0bb61252a30b1f3ce7fe6bcacc3999fe55bfb651d868a8652aeaf8","98855f8959436f4853e5fac946c70c710f1a2d4adf168fdc9c84538e169d8df0","f56078b5cd46e83607a34dc14380fae212fcab301182d078fa87ae376edaa4f1","df9e7e665a6ac129cae01094b082c830cedc7647dcdf1f00c5a2f823f1912d7e","17fffdd40ee47f133c1703079f2937f696ee43903d65be936bb547bc6de31408","b3a2a8d25e9af1169a4c85e5a106586fe9a724e58143b2913af2333b3fab6ce1","7a4ac573aa72fd4ba8e051b88ed439feaf543bc4724f50c5330f0f4ee6f423e3","3d21a62215162b488e54fc47ec5fe502bd903ef889c57df94114f3f4eb27ddca","48cf3c2bc16fbfcbcecd63c960d54ca062d65b0b78a2abfd39b50c6eb3a54d1e","80901f234ff7cf1f5924d6d40df437fb2a21b6e7b0d1c7e12281435efef44996","b7e24916bc388c3eedc2b9e8b44d7d4c8909f39efe94534a18ca61500c49a24a","530dd93c4776b1d784b5c28dbb1171e01ff30cf6ebbc518ab336494b31ae1f0b","4f2af62cc5a3048313df5415da4efcb15fa696ad11e8248df5858012dad01b9d","2df2f5731e1780d63357137ce1130ed6dd140e806e313d44c8aed0e8d6b50e3a","4e769804fb2e96ec9d1ad81f90944a8f2ed309b9b9ef5ed4fd57ed3fc70bb427","0abdbc7d7b1e1ac51bab90c50261b54aa60055ef9698e9950cf5bbde2483ca57","5d772e18dd4b5aa3164c44081b3fcffd59a8d14a6746d80c7c17ac1621f68dcb","9919342287a2c31347a2ac595c82cd08953e402fe4fa96e79c62c49c5d5b9da8","733ae00aed1ed51baf2f3a60d569e378c40e36e6e2d0bf0bb2ae906d3c3194f4","7e6d4bb8e4b1da9c5e425dea718481ac7cb00be5c8c2c07d9e0f7ff0a56b0784","c51b6fe5f737f797ece2510334279f7103b3eed0eb50b58bbebe54f924a268d5","c0005d474e4792c20d54648fc1081383390f2b602fac034b605c7f7791de01ba","6b70d48e7233f1066e2eda5460948d444027ec5dcd3658b21ed0366dedb93d3b","2a000fd14df5e7f39df11a3e4ab6b515f3309dfce69139f4a15a0d67d593566f","2ff5d0fdaa2cf5047ed3e6047260fe6d3d8abb4b9f6fab2bd151468dcae317c9","620850e70e51a96940aca585ae2484cd4b32a6331a987a7f360d29eb3a16a5a4","dc07b3eabf3ba71f97cfeeeb63a9a5814a45276d60689f21509511e5f237dd45","0a6ce8cca29124708f4acdcc3a3e06d6f93ac73aca6d48ef89034c84633c5961","d43d27b21ef97012930e4950cfa4dd989039756d904a55264c4de19611e2b076","6563691abb98b5505be14d5f815ee640dea28d4c9f610987d45559911b576443","0294be081f7536044394d0c5aad25789b8b6b17f31c7cafe807854a849c374cc","bcdbf184f3263b9aa68ea959bf41105c37c21de1c459fb9824c0042d4c7f9f87","f546fd342f078e1a01d5f630cece3ed6a854b6fd0f3938340c4ae3c28a9f2f00","2c0989f3d391ef9f18f0d8f4adcbe7f1fe380048a26adc0bfd601e30f5d31a52","0f130cf6bc572e6ea239683d11e13df5844837158f4811cdf2d84c7d8f373889","761b454a1b6b8ec76e78ad33ae4b9980657d2e047955ddcf07a9c43d8a03bc14","e509cdc8158a384ad99c25f9f29a42a8fdbe1ed0cb691aa35be15a6d9a711272","23424e196eaf0f2a3ee33a6052b92c428a181696ee36bc4b2681b8e52ddb2751","1cb7072da3cefb99ed28ea9d104263e6e60c861d9c786e54fed28ac335f779b8","746bf99dff837cfdb0b770ed377f4bff17fc0139abfbd9fab279a73c5eecf49a","0b8100e8480f40bfd0ae05fd48b435fba9c8b02274ea49ba5681872ca0aa5e06","aff552adee63489a07a32382902ff05e5018963a8bf94c479392177510357673","ba1f326312d8383da12adcaca209f0094c03e9383e4a2743bbe52071ecd49e89","b458d0285f707ecf67e7feac5b7198c69fa30d8e0b498eec5f8e5ea65249c7e3","b3c653bf0c7107660df2479ad73504fbf311df7bfa62970121d28e1bad77163d","0da54e0544128271fca3367d0e47c67ac875c055154023b5b88e96ea365e3fff","251278c21087fb17cf1dadb842b96d367a354243249677fe5afef9a4b14b8688","a7e2f873f43b01dd83e186957304f9c73b4f4e564db42779b1ea70c0fb269870","c88224b3aed6cce689b4352ae320fa4d4258c8fcf0fa1f2fd96b29ed2f123ca8","03f457e9a37033b98e3fb4da49c864f801daea13e7f56994b37f4c594718c281","1f7a99be25ca7ef4d2882464d2a1cf643d916597fd492643e1150547dc7b0525","840930c158c09287055e4863487342b408279da5342239e86b53261921210f39","3e1a75fdef586a54642542c952ae2d0cb056d0500d8716eb5009e9b23b550175","75ad184f0d3b33eeb1c763adb9b8db83c2487c03e0ee7b6547766a7d5d6432a6","761b344f5e4e7f54c07a501bc71a31c105cccc08d11de14abfd321c224ada2ac","e94d6fdb7ce16b8364d631eadabe4460fc4bad4ccc8ecb3d25e163e7fb87a8b7","4d89da5669852617aeb9af631debd43a18aaf848aae799324710076a06332b43","7ffac2479c6f04930da3ff1d93ab9473c4e98fadcbd7b63e0add623dd4cb3f89","66884054089c0ac3d8fe531d498465e9f19f0ee85cb472768e8b29633e62f28e","507dd9d25872bc15ee0f6552d98c64304a629c60394b655739bba6d4be0970d5","df02b64a68de7585b21c85e14fd7991f61049bcc5ce3d41dee5780cc3002ceec","be5e18362ba48fa88e9d92916a7871e29e0b55c7343a739db072dbd0e840c567","6954cc7ce75cf76050dd5070c1afbb19399a96de15a54b9c3c45382977c0fabf","1d258eb2de0bcb8fe0b1c6189b90d951546de6f98ea2bdf5e5bf0396775eeb30","8c90825c97953e1a1ebd59ef8b21fe1c4f4c5c2d2d3838907da8a757c84ca53e","91d916bf20302f4fe23269fbcb7db735f70f990eadc8c006ceb47fd06d76c038","69a53b33349c771e32849b3db944ae5509b2225e67be72d7a7dc9895ea41cf9f","4c9a3f8617e2f76c937b5ad45f75a582e3eb99815055e7100a6fe1e3b4baaad1","5d3d3d1925bc92f1f131b84624cce70e66c31929669fe401dadb9daf8d6adf65","4748170772d7bd555b992f6555e95e7347bd1d8b66fa60d6c884297b707bb75e","c4c31825e4111a321b8e1b31a755cd1cdff4aeef82ef90e8eb837cf293d08f94","97cee76d137a75cf7f9bbaba031e3e7d470840742bacea89168ee475958bbb4e","1569d0f3883a040955124e9b1d1a761e375be4489078d514c6073a2e757d890d","008f81f96d31f08dee7f6a5ea13bdbd76b61d1afbf19ca0b72be20e527e6ff41"];
+    var selectedOs = null;
+
+    var keyBox = document.getElementById("dlKey");
+    var input = document.getElementById("dlKeyInput");
+    var btn = document.getElementById("dlKeyBtn");
+    var msg = document.getElementById("dlMsg");
+    var target = document.getElementById("dlTarget");
+    if (!keyBox || !input || !btn) return;
+
+    function t(key) {
+      var lang = document.documentElement.getAttribute("lang") || "fr";
+      var dict = (typeof I18N !== "undefined" ? (I18N[lang] || I18N.fr) : {});
+      return dict[key] || key;
+    }
+    // Miroir EXACT de normalizeBetaKey() de l'app (packages/app/src/lib/betaKey.ts) :
+    // l'empreinte porte sur la forme canonique AVEC préfixe et tirets
+    // (NAVAWAY-XXXX-XXXX-XXXX), pas sur le corps nu. Renvoie null si invalide.
+    function normalizeKey(raw) {
+      var cleaned = (raw || "").trim().toUpperCase().replace(/\s+/g, "");
+      var body = cleaned.replace(/^NAVAWAY-?/, "").replace(/-/g, "");
+      if (!/^[A-Z0-9]+$/.test(body)) return null;
+      if (body.length !== 12) return null;
+      var segs = [];
+      for (var i = 0; i < 3; i++) segs.push(body.slice(i * 4, (i + 1) * 4));
+      return "NAVAWAY-" + segs.join("-");
+    }
+    function sha256Hex(str) {
+      var enc = new TextEncoder().encode(str);
+      return crypto.subtle.digest("SHA-256", enc).then(function (buf) {
+        var b = new Uint8Array(buf), hex = "";
+        for (var i = 0; i < b.length; i++) hex += b[i].toString(16).padStart(2, "0");
+        return hex;
+      });
+    }
+    function setMsg(txt, cls) {
+      msg.textContent = txt || "";
+      msg.className = "dl-msg" + (cls ? " " + cls : "");
+    }
+    function refreshTarget() {
+      if (!selectedOs) { target.textContent = ""; return; }
+      var label = selectedOs === "mac" ? t("dl.targetMac") : t("dl.targetWin");
+      target.innerHTML = '<b>&#8595;</b> ' + label;
+    }
+    window.__nwDlRefresh = refreshTarget;
+
+    document.querySelectorAll(".dl-os").forEach(function (b) {
+      b.addEventListener("click", function () {
+        selectedOs = b.getAttribute("data-os");
+        document.querySelectorAll(".dl-os").forEach(function (o) {
+          o.setAttribute("aria-pressed", String(o === b));
+        });
+        keyBox.classList.add("open");
+        setMsg("", "");
+        refreshTarget();
+        input.focus();
+      });
+    });
+
+    function attempt() {
+      if (!selectedOs) return;
+      var raw = (input.value || "").trim();
+      if (!raw) { setMsg(t("dl.empty"), "err"); input.focus(); return; }
+      var norm = normalizeKey(raw);
+      // Saisie non vide mais malformée (longueur/caractères) → invalide, pas « vide ».
+      if (!norm) { setMsg(t("dl.invalid"), "err"); input.focus(); return; }
+      setMsg(t("dl.checking"), "");
+      btn.disabled = true;
+      sha256Hex(norm).then(function (hex) {
+        btn.disabled = false;
+        if (HASHES.indexOf(hex) !== -1) {
+          setMsg(t("dl.ok"), "ok");
+          var url = RELEASE_BASE + ASSET[selectedOs];
+          // déclenche le téléchargement direct
+          var a = document.createElement("a");
+          a.href = url; a.rel = "noopener";
+          document.body.appendChild(a); a.click(); a.remove();
+        } else {
+          setMsg(t("dl.invalid"), "err");
+        }
+      }).catch(function () {
+        btn.disabled = false;
+        setMsg(t("dl.invalid"), "err");
+      });
+    }
+
+    btn.addEventListener("click", attempt);
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") { e.preventDefault(); attempt(); }
+    });
+  })();
 
   /* ---------- Theme ---------- */
   var themeBtn = document.getElementById("themeBtn");
