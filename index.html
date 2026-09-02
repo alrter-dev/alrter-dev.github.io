@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Navaway — la suite complète de navigation : routage météo, cartes, GRIB, instruments en temps réel, polaires, alarmes et point astral, réunis dans un seul logiciel pour macOS et Windows.">
+<meta name="description" content="Sailaware — la suite complète de navigation : routage météo, cartes, GRIB, instruments en temps réel, polaires, alarmes et point astral, réunis dans un seul logiciel pour macOS et Windows.">
 <meta name="theme-color" content="#0E1822">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23bef264'/%3E%3Cg fill='none' stroke='%230E1822' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' transform='scale(0.72) translate(4.6 4.6)'%3E%3Cpath d='M2 20a2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1'/%3E%3Cpath d='M4 18 2 6l10 6 10-6-2 12'/%3E%3C/g%3E%3C/svg%3E">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Navaway — Toute votre navigation, dans un seul logiciel">
+<meta property="og:title" content="Sailaware — Toute votre navigation, dans un seul logiciel">
 <meta property="og:description" content="Routage météo, cartes, GRIB, instruments, polaires, alarmes et point astral, réunis dans une seule application. Bêta privée.">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:locale:alternate" content="en_US">
-<title>Navaway — Routage météo & navigation hauturière</title>
+<title>Sailaware — Routage météo & navigation hauturière</title>
 <style>
   @font-face {
     font-family: "JetBrains Mono";
@@ -179,6 +179,7 @@
   }
   @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; gap: 36px; } }
 
+  .hero .baseline { color: var(--lime); text-transform: uppercase; letter-spacing: .16em; font-size: 12px; font-weight: 700; margin: 0 0 14px; }
   .hero h1 {
     font-size: clamp(30px, 5vw, 50px);
     line-height: 1.06;
@@ -529,14 +530,14 @@
 <body>
 <header class="nav">
   <div class="nav-in">
-    <a class="brand" href="#top" aria-label="Navaway — accueil">
+    <a class="brand" href="#top" aria-label="Sailaware — accueil">
       <span class="mark" aria-hidden="true">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0E1822" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M2 20a2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1"/>
           <path d="M4 18 2 6l10 6 10-6-2 12"/>
         </svg>
       </span>
-      Navaway
+      Sailaware
     </a>
     <nav class="nav-links" aria-label="Sections">
       <a href="#features" data-i18n="nav.features">Fonctions</a>
@@ -562,8 +563,9 @@
   <div class="wrap hero-grid">
     <div class="rise">
       <p class="eyebrow" data-i18n="hero.eyebrow">Logiciel de navigation · macOS &amp; Windows · bêta privée</p>
+      <p class="baseline">Weather routing, sky to sea</p>
       <h1 data-i18n="hero.title">Toute votre navigation, <span class="hl">dans un seul logiciel.</span></h1>
-      <p class="lede" data-i18n="hero.lede">Routage météo, cartes, fichiers GRIB, instruments en temps réel, polaires, alarmes et point astral : Navaway réunit tous les outils du bord dans une seule application — la suite complète du navigateur hauturier et côtier.</p>
+      <p class="lede" data-i18n="hero.lede">Routage météo, cartes, fichiers GRIB, instruments en temps réel, polaires, alarmes et point astral : Sailaware réunit tous les outils du bord dans une seule application — la suite complète du navigateur hauturier et côtier.</p>
       <div class="cta-row">
         <a class="btn btn-primary" href="#beta" data-i18n="hero.ctaBeta">Devenir bêta testeur</a>
         <a class="btn btn-ghost" href="#features" data-i18n="hero.ctaFeatures">Découvrir les outils</a>
@@ -578,9 +580,9 @@
       <div class="screenframe">
         <div class="titlebar" aria-hidden="true">
           <i></i><i></i><i></i>
-          <span class="tb-label">Navaway — Routage</span>
+          <span class="tb-label">Sailaware — Routage</span>
         </div>
-        <img class="hero-shot" id="heroShot" alt="Route météo calculée par Navaway sur le Pacifique" />
+        <img class="hero-shot" id="heroShot" alt="Route météo calculée par Sailaware sur le Pacifique" />
       </div>
     </div>
   </div>
@@ -723,7 +725,7 @@
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 20 4M14 4h6v6"/><circle cx="6" cy="18" r="2"/></svg>
         </div>
         <h3 data-i18n="feat.trips.t">Voyages, bateaux &amp; rapports</h3>
-        <p data-i18n="feat.trips.d">Gérez plusieurs bateaux et voyages, posez vos pivots, enregistrez la trace, éditez un rapport PDF. Import de vos données Navaway existantes en un fichier.</p>
+        <p data-i18n="feat.trips.d">Gérez plusieurs bateaux et voyages, posez vos pivots, enregistrez la trace, éditez un rapport PDF. Import de vos données Sailaware existantes en un fichier.</p>
         <div class="tags">
           <span class="tag">Import V1</span>
           <span class="tag">Rapport PDF</span>
@@ -742,7 +744,7 @@
     <div class="sec-head rise">
       <p class="eyebrow" data-i18n="route.eyebrow">Routage</p>
       <h2 data-i18n="route.title">Un moteur de routage, directement à bord.</h2>
-      <p data-i18n="route.sub">Choisissez un profil, lancez le calcul : le moteur d'isochrones de Navaway trace votre route optimale sur la météo réelle, sans passer par un logiciel tiers ni un service en ligne.</p>
+      <p data-i18n="route.sub">Choisissez un profil, lancez le calcul : le moteur d'isochrones de Sailaware trace votre route optimale sur la météo réelle, sans passer par un logiciel tiers ni un service en ligne.</p>
     </div>
 
     <div class="spot rise">
@@ -775,7 +777,7 @@
         <span class="pulse"></span>
         <span data-i18n="beta.badge">Bêta privée en cours</span>
       </div>
-      <h2 data-i18n="beta.title">Navaway est en test auprès de navigateurs.</h2>
+      <h2 data-i18n="beta.title">Sailaware est en test auprès de navigateurs.</h2>
       <p data-i18n="beta.p">L'application est en bêta privée, éprouvée sur macOS et Windows par un cercle restreint de bêta testeurs. Vous avez reçu une clé ? Téléchargez votre version ci-dessous. Sinon, demandez votre accès — chaque retour compte.</p>
 
       <!-- Téléchargement gated par clé -->
@@ -807,12 +809,12 @@
               <span data-i18n="dl.help.toggle">macOS affiche « endommagé » à l'ouverture ?</span>
             </button>
             <div class="dl-help-body" id="dlHelpBody" hidden>
-              <p data-i18n="dl.help.intro">macOS bloque les apps non signées téléchargées sur Internet (message « endommagée »). L'application est saine — voici comment l'autoriser. Placez d'abord Navaway dans le dossier Applications, puis collez cette commande dans le Terminal :</p>
+              <p data-i18n="dl.help.intro">macOS bloque les apps non signées téléchargées sur Internet (message « endommagée »). L'application est saine — voici comment l'autoriser. Placez d'abord Sailaware dans le dossier Applications, puis collez cette commande dans le Terminal :</p>
               <div class="dl-cmd">
-                <code id="dlCmd">xattr -dr com.apple.quarantine "/Applications/Navaway V2.app"</code>
+                <code id="dlCmd">xattr -dr com.apple.quarantine "/Applications/Sailaware.app"</code>
                 <button type="button" class="dl-copy" id="dlCopy" data-i18n="dl.help.copy">Copier</button>
               </div>
-              <p class="alt" data-i18n="dl.help.alt">Autre méthode : dans le dossier Applications, faites un clic droit sur Navaway V2 → Ouvrir → Ouvrir.</p>
+              <p class="alt" data-i18n="dl.help.alt">Autre méthode : dans le dossier Applications, faites un clic droit sur Sailaware → Ouvrir → Ouvrir.</p>
             </div>
           </div>
         </div>
@@ -874,7 +876,7 @@
             <path d="M4 18 2 6l10 6 10-6-2 12"/>
           </svg>
         </span>
-        Navaway
+        Sailaware
       </span>
       <span class="ft-legal" data-i18n="ft.legal">Logiciel de navigation · bêta privée</span>
     </div>
@@ -896,13 +898,13 @@
       "nav.features": "Fonctions", "nav.routing": "Routage", "nav.beta": "Bêta testing",
       "hero.eyebrow": "Logiciel de navigation · macOS & Windows · bêta privée",
       "hero.title": "Toute votre navigation,|dans un seul logiciel.",
-      "hero.lede": "Routage météo, cartes, fichiers GRIB, instruments en temps réel, polaires, alarmes et point astral : Navaway réunit tous les outils du bord dans une seule application — la suite complète du navigateur hauturier et côtier.",
+      "hero.lede": "Routage météo, cartes, fichiers GRIB, instruments en temps réel, polaires, alarmes et point astral : Sailaware réunit tous les outils du bord dans une seule application — la suite complète du navigateur hauturier et côtier.",
       "hero.ctaBeta": "Devenir bêta testeur", "hero.ctaFeatures": "Découvrir les outils",
       "hero.m1": "Une suite complète", "hero.m2": "Fonctionne hors connexion", "hero.m3": "Bilingue FR / EN",
       "hero.phNote": "Aperçu · capture réelle à venir",
       "stat.instruments": "Instruments live", "stat.constellations": "Constellations", "stat.position": "Méthodes de position", "stat.langs": "Langues FR · EN",
       "feat.eyebrow": "À bord", "feat.title": "Tout l'instrument de bord, réuni et cohérent.",
-      "feat.sub": "Chaque module reprend la logique éprouvée de Navaway, dans une interface pensée comme un tableau de bord marin — dense, lisible, en clair comme en nuit. Cliquez une vignette pour la voir en images.",
+      "feat.sub": "Chaque module reprend la logique éprouvée de Sailaware, dans une interface pensée comme un tableau de bord marin — dense, lisible, en clair comme en nuit. Cliquez une vignette pour la voir en images.",
       "feat.view": "Voir en images", "modal.phLabel": "Capture à venir",
       "feat.route.t": "Routage météo par isochrones",
       "feat.route.d": "Un moteur natif calcule votre route optimale sur la météo réelle — vent, courant et vagues, sécurité des côtes, mode voile ou mixte moteur. L'éventail d'isochrones se dessine en direct, waypoint par waypoint.",
@@ -921,13 +923,13 @@
       "feat.sky.t": "Atlas du ciel & astronomie",
       "feat.sky.d": "Les 88 constellations, éphémérides Skyfield et navigation à l'astral — pour préparer un point d'étoiles ou simplement lire le ciel au mouillage.",
       "feat.trips.t": "Voyages, bateaux & rapports",
-      "feat.trips.d": "Gérez plusieurs bateaux et voyages, posez vos pivots, enregistrez la trace, éditez un rapport PDF. Import de vos données Navaway existantes en un fichier.",
+      "feat.trips.d": "Gérez plusieurs bateaux et voyages, posez vos pivots, enregistrez la trace, éditez un rapport PDF. Import de vos données Sailaware existantes en un fichier.",
       "route.eyebrow": "Routage", "route.title": "Un moteur de routage, directement à bord.",
-      "route.sub": "Choisissez un profil, lancez le calcul : le moteur d'isochrones de Navaway trace votre route optimale sur la météo réelle, sans passer par un logiciel tiers ni un service en ligne.",
+      "route.sub": "Choisissez un profil, lancez le calcul : le moteur d'isochrones de Sailaware trace votre route optimale sur la météo réelle, sans passer par un logiciel tiers ni un service en ligne.",
       "route.spot.t": "L'éventail se dessine sous vos yeux.",
       "route.spot.d": "Le moteur intègre vent, courant et vagues, respecte la sécurité des côtes et arbitre voile ou moteur le long du parcours. Cinq profils — d'Aperçu rapide à Régate fin — et un pas de temps adaptatif. Affichez la route en Simple ou Annoté (barbules WMO, couleur selon le vent) et comparez plusieurs routages côte à côte.",
       "beta.badge": "Bêta privée en cours",
-      "beta.title": "Navaway est en test auprès de navigateurs.",
+      "beta.title": "Sailaware est en test auprès de navigateurs.",
       "beta.p": "L'application est en bêta privée, éprouvée sur macOS et Windows par un cercle restreint de bêta testeurs. Vous avez reçu une clé ? Téléchargez votre version ci-dessous. Sinon, demandez votre accès — chaque retour compte.",
       "beta.cta": "Pas encore de clé ? Demander un accès",
       "beta.foot": "Ouvre votre messagerie vers alrter@gmail.com. Dites-nous votre programme de navigation et votre système (macOS / Windows).",
@@ -943,23 +945,23 @@
       "dl.targetMac": "Cible : macOS (Apple Silicon · .dmg)",
       "dl.targetWin": "Cible : Windows (installeur .exe)",
       "dl.help.toggle": "macOS affiche « endommagé » à l'ouverture ?",
-      "dl.help.intro": "macOS bloque les apps non signées téléchargées sur Internet (message « endommagée »). L'application est saine — voici comment l'autoriser. Placez d'abord Navaway dans le dossier Applications, puis collez cette commande dans le Terminal :",
+      "dl.help.intro": "macOS bloque les apps non signées téléchargées sur Internet (message « endommagée »). L'application est saine — voici comment l'autoriser. Placez d'abord Sailaware dans le dossier Applications, puis collez cette commande dans le Terminal :",
       "dl.help.copy": "Copier",
       "dl.help.copied": "Copié !",
-      "dl.help.alt": "Autre méthode : dans le dossier Applications, faites un clic droit sur Navaway V2 → Ouvrir → Ouvrir.",
+      "dl.help.alt": "Autre méthode : dans le dossier Applications, faites un clic droit sur Sailaware → Ouvrir → Ouvrir.",
       "ft.legal": "Logiciel de navigation · bêta privée"
     },
     en: {
       "nav.features": "Features", "nav.routing": "Routing", "nav.beta": "Beta testing",
       "hero.eyebrow": "Navigation software · macOS & Windows · private beta",
       "hero.title": "Your whole navigation,|in a single app.",
-      "hero.lede": "Weather routing, charts, GRIB files, real-time instruments, polars, alarms and celestial fixes: Navaway brings every tool on board into one application — the complete suite for the offshore and coastal sailor.",
+      "hero.lede": "Weather routing, charts, GRIB files, real-time instruments, polars, alarms and celestial fixes: Sailaware brings every tool on board into one application — the complete suite for the offshore and coastal sailor.",
       "hero.ctaBeta": "Become a beta tester", "hero.ctaFeatures": "Explore the tools",
       "hero.m1": "A complete suite", "hero.m2": "Works offline", "hero.m3": "Bilingual FR / EN",
       "hero.phNote": "Preview · real screenshot coming",
       "stat.instruments": "Live instruments", "stat.constellations": "Constellations", "stat.position": "Position methods", "stat.langs": "Languages FR · EN",
       "feat.eyebrow": "On board", "feat.title": "Your whole helm station, brought together.",
-      "feat.sub": "Every module carries over Navaway's proven logic, in an interface built like a marine dashboard — dense, legible, day and night. Click a tile to see it in pictures.",
+      "feat.sub": "Every module carries over Sailaware's proven logic, in an interface built like a marine dashboard — dense, legible, day and night. Click a tile to see it in pictures.",
       "feat.view": "See it in pictures", "modal.phLabel": "Screenshot coming",
       "feat.route.t": "Isochrone weather routing",
       "feat.route.d": "A native engine computes your optimal route on real weather — wind, current and waves, coastline safety, sail or motor-sailing. The isochrone fan draws live, waypoint by waypoint.",
@@ -978,13 +980,13 @@
       "feat.sky.t": "Sky atlas & astronomy",
       "feat.sky.d": "All 88 constellations, Skyfield ephemerides and celestial navigation — to prepare a star fix or simply read the sky at anchor.",
       "feat.trips.t": "Trips, boats & reports",
-      "feat.trips.d": "Manage several boats and voyages, drop your waypoints, record the track, export a PDF report. Import your existing Navaway data from a single file.",
+      "feat.trips.d": "Manage several boats and voyages, drop your waypoints, record the track, export a PDF report. Import your existing Sailaware data from a single file.",
       "route.eyebrow": "Routing", "route.title": "A routing engine, right on board.",
-      "route.sub": "Pick a profile, run the computation: Navaway's isochrone engine draws your optimal route on real weather — no third-party software, no online service.",
+      "route.sub": "Pick a profile, run the computation: Sailaware's isochrone engine draws your optimal route on real weather — no third-party software, no online service.",
       "route.spot.t": "The fan draws before your eyes.",
       "route.spot.d": "The engine factors in wind, current and waves, respects coastline safety and decides sail or motor along the way. Five profiles — from quick Preview to fine Race — with an adaptive time step. Show the route Simple or Annotated (WMO barbs, colored by wind) and compare several routings side by side.",
       "beta.badge": "Private beta in progress",
-      "beta.title": "Navaway is being tested by sailors.",
+      "beta.title": "Sailaware is being tested by sailors.",
       "beta.p": "The app is in private beta, put through its paces on macOS and Windows by a small circle of beta testers. Got a key? Download your build below. Otherwise, request access — every bit of feedback counts.",
       "beta.cta": "No key yet? Request access",
       "beta.foot": "Opens your mail app to alrter@gmail.com. Tell us your sailing program and your platform (macOS / Windows).",
@@ -1000,10 +1002,10 @@
       "dl.targetMac": "Target: macOS (Apple Silicon · .dmg)",
       "dl.targetWin": "Target: Windows (installer .exe)",
       "dl.help.toggle": "macOS says the app is “damaged”?",
-      "dl.help.intro": "macOS blocks unsigned apps downloaded from the web (the “damaged” message). The app is fine — here's how to allow it. First move Navaway to your Applications folder, then paste this command into Terminal:",
+      "dl.help.intro": "macOS blocks unsigned apps downloaded from the web (the “damaged” message). The app is fine — here's how to allow it. First move Sailaware to your Applications folder, then paste this command into Terminal:",
       "dl.help.copy": "Copy",
       "dl.help.copied": "Copied!",
-      "dl.help.alt": "Alternative: in the Applications folder, right-click Navaway V2 → Open → Open.",
+      "dl.help.alt": "Alternative: in the Applications folder, right-click Sailaware → Open → Open.",
       "ft.legal": "Navigation software · private beta"
     }
   };
@@ -1034,10 +1036,10 @@
     // mailto beta request — localized subject/body
     var mail = document.getElementById("betaMail");
     if (mail) {
-      var subj = lang === "en" ? "Navaway — beta access request" : "Navaway — demande d'accès bêta";
+      var subj = lang === "en" ? "Sailaware — beta access request" : "Sailaware — demande d'accès bêta";
       var body = lang === "en"
-        ? "Hello,\n\nI'd like to join the Navaway beta.\n\n- Platform (macOS / Windows): \n- Sailing program: \n- Boat: \n\nThanks!"
-        : "Bonjour,\n\nJe souhaite rejoindre la bêta de Navaway.\n\n- Système (macOS / Windows) : \n- Programme de navigation : \n- Bateau : \n\nMerci !";
+        ? "Hello,\n\nI'd like to join the Sailaware beta.\n\n- Platform (macOS / Windows): \n- Sailing program: \n- Boat: \n\nThanks!"
+        : "Bonjour,\n\nJe souhaite rejoindre la bêta de Sailaware.\n\n- Système (macOS / Windows) : \n- Programme de navigation : \n- Bateau : \n\nMerci !";
       mail.setAttribute("href", "mailto:alrter@gmail.com?subject=" + encodeURIComponent(subj) + "&body=" + encodeURIComponent(body));
     }
     try { localStorage.setItem("nw_lang", lang); } catch (e) {}
