@@ -455,6 +455,7 @@
   .dl-os[aria-pressed="true"] { border-color: var(--lime); background: var(--line-soft); box-shadow: 0 0 0 1px var(--lime) inset; }
   .dl-os svg { flex: none; }
   /* Zone clé — révélée après choix plateforme */
+  .dl-avert { margin: 16px auto 0; max-width: 52ch; font-size: 12.5px; line-height: 1.5; color: var(--warn); border: 1px solid var(--warn); border-radius: 8px; padding: 10px 14px; text-align: center; }
   .dl-key { margin-top: 20px; display: none; }
   .dl-key.open { display: block; animation: dlKeyIn 0.25s var(--ease); }
   @keyframes dlKeyIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
@@ -794,6 +795,7 @@
             <span data-i18n="dl.win">Windows</span>
           </button>
         </div>
+        <p class="dl-avert" id="dlAvert" hidden></p>
         <div class="dl-key" id="dlKey">
           <div class="dl-key-row">
             <input type="text" id="dlKeyInput" autocomplete="off" spellcheck="false" placeholder="NAVAWAY-XXXX-XXXX-XXXX" aria-label="Clé bêta" data-i18n-ph="dl.placeholder" />
@@ -942,6 +944,7 @@
       "dl.ok": "Clé valide — téléchargement en cours…",
       "dl.invalid": "Clé non reconnue. Vérifiez la saisie ou demandez un accès.",
       "dl.empty": "Saisissez votre clé bêta pour continuer.",
+      "dl.avertMac": "⚠️ Mac Apple Silicon uniquement (M1, M2, M3, M4), macOS 11 ou plus récent. Un Mac Intel — donc tout Mac acheté avant fin 2020 — ne peut pas exécuter cette application.",
       "dl.targetMac": "Cible : macOS (Apple Silicon · .dmg)",
       "dl.targetWin": "Cible : Windows (installeur .exe)",
       "dl.help.toggle": "macOS affiche « endommagé » à l'ouverture ?",
@@ -999,6 +1002,7 @@
       "dl.ok": "Valid key — download starting…",
       "dl.invalid": "Key not recognized. Check your entry or request access.",
       "dl.empty": "Enter your beta key to continue.",
+      "dl.avertMac": "⚠️ Apple Silicon Macs only (M1, M2, M3, M4), macOS 11 or later. An Intel Mac — that is, any Mac bought before late 2020 — cannot run this application.",
       "dl.targetMac": "Target: macOS (Apple Silicon · .dmg)",
       "dl.targetWin": "Target: Windows (installer .exe)",
       "dl.help.toggle": "macOS says the app is “damaged”?",
@@ -1038,8 +1042,8 @@
     if (mail) {
       var subj = lang === "en" ? "Sailaware — beta access request" : "Sailaware — demande d'accès bêta";
       var body = lang === "en"
-        ? "Hello,\n\nI'd like to join the Sailaware beta.\n\n- Platform (macOS / Windows): \n- Sailing program: \n- Boat: \n\nThanks!"
-        : "Bonjour,\n\nJe souhaite rejoindre la bêta de Sailaware.\n\n- Système (macOS / Windows) : \n- Programme de navigation : \n- Bateau : \n\nMerci !";
+        ? "Hello,\n\nI'd like to join the Sailaware beta.\n\n- Platform (macOS / Windows): \n- If Mac: Apple Silicon (M1/M2/M3/M4) or Intel? \n- Sailing program: \n- Boat: \n\nThanks!"
+        : "Bonjour,\n\nJe souhaite rejoindre la bêta de Sailaware.\n\n- Système (macOS / Windows) : \n- Si Mac : Apple Silicon (M1/M2/M3/M4) ou Intel ? \n- Programme de navigation : \n- Bateau : \n\nMerci !";
       mail.setAttribute("href", "mailto:alrter@gmail.com?subject=" + encodeURIComponent(subj) + "&body=" + encodeURIComponent(body));
     }
     try { localStorage.setItem("nw_lang", lang); } catch (e) {}
@@ -1110,9 +1114,22 @@
       msg.className = "dl-msg" + (cls ? " " + cls : "");
     }
     function refreshTarget() {
-      if (!selectedOs) { target.textContent = ""; return; }
+      // ⚠️ L'avertissement Mac Intel se rend ICI, avec la ligne « Cible », parce que
+      // c'est la seule fonction appelee AUX DEUX moments : au choix du systeme et au
+      // changement de langue. Le placer ailleurs le laisserait en francais sur la
+      // page anglaise, ou muet tant qu'on ne rechoisit pas son systeme.
+      var avert = document.getElementById("dlAvert");
+      if (!selectedOs) {
+        target.textContent = "";
+        if (avert) avert.hidden = true;
+        return;
+      }
       var label = selectedOs === "mac" ? t("dl.targetMac") : t("dl.targetWin");
       target.innerHTML = '<b>&#8595;</b> ' + label;
+      if (avert) {
+        avert.hidden = selectedOs !== "mac";
+        if (selectedOs === "mac") avert.textContent = t("dl.avertMac");
+      }
     }
     window.__nwDlRefresh = refreshTarget;
 
