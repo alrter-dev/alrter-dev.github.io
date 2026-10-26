@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title data-en="Sparring Skipper — it prepares the trip with you">Sparring Skipper — il prépare la navigation avec vous</title>
+<meta name="description" content="Sparring Skipper, en préparation : il lit la météo pour votre programme et dit par où passer, où dormir, quand décider. Deux vrais exemples : le Tour de Corse et une traversée de l'Atlantique Sud." data-en-content="Sparring Skipper, in preparation: it reads the weather for your plans and tells you which way to go, where to spend the night, when to decide. Two real examples: the Tour of Corsica and a South Atlantic crossing.">
+<meta name="theme-color" content="#0E1822">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23bef264'/%3E%3Cg fill='none' stroke='%230E1822' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' transform='scale(0.72) translate(4.6 4.6)'%3E%3Cpath d='M2 20a2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1'/%3E%3Cpath d='M4 18 2 6l10 6 10-6-2 12'/%3E%3C/g%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sparring Skipper — il prépare la navigation avec vous">
+<meta property="og:description" content="Sparring Skipper, en préparation : il lit la météo pour votre programme et dit par où passer, où dormir, quand décider. Deux vrais exemples : le Tour de Corse et une traversée de l'Atlantique Sud.">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:locale:alternate" content="en_US">
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js"></script>
+<style>
+/* page Offshore */
+.duo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 48px; align-items: center; }
+section.bloc > .wrap.duo { padding-block: 72px; }
+.duo.inverse { grid-template-columns: minmax(0, .9fr) minmax(0, 1.2fr); }
+.duo h2 { margin-top: 12px; }
+.duo .intro { color: var(--muted); font-size: 18px; margin: 16px 0 22px; }
+.planche { margin: 0; background: var(--surface); border: 1px solid var(--line-strong); border-radius: 14px; overflow: hidden; }
+.planche svg { display: block; width: 100%; height: auto; }
+.frise-meteo { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-top: 1px solid var(--line); font: 500 12px/1 var(--mono); color: var(--dim); }
+.frise-meteo .piste { flex: 1; height: 4px; border-radius: 4px; background: var(--surface-2); position: relative; }
+.frise-meteo .piste b { position: absolute; left: 0; top: 0; bottom: 0; width: 22%; border-radius: 4px; background: var(--accent); animation: avance 12s linear infinite; }
+.frise-meteo .piste u { display: none; }
+@keyframes avance { from { width: 4%; } to { width: 96%; } }
+.profils { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-bottom: 22px; }
+.profil { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 16px 14px; display: grid; gap: 10px; align-content: start; }
+.profil.choisi { border-color: var(--accent); }
+.profil .nom { font: 700 17px/1.1 var(--mono); }
+.profil .sous { font: 500 12px/1 var(--mono); color: var(--dim); text-transform: uppercase; letter-spacing: .1em; }
+.profil .jauge { display: grid; gap: 4px; font: 500 12px/1.3 var(--mono); color: var(--muted); }
+.profil .barre { height: 6px; border-radius: 6px; background: var(--surface-2); overflow: hidden; }
+.profil .barre i { display: block; height: 100%; border-radius: 6px; background: var(--accent); }
+.profil .barre.temps i { background: var(--iso); }
+.cases.trois { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cases.quatre { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.ligne-temps { margin: 0 0 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px 8px; }
+.ligne-temps svg { display: block; width: 100%; height: auto; }
+.ligne-temps svg text { font-family: var(--mono); }
+.tableau-route { width: 100%; margin-top: 14px; border-collapse: collapse; font: 500 13px/1.3 var(--mono); font-variant-numeric: tabular-nums; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.tableau-route th { text-align: right; font-weight: 600; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); padding: 9px 10px; border-bottom: 1px solid var(--line); }
+.tableau-route td { text-align: right; padding: 8px 10px; color: var(--muted); border-bottom: 1px solid var(--line); }
+.tableau-route th:first-child, .tableau-route td:first-child { text-align: left; }
+.tableau-route tr.vire td { color: var(--fg); background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.tableau-route tr:last-child td { border-bottom: 0; }
+@media (max-width: 960px) {
+  .duo, .duo.inverse { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .profils { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cases.trois, .cases.quatre { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .profils, .cases.trois, .cases.quatre { grid-template-columns: minmax(0, 1fr); }
+  .tableau-route { font-size: 11.5px; }
+  .tableau-route th, .tableau-route td { padding: 7px 6px; }
+}
+
+/* page Sparring Skipper */
+.badge-ss { display: inline-block; font: 600 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--on-accent); background: var(--accent); padding: 6px 9px; border-radius: 5px; }
+.hero h1 { margin-top: 16px; }
+.hero .chapeau b { color: var(--fg); font-weight: 600; }
+.bulletin { margin: 0; background: var(--surface); border: 1px solid var(--line-strong); border-radius: 14px; padding: 22px 24px; display: grid; gap: 12px; box-shadow: 0 30px 80px -40px rgb(0 0 0 / .6); }
+.b-tete { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font: 600 12px/1.3 var(--mono); color: var(--dim); text-transform: uppercase; letter-spacing: .08em; }
+.b-verdict { background: color-mix(in srgb, var(--accent) 10%, transparent); border-left: 3px solid var(--accent); border-radius: 6px; padding: 12px 14px; display: grid; gap: 4px; }
+.b-verdict b { font: 700 19px/1.25 var(--mono); }
+.b-verdict span { color: var(--muted); font-size: 15px; }
+.b-ligne { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--line); padding-bottom: 8px; font-size: 15px; color: var(--muted); }
+.b-ligne b { font: 600 15px/1.3 var(--mono); color: var(--fg); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 4px; }
+.b-ligne b u { text-decoration: none; }
+.b-ligne .etoiles { text-decoration: none; color: var(--accent); letter-spacing: 2px; }
+.b-ligne .etoiles i { font-style: normal; color: var(--surface-2); }
+.b-pied { font: 500 12px/1.4 var(--mono); color: var(--dim); }
+.chaine { list-style: none; margin: 0 0 22px; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; counter-reset: c; }
+.chaine li { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 14px 16px; display: grid; gap: 6px; align-content: start; }
+.chaine li:not(:last-child)::after { content: "→"; position: absolute; right: -10px; top: 18px; font: 700 14px/1 var(--mono); color: var(--accent); background: var(--bg); padding: 2px 0; z-index: 1; }
+.chaine .n { font: 700 12px/1 var(--mono); color: var(--on-accent); background: var(--accent); width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; }
+.chaine b { font: 600 14.5px/1.3 var(--mono); }
+.chaine li > span:last-child { color: var(--muted); font-size: 14px; line-height: 1.45; }
+.chaine li:nth-child(4) { border-color: var(--accent); }
+.a-trous { margin: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 16px; align-items: center; }
+.a-trous-l { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; display: grid; gap: 8px; }
+.a-trous-l .lib { font: 600 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+.a-trous-l p { font-size: 17px; }
+.a-trous code { font: 600 14px/1 var(--mono); color: var(--iso); background: var(--surface-2); padding: 3px 6px; border-radius: 5px; }
+.a-trous mark { font: 700 17px/1 var(--mono); color: var(--on-accent); background: var(--accent); padding: 2px 6px; border-radius: 5px; }
+.a-trous .fleche { font: 700 24px/1 var(--mono); color: var(--accent); }
+.niveaux3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.niveau { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; display: grid; gap: 8px; align-content: start; }
+.niveau b { font: 700 18px/1.2 var(--mono); }
+.niveau span { color: var(--muted); font-size: 15.5px; }
+.pages { display: flex; height: 70px; align-items: flex-end; margin-bottom: 8px; }
+.pages i { display: block; width: 46px; height: 62px; border-radius: 4px; background: var(--surface-2); border: 1px solid var(--line-strong); margin-left: -30px; box-shadow: -3px 3px 0 rgb(0 0 0 / .15); }
+.pages i:first-child { margin-left: 0; }
+.pages i:last-child { background: color-mix(in srgb, var(--accent) 18%, var(--surface-2)); }
+.deux-volets { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.volet-c { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: grid; align-content: start; }
+.volet-c > svg { display: block; width: 100%; height: auto; }
+.volet-c .txt { padding: 18px 22px 22px; }
+.volet-c h3 { font-size: 20px; margin-bottom: 10px; }
+.liste-c { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.liste-c li { display: grid; grid-template-columns: 18px 1fr; gap: 8px; color: var(--muted); }
+.liste-c li::before { content: "→"; font-family: var(--mono); color: var(--accent); }
+@media (max-width: 960px) {
+  .chaine { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .chaine li::after { display: none; }
+  .niveaux3, .deux-volets { grid-template-columns: minmax(0, 1fr); }
+  .a-trous { grid-template-columns: minmax(0, 1fr); }
+  .a-trous .fleche { transform: rotate(90deg); justify-self: center; }
+}
+
+/* appel final */
+.fin .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; padding-block: 64px; }
+.fin h2 { max-width: 18em; }
+.fin p { color: var(--muted); margin-top: 10px; }
+
+footer { border-top: 1px solid var(--line); color: var(--dim); font-size: 14px; }
+footer .wrap { padding-block: 34px 44px; display: grid; grid-template-columns: 1.2fr repeat(3, minmax(0, 1fr)); gap: 24px; }
+footer h4 { font: 600 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+footer a { text-decoration: none; }
+footer a:hover { color: var(--fg); }
+
+@media (max-width: 960px) {
+  nav.menu { display: none; }
+  nav.menu.ouvert { display: grid; position: absolute; top: 100%; left: 0; right: 0; gap: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  nav.menu.ouvert a { padding-block: 14px; border-top: 1px solid var(--line); }
+  .burger { display: inline-block; }
+  header.top .langue { display: none; }
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); gap: 34px; padding-block: 40px; }
+  .forts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .preuve .chiffres, .familles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .abord .wrap.grille { grid-template-columns: minmax(0, 1fr); }
+  footer .wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  body { font-size: 16px; }
+  header.top .btn-plein { display: none; }
+  .portes, .ss .volets, .forts { grid-template-columns: minmax(0, 1fr); }
+  section.bloc > .wrap { padding-block: 52px; }
+  .porte, .volet { padding: 22px; }
+  .instruments { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .instr.large { grid-column: span 2; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+/* page Sparring Skipper v2 — de vrais exemples : le Tour de Corse (Coastal), une traversée de l'Atlantique Sud (Offshore) */
+.corse { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); gap: 32px; align-items: start; }
+.carte-corse { margin: 0; background: var(--sea); border: 1px solid var(--line-strong); border-radius: 14px; overflow: hidden; position: sticky; top: 80px; }
+.carte-corse svg { display: block; width: 100%; height: auto; }
+.carte-corse svg text { font-family: var(--mono); }
+.carte-corse figcaption { font: 500 12px/1.45 var(--mono); color: var(--dim); padding: 10px 13px 11px; border-top: 1px solid var(--line); background: var(--surface); }
+.journal-tete { display: grid; grid-template-columns: 64px minmax(0, 1fr) minmax(0, 1.05fr); gap: 14px; padding: 0 14px 8px; font: 600 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+.journal ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.jour { display: grid; grid-template-columns: 64px minmax(0, 1fr) minmax(0, 1.05fr); gap: 14px; align-items: start; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 11px 14px; cursor: pointer; transition: border-color .2s, background .2s; }
+.jour:hover, .jour.choisi { border-color: var(--accent); }
+.jour .date { font: 600 13px/1.3 var(--mono); color: var(--fg); }
+.jour .date small { display: block; font-weight: 500; color: var(--dim); font-size: 11.5px; margin-top: 2px; }
+.jour .jambe b { display: block; font: 600 14px/1.3 var(--mono); }
+.jour .jambe span, .jour .nuit span { font-size: 13.5px; color: var(--muted); line-height: 1.45; }
+.jour .nuit span { display: block; }
+.jour .nuit b { display: flex; align-items: center; gap: 7px; font: 600 13.5px/1.3 var(--mono); }
+.pastille { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex: none; }
+.c0 { background: #4ade80; } .c1 { background: #facc15; } .c2 { background: #fb923c; } .c3 { background: #f87171; }
+.legende-nuits { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 12px; font: 500 12px/1.4 var(--mono); color: var(--dim); }
+.legende-nuits i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; margin-right: 6px; vertical-align: -1px; }
+.legende-nuits .risque { flex-basis: 100%; }
+.sous-titre { margin: 44px 0 16px; font-size: 21px; }
+.decision .niveau .etiquette { font: 600 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+.scenarios { margin-top: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; }
+.scen-tete { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; font: 600 13px/1.3 var(--mono); margin-bottom: 12px; }
+.scen-tete span { color: var(--dim); font-weight: 500; }
+.scen-barre { display: flex; gap: 4px; min-height: 64px; }
+.scen { border-radius: 8px; padding: 9px 11px; display: grid; align-content: space-between; gap: 6px; min-width: 0; background: color-mix(in srgb, var(--accent) 16%, var(--surface-2)); }
+.scen:first-child { background: color-mix(in srgb, var(--accent) 34%, var(--surface-2)); }
+.scen b { font: 700 18px/1 var(--mono); font-variant-numeric: tabular-nums; }
+.scen span { font-size: 13px; line-height: 1.3; color: var(--fg); }
+.scen-note { margin-top: 12px; color: var(--muted); font-size: 15px; }
+.duo-ss { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+.page-equipage { box-shadow: none; }
+.synthese { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.synthese li { position: relative; padding-left: 26px; color: var(--muted); font-size: 15.5px; line-height: 1.5; }
+.synthese li::before { content: "→"; position: absolute; left: 0; top: 0; font-family: var(--mono); color: var(--accent); }
+.synthese b { color: var(--fg); }
+.synthese u, .b-ligne b u { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 4px; }
+.b-ligne b { text-decoration: none; }
+.periodes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 6px; }
+.periode { background: var(--surface-2); border-radius: 9px; padding: 10px 12px; display: grid; gap: 4px; }
+.periode .quand { font: 600 12px/1.3 var(--mono); color: var(--dim); }
+.periode p { font-size: 14px; line-height: 1.4; color: var(--muted); }
+.periode .etoiles { color: var(--accent); letter-spacing: 2px; font-size: 13px; }
+.periode .etoiles i { font-style: normal; color: var(--line-strong); }
+.pile { display: grid; gap: 16px; }
+.carte-info { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; display: grid; gap: 10px; }
+.carte-info .lib, .options .lib { font: 600 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+.carte-info .tableau-route { margin-top: 0; }
+.carte-info p { color: var(--muted); font-size: 15.5px; }
+.carte-info p b { color: var(--fg); }
+.note-table { font: 500 12px/1.45 var(--mono) !important; color: var(--dim) !important; }
+.critique { border-color: var(--line-strong); }
+.options { margin-top: 24px; display: grid; gap: 10px; }
+.tableau-options td, .tableau-options th { text-align: left !important; vertical-align: top; }
+.tableau-options td:first-child { color: var(--fg); font-weight: 600; white-space: normal; }
+.compteurs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 30px; }
+.compteurs .chiffre b { color: var(--accent); }
+@media (max-width: 960px) {
+  .corse, .duo-ss { grid-template-columns: minmax(0, 1fr); }
+  .carte-corse { position: static; max-width: 460px; }
+  .compteurs { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 620px) {
+  .jour, .journal-tete { grid-template-columns: 52px minmax(0, 1fr); }
+  .jour .nuit { grid-column: 2; }
+  .journal-tete span:last-child { display: none; }
+  .periodes { grid-template-columns: minmax(0, 1fr); }
+  .scen-barre { flex-direction: column; }
+  .scen { flex: none !important; }
+  .tableau-options { display: block; overflow-x: auto; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="marque" href="index.html"><img alt="" src="assets/logo.png">Sailaware</a>
+    <nav class="menu" id="menu" aria-label="Navigation principale" data-en-aria-label="Main navigation">
+      <a href="offshore.html">Offshore</a>
+      <a href="coastal.html">Coastal</a>
+      <a href="features.html" data-en="Features">Fonctionnalités</a>
+      <a href="routing.html" data-en="Routing">Le routage</a>
+      <a href="sparring-skipper.html" aria-current="page">Sparring Skipper</a>
+      <a href="about.html" data-en="About">À propos</a>
+    </nav>
+    <div class="outils" style="display:flex;gap:10px;align-items:center">
+      <div class="pill-toggle" role="group" aria-label="Langue" data-en-aria-label="Language"><button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+      <button class="icon-btn theme-btn" type="button" aria-label="Basculer jour / nuit" data-en-aria-label="Switch day / night" title="Jour / Nuit" data-en-title="Day / Night"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+    </div>
+    <a class="btn btn-plein btn-petit" href="download.html#acces" data-en="Request access">Demander l'accès</a>
+    <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+  </div>
+</header>
+
+<main id="haut">
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div><span class="badge-ss" data-en="In preparation">En préparation</span></div>
+      <h1 data-en="Sparring Skipper.<br><em>It prepares the trip with you.</em>">Sparring Skipper.<br><em>Il prépare la navigation avec vous.</em></h1>
+      <p class="chapeau" data-en="Ten days around an island, three weeks offshore: it reads the weather for your plans, then tells you which way to go, where to spend the night, when to decide and which signal to watch for. The examples on this page are real computations, made on the forecasts of autumn 2026. <b>Artificial intelligence writes; every number comes from the computation.</b>">Dix jours autour d'une île, trois semaines au large : il lit la météo pour votre programme, puis dit par où passer, où dormir, quand décider et quel signal guetter. Les exemples de cette page sont de vrais calculs, faits sur les prévisions de l'automne 2026. <b>L'intelligence artificielle rédige ; chaque chiffre vient du calcul.</b></p>
+      <div class="actions">
+        <a class="btn btn-plein mail-prevenir" href="mailto:alrter@gmail.com" data-en="Get notified">Être prévenu</a>
+        <a class="btn btn-trait" href="#coastal" data-en="See the Tour of Corsica">Voir le Tour de Corse</a>
+      </div>
+      <div class="faits"><span data-en="Coastal · cruises and anchorages">Coastal · croisières et mouillages</span><span data-en="Offshore · crossings">Offshore · traversées</span></div>
+    </div>
+    <figure class="bulletin" aria-label="Le verdict du Tour de Corse" data-en-aria-label="The verdict for the Tour of Corsica">
+      <div class="b-tete"><span data-en="Real example · Tour of Corsica">Exemple réel · Tour de Corse</span><span data-en="forecasts of 27/09/2026">prévisions du 27/09/2026</span></div>
+      <div class="b-verdict" data-en="<b>Go round by the south first.</b><span>It is the robust itinerary: it follows the east coast from port to port during the easterly blow, and reaches the west coast after the north-westerly.</span>"><b>Faire le tour par le sud d'abord.</b><span>C'est l'itinéraire robuste : il longe la côte est de port en port pendant le coup d'est, et retrouve la côte ouest après le nord-ouest.</span></div>
+      <div class="b-ligne"><span>Distance</span><b data-en="<u>265</u> miles"><u>265</u> milles</b></div>
+      <div class="b-ligne"><span data-en="Time underway">Temps de route</span><b data-en="<u>54</u> h, <u>19</u> of them under engine"><u>54</u> h, dont <u>19</u> au moteur</b></div>
+      <div class="b-ligne"><span data-en="Nights">Nuits</span><b data-en="<u>9</u>, each with its fallback"><u>9</u>, chacune avec son repli</b></div>
+      <div class="b-ligne"><span data-en="Direction decided">Le sens se décide</span><b data-en="Friday <u>2</u>, evening">vendredi <u>2</u> au soir</b></div>
+      <div class="b-pied" data-en="Every underlined number comes from the computation, never from the AI.">Chaque chiffre souligné vient du calcul, jamais de l'IA.</div>
+    </figure>
+  </div>
+</section>
+
+<section class="bloc" id="coastal">
+  <div class="wrap">
+    <div class="tete">
+      <div class="eyebrow" data-en="Coastal · real example">Coastal · exemple réel</div>
+      <h2 data-en="Ten days around Corsica, prepared a week ahead.">Dix jours autour de la Corse, préparés une semaine avant.</h2>
+      <p data-en="The request: leave Ajaccio on Saturday 3 October, be back by Monday 12 at the latest, beautiful sheltered anchorages, a port every three or four days, daytime legs. The computation traced the routes between 35 ports and anchorages, assessed the shelter of each night, then compared the two directions around the island in 31 weather scenarios.">La demande : partir d'Ajaccio le samedi 3 octobre, rentrer au plus tard le lundi 12, de beaux mouillages abrités, un port tous les trois ou quatre jours, des étapes de jour. Le calcul a tracé les routes entre 35 ports et mouillages, jugé l'abri de chaque nuit, puis comparé les deux sens du tour dans 31 scénarios météo.</p>
+    </div>
+    <div class="corse">
+      <figure class="carte-corse">
+        <svg id="carte-corse" role="img" aria-label="Carte de la Corse : l'itinéraire retenu, ses neuf étapes et les replis" data-en-aria-label="Map of Corsica: the chosen itinerary, its nine stops and the fallbacks"></svg>
+        <figcaption data-en="The routes are those of the routing engine, leg by leg. ● stop · ○ fallback for the night.">Les routes sont celles du moteur de routage, jambe par jambe. ● étape · ○ repli de la nuit.</figcaption>
+      </figure>
+      <div class="journal">
+        <div class="journal-tete"><span data-en="Day">Jour</span><span data-en="The leg">La jambe</span><span data-en="The night and its fallback">La nuit et son repli</span></div>
+        <ol id="journal"></ol>
+        <div class="legende-nuits"><span data-en="<i class='c0'></i>comfortable"><i class="c0"></i>confortable</span><span data-en="<i class='c1'></i>fair"><i class="c1"></i>correct</span><span data-en="<i class='c2'></i>uncomfortable"><i class="c2"></i>inconfortable</span><span data-en="<i class='c3'></i>to avoid"><i class="c3"></i>à éviter</span><span class="risque" data-en="risk: share of the 31 scenarios that judge the night uncomfortable">risque : part des 31 scénarios qui jugent la nuit inconfortable</span></div>
+      </div>
+    </div>
+
+    <h3 class="sous-titre" data-en="The decision, and when to make it">La décision, et le moment de la prendre</h3>
+    <div class="niveaux3 decision">
+      <article class="niveau"><span class="etiquette" data-en="The strategy">La stratégie</span><b data-en="Round by the south first.">Le tour par le sud d'abord.</b><span data-en="In the worst of the 31 scenarios, it falls 16.8 points short of the best choice, against 24.2 for the best round by the north. Going round by the north does slightly better on average, but loses a lot if the low doesn't come.">Dans le pire des 31 scénarios, il s'écarte de 16,8 points du meilleur choix, contre 24,2 pour le meilleur tour par le nord. Le tour par le nord fait un peu mieux en moyenne, mais perd beaucoup si la dépression ne vient pas.</span></article>
+      <article class="niveau"><span class="etiquette" data-en="The gate">La porte</span><b data-en="Friday 2 October, in the evening.">Vendredi 2 octobre, au soir.</b><span data-en="Nothing commits you before then: the choice is made when leaving Ajaccio on Saturday morning, when the fine-scale models cover the easterly episode.">Rien n'engage avant : le choix se fait en sortant d'Ajaccio le samedi matin, à l'heure où les modèles fins couvrent l'épisode d'est.</span></article>
+      <article class="niveau"><span class="etiquette" data-en="The signal">Le signal</span><b data-en="A low of 1008 hPa or deeper.">Un creux d'au plus 1008 hPa.</b><span data-en="If it is confirmed west of Sardinia on the 6th, with at least 20 knots of easterly at Cap Corse, going round by the north becomes defensible. Otherwise, by the south.">S'il est confirmé à l'ouest de la Sardaigne le 6, avec au moins 20 nœuds d'est au cap Corse, le tour par le nord devient défendable. Sinon, par le sud.</span></article>
+    </div>
+    <div class="scenarios">
+      <div class="scen-tete"><b data-en="The 31 scenarios of the ensemble, in four families">Les 31 scénarios de l'ensemble, en quatre familles</b><span data-en="forecasts of 27/09">prévisions du 27/09</span></div>
+      <div class="scen-barre" id="scen-barre"></div>
+      <p class="scen-note" data-en="A night to watch: on the evening of the 5th, the easterly swell reaches 2.7 m off Solenzara. If that is confirmed, fall back on Propriano.">Une nuit à surveiller : le 5 au soir, la houle d'est atteint 2,7 m devant Solenzara. Si c'est confirmé, repli sur Propriano.</p>
+    </div>
+  </div>
+</section>
+
+<section class="bloc" id="offshore">
+  <div class="wrap">
+    <div class="tete">
+      <div class="eyebrow" data-en="Offshore · real example">Offshore · exemple réel</div>
+      <h2 data-en="A South Atlantic crossing, read the way a router reads it.">Une traversée de l'Atlantique Sud, lue comme un routeur la lit.</h2>
+      <p data-en="From Trindade, left to port, to south of Cape Agulhas: 2,821 miles on the route chosen by the skipper. The bulletin was produced by the complete chain, on the forecasts of 9 October 2026 at 12:00 UTC, for sixteen days.">De Trindade à bâbord jusqu'au sud du cap des Aiguilles : 2 821 milles sur la route choisie par le skipper. Le bulletin a été produit par la chaîne complète, sur les prévisions du 9 octobre 2026 à 12 h UTC, pour seize jours.</p>
+    </div>
+    <div class="duo-ss">
+      <figure class="bulletin page-equipage">
+        <div class="b-tete"><span data-en="Level 1 · for the whole crew">Niveau 1 · pour tout l'équipage</span><span data-en="1 page · 2 minutes">1 page · 2 minutes</span></div>
+        <ul class="synthese">
+          <li data-en="<b>Calm on Sunday.</b> On the skipper's route, the probability of calm reaches <u>50</u>% on Sun. 11/10, <u>255</u> miles from the start."><b>Calme dimanche.</b> Sur la route du skipper, la probabilité de calme atteint <u>50</u> % le dim. 11/10, à <u>255</u> milles du départ.</li>
+          <li data-en="<b>A front to cross on Wednesday.</b> The cold front of low D24 is crossed around Wed. 14/10 at <u>12</u>:00 UTC."><b>Front à traverser mercredi.</b> Le front froid de la dépression D24 est traversé vers le mer. 14/10 à <u>12</u> h UTC.</li>
+          <li data-en="<b>Wind rising afterwards.</b> The simulated wind at the boat reaches <u>24</u> knots on Fri. 16/10, close-hauled."><b>Vent qui monte ensuite.</b> Le vent simulé au bateau atteint <u>24</u> nœuds le ven. 16/10, au près.</li>
+          <li data-en="<b>Arrival beyond the horizon.</b> It is estimated for Wed. 28/10, beyond the bulletin's sixteen days."><b>Arrivée hors horizon.</b> Elle est estimée au mer. 28/10, au-delà des seize jours du bulletin.</li>
+        </ul>
+        <div class="periodes" id="periodes"></div>
+      </figure>
+      <div class="pile">
+        <div class="carte-info">
+          <div class="lib" data-en="The three corridors compared">Les trois couloirs comparés</div>
+          <table class="tableau-route">
+            <thead><tr><th data-en="Corridor">Couloir</th><th data-en="Length">Longueur</th><th data-en="Calm at worst">Calme au pire</th><th data-en="Strong wind at worst">Vent fort au pire</th></tr></thead>
+            <tbody>
+              <tr><td>Direct</td><td data-en="2,735 M">2 735 M</td><td data-en="76%">76 %</td><td data-en="12%">12 %</td></tr>
+              <tr class="vire"><td data-en="Skipper's route">Route du skipper</td><td data-en="2,821 M">2 821 M</td><td data-en="50%">50 %</td><td data-en="20%">20 %</td></tr>
+              <tr><td data-en="Far south">Très sud</td><td data-en="2,960 M">2 960 M</td><td data-en="24%">24 %</td><td data-en="26%">26 %</td></tr>
+            </tbody>
+          </table>
+          <p class="note-table" data-en="Calm: under 8 knots · strong wind: 25 knots and over · share of the members of both ensembles.">Calme : moins de 8 nœuds · vent fort : 25 nœuds et plus · part des membres des deux ensembles.</p>
+        </div>
+        <div class="carte-info critique">
+          <div class="lib" data-en="The route's critical note">La note critique de la route</div>
+          <p data-en="<b>The skipper's route holds in both models</b>, with no gale at the boat at the passage times. Its strength is the compromise: less strong wind than the far-south corridor, less calm than the direct corridor. Its weakness: the two models disagree around Tuesday 20th, 28 knots for one, 10 for the other."><b>La route du skipper tient dans les deux modèles</b>, sans coup de vent au bateau aux heures de passage. Son point fort est le compromis : moins de vent fort que le couloir très sud, moins de calme que le couloir direct. Sa fragilité : le désaccord des deux modèles autour du mardi 20, 28 nœuds pour l'un, 10 pour l'autre.</p>
+        </div>
+      </div>
+    </div>
+    <div class="options">
+      <div class="lib" data-en="The options, their gate and their signal">Les options, leur porte et leur signal</div>
+      <table class="tableau-route tableau-options">
+        <thead><tr><th data-en="Option">Option</th><th data-en="The gate">La porte</th><th data-en="The signal">Le signal</th></tr></thead>
+        <tbody>
+          <tr><td data-en="Keep the skipper's route">Garder la route du skipper</td><td data-en="around 917 miles, Fri. 16/10 at 06:00 UTC">vers 917 milles, le ven. 16/10 à 06 h UTC</td><td data-en="the new forecasts confirm a favourable wind, with no gale">les nouvelles prévisions confirment un vent porteur, sans coup de vent</td></tr>
+          <tr><td data-en="Move up to the direct corridor">Remonter vers le couloir direct</td><td data-en="before Thu. 22/10 at 12:00 UTC, around 1,923 miles">avant le jeu. 22/10 à 12 h UTC, vers 1 923 milles</td><td data-en="both models agree on strong wind and a building sea at the end of the route">les deux modèles s'accordent sur un vent fort et une mer croissante en fin de parcours</td></tr>
+          <tr><td data-en="Drop down to the far-south corridor">Descendre vers le couloir très sud</td><td data-en="around Tue. 20/10 at 00:00 UTC">autour du mar. 20/10 à 00 h UTC</td><td data-en="calm takes over the skipper's route, and the far-south corridor's gale disappears from the forecasts">le calme gagne la route du skipper, et le coup de vent du couloir très sud disparaît des prévisions</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="bloc" id="principe">
+  <div class="wrap">
+    <div class="tete">
+      <div class="eyebrow" data-en="The principle">Le principe</div>
+      <h2 data-en="AI writes. It doesn't make up a single number.">L'IA écrit. Elle n'invente aucun chiffre.</h2>
+      <p data-en="An AI that talks about weather can be confidently wrong. Sparring Skipper is built so that this is impossible for the numbers: the computation establishes the facts, the AI puts them into words, and automatic checks reject any text that strays from them.">Une IA qui parle de météo peut se tromper avec aplomb. Sparring Skipper est construit pour que ce soit impossible sur les chiffres : le calcul établit les faits, l'IA les met en mots, et des contrôles automatiques refusent tout texte qui s'en écarte.</p>
+    </div>
+    <ol class="chaine">
+      <li><span class="n">1</span><b data-en="The weather models">Les modèles météo</b><span data-en="Files from the major models and their ensembles, for your area and your dates.">Les fichiers des grands modèles et leurs ensembles, pour votre zone et vos dates.</span></li>
+      <li><span class="n">2</span><b data-en="The computation, without AI">Le calcul, sans IA</b><span data-en="Routes, named weather systems, the shelter of each night, probabilities.">Les routes, les systèmes nommés, l'abri de chaque nuit, les probabilités.</span></li>
+      <li><span class="n">3</span><b data-en="The fact sheet">La fiche de faits</b><span data-en="Everything the bulletin is allowed to say, each value with what it measures.">Tout ce que le bulletin a le droit de dire, chaque valeur avec ce qu'elle mesure.</span></li>
+      <li><span class="n">4</span><b data-en="The AI writes with blanks">L'IA rédige « à trous »</b><span data-en="It writes no number: each value is a reference to the fact sheet.">Elle n'écrit aucun nombre : chaque valeur est un renvoi vers la fiche.</span></li>
+      <li><span class="n">5</span><b data-en="Two checks">Deux contrôles</b><span data-en="An invented number or a wrong reference, and the text is rejected, then redone.">Un nombre inventé ou un renvoi faux, et le texte est refusé puis repris.</span></li>
+      <li><span class="n">6</span><b data-en="A reading for meaning">Une relecture du sens</b><span data-en="A second AI rereads; its corrections only go through if the checks pass again.">Une seconde IA relit ; ses corrections ne passent que si les contrôles repassent.</span></li>
+    </ol>
+    <figure class="a-trous" aria-label="Un texte à trous : la phrase de l'IA et la valeur prise dans la fiche" data-en-aria-label="A text with blanks: the AI's sentence and the value taken from the fact sheet">
+      <div class="a-trous-l"><span class="lib" data-en="What the AI wrote">Ce que l'IA a écrit</span><p data-en="On the skipper's route, the probability of calm reaches <code>{{passage.S.calme_max.p}}</code>% on <code>{{passage.S.calme_max.date}}</code>, <code>{{passage.S.calme_max.dist_nm}}</code> miles from the start.">Sur la route du skipper, la probabilité de calme atteint <code>{{passage.S.calme_max.p}}</code> % le <code>{{passage.S.calme_max.date}}</code>, à <code>{{passage.S.calme_max.dist_nm}}</code> milles du départ.</p></div>
+      <div class="fleche" aria-hidden="true">→</div>
+      <div class="a-trous-l"><span class="lib" data-en="What you read">Ce que vous lisez</span><p data-en="On the skipper's route, the probability of calm reaches <mark>50</mark>% on <mark>Sun. 11/10</mark>, <mark>255</mark> miles from the start.">Sur la route du skipper, la probabilité de calme atteint <mark>50</mark> % le <mark>dim. 11/10</mark>, à <mark>255</mark> milles du départ.</p></div>
+    </figure>
+    <div class="compteurs">
+      <div class="chiffre"><b>802</b><span data-en="values checked in the first four bulletins">valeurs vérifiées dans les quatre premiers bulletins</span></div>
+      <div class="chiffre"><b>0</b><span data-en="invented values in their final version">valeur inventée dans leur version finale</span></div>
+      <div class="chiffre"><b>15 · 24</b><span data-en="errors in the first draft of an anchorage bulletin and of a passage-plan bulletin: all rejected, text redone">erreurs au premier jet d'un bulletin de mouillage et d'un bulletin d'étapes : toutes refusées, texte repris</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="bloc" id="niveaux">
+  <div class="wrap">
+    <div class="tete">
+      <div class="eyebrow" data-en="Three levels of reading">Trois niveaux de lecture</div>
+      <h2 data-en="One page for the crew, four for the skipper, the detail for those who want to see everything.">Une page pour l'équipage, quatre pour le skipper, le détail pour qui veut tout voir.</h2>
+    </div>
+    <div class="niveaux3">
+      <article class="niveau"><div class="pages" aria-hidden="true"><i></i></div><b data-en="The crew">L'équipage</b><span data-en="One page, two minutes: what lies ahead, in plain words.">Une page, deux minutes : ce qui nous attend, en clair.</span></article>
+      <article class="niveau"><div class="pages" aria-hidden="true"><i></i><i></i><i></i><i></i></div><b data-en="The skipper">Le skipper</b><span data-en="Four pages, ten minutes: the passage at a glance, day by day, the weather systems and what may change.">Quatre pages, dix minutes : le passage en un coup d'œil, jour par jour, les systèmes et ce qui peut changer.</span></article>
+      <article class="niveau"><div class="pages" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><b data-en="The detail">Le détail</b><span data-en="The assumptions, the sources, the situation charts, each model and its limits.">Les hypothèses, les sources, les cartes de situation, chaque modèle et ses limites.</span></article>
+    </div>
+    <p class="avert" style="margin-top:22px" data-en="Examples taken from the Sparring Skipper study: forecasts of 27 September and 9 October 2026. They illustrate the method; they are not advice for real navigation.">Exemples tirés de l'étude de Sparring Skipper : prévisions du 27 septembre et du 9 octobre 2026. Ils illustrent la méthode ; ce ne sont pas des conseils pour une navigation réelle.</p>
+  </div>
+</section>
+
+<section class="bloc fin" id="fin">
+  <div class="wrap">
+    <div>
+      <h2 data-en="Be notified when it opens.">Soyez prévenu de son ouverture.</h2>
+      <p data-en="Sparring Skipper is in preparation. Send us a message: you'll receive a single reply, on the day it opens.">Sparring Skipper est en préparation. Laissez votre adresse : vous recevrez un seul message, le jour où il ouvre.</p>
+    </div>
+    <a class="btn btn-plein mail-prevenir" href="mailto:alrter@gmail.com" data-en="Get notified">Être prévenu</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><a class="marque" href="index.html" style="font-size:16px"><img alt="" src="assets/logo.png" style="width:24px;height:24px;border-radius:6px">Sailaware</a><p style="margin-top:12px" data-en="Navigation software for macOS and Windows.">Logiciel de navigation pour macOS et Windows.</p></div>
+    <div><h4 data-en="Explore">Naviguer</h4><ul><li><a href="offshore.html">Offshore</a></li><li><a href="coastal.html">Coastal</a></li><li><a href="features.html" data-en="Features">Fonctionnalités</a></li><li><a href="routing.html" data-en="Routing">Le routage</a></li></ul></div>
+    <div><h4 data-en="Get started">Commencer</h4><ul><li><a href="download.html#acces" data-en="Request access">Demander l'accès</a></li><li><a href="download.html" data-en="Download">Télécharger</a></li><li><a href="sparring-skipper.html">Sparring Skipper</a></li></ul></div>
+    <div><h4>Sailaware</h4><ul><li><a href="about.html" data-en="About and contact">À propos et contact</a></li><li class="reglages"><div class="pill-toggle" role="group" aria-label="Langue" data-en-aria-label="Language"><button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div><button class="icon-btn theme-btn" type="button" aria-label="Basculer jour / nuit" data-en-aria-label="Switch day / night"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button></li></ul></div>
+  </div>
+</footer>
+
+<script type="application/json" id="corse-data">{"cadre": [367, 611], "cote": ["M221.3 610.1 L222.1 610.5 L221.1 610.5 L221.3 610.1Z", "M223.1 609.0 L227.6 607.3 L228.6 608.0 L228.3 610.5 L223.3 610.5 L223.1 609.0Z", "M171.2 536.4 L169.0 533.4 L166.3 536.9 L163.9 533.4 L162.2 534.2 L162.1 531.6 L160.8 530.6 L155.3 532.0 L154.3 530.1 L150.8 531.7 L151.7 530.2 L149.6 525.4 L142.0 527.0 L141.7 525.3 L144.0 523.3 L140.8 520.2 L132.3 522.6 L132.6 519.5 L135.6 517.0 L134.4 514.5 L135.3 512.5 L133.3 515.2 L132.7 513.0 L129.6 512.5 L127.2 513.8 L125.0 512.1 L125.8 510.4 L124.7 510.8 L124.5 509.4 L118.9 509.6 L118.5 507.4 L122.8 503.3 L120.0 502.6 L119.6 499.8 L117.6 500.4 L117.2 498.4 L115.7 498.0 L118.9 496.4 L119.7 491.4 L118.3 489.5 L120.6 487.3 L119.5 485.7 L122.5 484.4 L123.1 481.7 L126.8 485.2 L134.1 479.5 L139.6 479.2 L141.7 471.3 L150.4 468.2 L150.0 465.2 L143.5 466.0 L141.4 464.1 L131.7 463.2 L124.9 457.7 L120.8 459.1 L120.2 462.1 L117.8 462.4 L119.1 459.3 L115.2 457.3 L118.5 451.0 L115.5 448.7 L99.3 455.0 L98.3 454.3 L99.1 449.9 L97.4 448.7 L87.7 448.5 L89.1 445.1 L91.3 444.5 L94.1 446.2 L100.3 442.9 L104.0 438.6 L105.5 436.2 L103.9 433.0 L99.6 430.4 L100.9 428.3 L103.3 430.0 L107.2 430.0 L109.6 425.6 L115.2 425.2 L115.6 421.3 L118.1 419.1 L112.9 415.1 L109.9 415.0 L112.1 413.5 L118.8 413.2 L119.7 408.4 L116.7 402.0 L122.5 399.7 L123.0 397.9 L121.4 395.5 L121.8 394.1 L117.0 388.2 L114.3 387.6 L112.7 389.0 L109.6 385.7 L107.7 386.7 L107.7 391.3 L105.6 391.2 L102.9 393.7 L90.1 394.8 L84.4 393.1 L75.3 398.2 L77.1 395.5 L76.1 391.9 L77.1 388.8 L79.2 387.8 L78.4 386.4 L79.4 384.4 L75.2 382.7 L75.1 379.5 L73.0 379.4 L73.1 377.6 L71.0 375.6 L76.6 372.8 L85.4 374.2 L90.8 369.0 L90.6 366.0 L88.2 365.9 L87.3 363.0 L88.4 359.0 L95.0 354.1 L102.1 353.2 L104.4 351.7 L103.9 348.8 L106.8 349.9 L109.3 347.1 L107.4 342.2 L102.4 342.4 L102.0 337.4 L98.7 334.9 L100.0 331.9 L97.4 326.3 L95.4 326.0 L93.3 329.3 L90.3 328.5 L88.0 330.4 L87.5 327.8 L85.7 326.4 L86.0 324.6 L79.3 323.3 L76.0 319.4 L68.5 321.4 L71.4 316.0 L69.5 313.6 L63.1 314.9 L65.8 311.7 L70.7 309.8 L71.2 307.7 L63.3 306.9 L65.0 304.6 L69.6 303.6 L67.1 300.0 L68.2 299.2 L68.1 295.5 L64.1 296.2 L66.0 293.0 L67.4 293.2 L64.7 291.5 L66.8 288.8 L63.8 287.2 L60.5 288.3 L58.2 286.0 L58.5 284.8 L63.0 285.3 L74.8 280.9 L75.6 279.0 L81.1 280.1 L96.1 275.3 L94.6 271.2 L92.5 271.0 L91.2 266.5 L88.0 263.9 L84.6 263.6 L83.4 265.0 L80.7 263.3 L80.1 260.6 L74.8 262.5 L73.3 261.5 L72.8 257.0 L79.8 254.1 L80.0 251.6 L77.4 251.0 L77.0 248.5 L75.6 249.3 L71.9 247.1 L64.2 253.7 L61.5 253.4 L62.9 250.5 L62.6 249.3 L60.8 249.4 L62.5 246.9 L61.6 246.1 L62.2 243.9 L59.0 241.5 L60.1 238.0 L61.5 240.5 L66.0 241.0 L67.3 239.3 L66.6 237.2 L74.8 235.8 L75.1 233.7 L73.7 232.1 L75.9 229.9 L73.7 228.3 L75.1 227.7 L75.2 225.6 L77.9 225.6 L78.7 224.3 L84.4 226.7 L87.3 225.5 L88.7 220.0 L85.3 217.0 L89.7 216.3 L90.2 214.5 L89.2 212.6 L93.0 208.2 L92.1 206.1 L85.8 206.9 L85.1 205.4 L88.9 199.9 L89.0 194.4 L90.1 192.9 L93.6 193.5 L97.6 189.3 L102.6 189.8 L101.5 186.9 L99.8 186.2 L102.8 183.2 L101.4 181.8 L102.8 180.1 L101.0 178.5 L101.8 175.2 L98.9 175.2 L100.6 173.8 L99.7 173.1 L103.3 170.4 L103.4 173.8 L104.8 173.5 L103.8 174.6 L104.3 177.5 L106.6 175.6 L112.3 174.8 L113.0 176.0 L111.6 177.1 L111.9 178.3 L116.6 179.4 L123.0 174.6 L122.0 170.8 L124.4 167.2 L122.3 164.6 L128.2 163.2 L129.4 164.9 L134.3 161.3 L139.0 162.4 L142.3 156.8 L141.4 155.3 L147.7 156.3 L151.8 152.2 L154.1 152.8 L153.7 150.0 L156.7 153.9 L170.2 151.9 L171.8 150.3 L174.8 151.7 L178.1 147.0 L186.0 144.9 L186.4 143.3 L184.9 141.9 L185.8 140.8 L184.3 138.0 L185.6 136.9 L185.3 132.4 L188.3 134.6 L191.7 130.4 L192.4 126.7 L195.6 126.6 L197.1 123.6 L199.9 123.6 L201.3 121.4 L204.4 123.3 L205.8 120.9 L211.5 119.8 L220.5 124.7 L220.3 123.3 L225.4 120.0 L228.1 125.3 L234.0 125.8 L233.4 130.6 L236.4 131.3 L238.9 134.1 L240.7 140.4 L244.4 139.8 L244.6 137.4 L250.0 133.1 L250.0 126.5 L251.9 125.8 L255.7 120.2 L253.8 111.4 L254.8 109.2 L253.8 107.5 L254.0 104.0 L255.3 101.5 L252.0 96.8 L252.3 95.3 L250.2 94.9 L249.8 91.9 L246.9 87.7 L252.9 78.0 L254.4 77.3 L252.0 75.4 L251.6 69.9 L250.0 68.5 L250.0 66.3 L259.5 58.6 L256.9 56.7 L259.1 52.0 L255.9 49.0 L257.1 42.9 L255.1 41.0 L254.8 34.4 L258.6 32.6 L259.8 29.3 L264.1 29.6 L265.5 27.6 L274.1 28.7 L274.7 26.8 L276.4 26.5 L280.5 30.5 L279.7 34.9 L284.4 37.7 L282.4 42.1 L283.2 44.6 L281.7 45.9 L282.8 50.1 L285.8 53.9 L284.6 55.6 L286.4 58.0 L285.6 64.1 L286.9 65.7 L286.6 70.7 L287.7 71.8 L287.7 73.4 L286.2 74.3 L288.9 77.3 L289.5 82.5 L288.3 86.9 L289.5 87.5 L291.3 96.8 L290.1 102.9 L285.0 112.2 L284.4 120.5 L282.3 127.0 L283.0 132.3 L282.5 130.8 L282.2 134.7 L280.3 136.4 L280.5 146.3 L281.2 145.6 L285.4 154.5 L296.6 169.4 L301.5 182.9 L301.9 190.6 L300.3 198.6 L301.5 207.1 L303.4 211.5 L304.0 222.8 L302.5 226.9 L301.1 240.6 L303.1 253.6 L308.0 269.0 L306.0 286.3 L307.8 298.4 L306.6 323.4 L305.4 328.6 L304.0 328.4 L305.0 329.7 L294.8 343.8 L286.2 358.3 L274.0 373.7 L271.8 378.7 L271.5 382.7 L271.3 378.7 L268.9 376.8 L269.7 378.1 L268.6 379.7 L270.5 379.2 L268.9 380.9 L270.3 382.0 L269.1 383.1 L271.7 383.5 L272.4 386.1 L271.8 392.1 L269.7 393.8 L270.3 394.9 L267.9 404.2 L270.1 422.1 L267.1 430.4 L268.5 432.9 L267.3 437.0 L269.4 437.9 L270.5 440.6 L269.3 446.1 L270.3 448.2 L269.1 452.1 L270.1 454.6 L269.5 463.7 L266.8 466.3 L264.9 465.7 L262.4 468.6 L263.7 472.3 L266.1 471.6 L262.8 474.1 L265.9 475.1 L266.5 476.9 L264.6 478.5 L265.4 480.3 L263.5 479.2 L261.1 483.6 L259.0 481.7 L256.3 482.6 L255.5 485.1 L257.3 486.2 L257.3 488.1 L258.3 488.4 L257.6 489.6 L252.5 488.0 L248.8 490.2 L248.6 489.1 L251.6 487.9 L248.6 488.5 L245.6 486.3 L245.6 490.2 L240.0 493.6 L241.0 495.3 L240.0 495.8 L240.6 498.3 L243.0 499.7 L242.5 501.7 L248.6 493.5 L252.5 494.0 L254.3 497.1 L260.9 496.0 L261.2 497.5 L256.1 503.5 L256.7 506.6 L255.1 508.6 L252.1 508.6 L247.2 511.6 L241.7 519.1 L238.1 518.7 L237.5 521.1 L240.3 521.8 L240.6 523.6 L239.1 527.0 L236.5 528.8 L240.5 529.0 L240.2 533.0 L241.2 533.5 L239.7 537.0 L236.3 538.5 L238.4 539.4 L238.2 541.1 L235.6 540.0 L233.6 543.8 L230.9 545.8 L222.9 548.4 L225.0 548.8 L226.7 552.8 L224.1 553.9 L226.1 554.1 L225.4 556.7 L222.6 556.9 L224.3 557.2 L223.7 558.5 L224.6 559.8 L230.9 554.0 L235.7 552.2 L234.3 556.9 L225.1 569.3 L224.8 572.7 L214.6 573.2 L212.1 566.9 L207.1 566.1 L207.9 564.4 L205.4 565.5 L202.1 563.2 L203.2 561.7 L195.0 564.4 L193.8 563.6 L193.9 558.5 L197.6 554.4 L196.6 552.5 L199.9 550.1 L201.1 547.5 L197.7 548.2 L197.3 545.7 L196.5 547.7 L194.8 547.7 L195.0 542.7 L192.4 547.1 L189.7 547.9 L187.9 546.8 L186.8 544.8 L187.2 539.8 L189.8 537.1 L189.3 535.0 L184.0 541.6 L181.6 541.3 L180.8 543.0 L179.9 542.3 L180.7 539.0 L179.3 537.8 L177.3 541.1 L174.4 537.9 L175.7 534.5 L174.2 536.4 L171.2 536.4Z", "M268.7 610.5 L268.2 606.8 L271.4 610.2 L271.4 607.2 L272.4 607.2 L271.9 604.0 L276.3 607.3 L274.8 608.3 L275.7 610.5 L268.7 610.5Z", "M258.7 595.9 L263.7 591.4 L264.9 595.2 L261.3 596.1 L260.9 598.0 L258.7 595.9Z", "M252.4 599.2 L255.6 597.4 L258.3 598.1 L257.6 601.9 L255.8 602.1 L252.4 599.2Z", "M252.0 593.4 L253.7 590.9 L257.0 592.8 L258.5 595.9 L253.1 595.8 L254.9 594.3 L252.0 593.4Z", "M232.2 571.5 L234.2 569.7 L234.8 571.3 L236.2 570.2 L236.0 571.9 L237.7 572.0 L235.8 573.8 L232.2 571.5Z"], "routes": ["109.0,388.9 109.0,395.3 99.2,419.7 89.5,440.0 86.9,446.6 87.2,450.5 98.1,467.6 117.1,510.1 121.5,516.4 128.0,523.5 136.1,524.6 141.7,524.1 140.7,523.8", "140.7,523.8 140.2,525.1 142.2,527.6 194.0,564.4 213.5,573.3 221.6,576.0 225.3,576.5 234.2,560.7 236.4,552.0 235.9,542.6", "235.9,542.6 259.8,548.4 268.1,551.6 267.8,545.5 270.0,527.1 269.8,519.0 274.2,497.1 274.2,489.9 276.6,471.9 276.7,457.6 278.7,446.8 272.1,430.7 273.1,427.0 272.2,423.8 273.1,415.9 272.8,412.0 270.4,409.4", "270.4,409.4 270.1,406.5 283.4,380.1 296.4,348.7 303.6,335.1 313.9,304.1 318.4,280.9 315.4,277.1 309.3,262.7 306.1,251.6 303.4,250.1 304.4,250.2", "304.4,250.2 304.0,237.2 304.9,222.4 303.3,205.6 302.9,186.3 300.3,175.1 295.8,160.4 286.9,135.6 283.8,129.2 289.7,108.6 295.3,77.8 291.6,71.9 292.6,64.2 287.4,54.6 288.5,41.7 287.1,38.2 280.4,28.5 274.4,23.5 268.3,24.0 257.1,30.7 254.3,34.5 254.4,43.2", "254.4,43.2 213.2,75.1 191.5,98.8 169.8,105.5 147.4,115.6 136.7,135.8 122.8,157.0 122.1,160.6 114.1,177.4", "114.1,177.4 113.4,174.5 111.9,172.5 104.1,169.6 98.9,173.6 92.9,187.1 88.9,192.3 84.5,205.3 85.3,224.7", "85.3,224.7 79.4,223.2 74.7,223.4 68.9,226.3 60.6,232.1 54.6,238.2 55.5,242.2 55.2,244.8 58.4,252.7 59.0,256.5 59.3,276.3 56.8,285.8 63.3,317.5 65.6,320.5 69.2,321.9 73.9,321.6", "73.9,321.6 77.0,328.5 74.3,354.7 70.2,375.0 70.2,382.7 74.0,397.6 77.3,399.5 103.6,394.3 107.0,392.7 109.0,388.9"], "jambes": [{"jour": "2026-10-03", "de": "AJA", "vers": "ROC", "nm": 30.2, "h": 5.74, "moteur": 0.75, "tws_max": 11, "hs_max": 0.3, "arrivee": "03/10 11:44", "rejeu_nm": 30.2, "de_c": "Ajaccio", "vers_c": "Roccapina"}, {"jour": "2026-10-04", "de": "ROC", "vers": "RON", "nm": 25.4, "h": 5.86, "moteur": 0.0, "tws_max": 10, "hs_max": null, "arrivee": "04/10 11:51", "rejeu_nm": 25.5, "de_c": "Roccapina", "vers_c": "Rondinara"}, {"jour": "2026-10-05", "de": "RON", "vers": "SOL", "nm": 32.8, "h": 7.25, "moteur": 0.0, "tws_max": 16, "hs_max": 1.6, "arrivee": "05/10 13:14", "rejeu_nm": 32.8, "de_c": "Rondinara", "vers_c": "Solenzara"}, {"jour": "2026-10-06", "de": "SOL", "vers": "TAV", "nm": 31.8, "h": 6.8, "moteur": 0.47, "tws_max": 9, "hs_max": 1.6, "arrivee": "06/10 12:48", "rejeu_nm": 31.8, "de_c": "Solenzara", "vers_c": "Taverna"}, {"jour": "2026-10-07", "de": "TAV", "vers": "CEN", "nm": 49.6, "h": 8.94, "moteur": 0.49, "tws_max": 18, "hs_max": 1.0, "arrivee": "07/10 14:56", "rejeu_nm": 49.6, "de_c": "Taverna", "vers_c": "Centuri"}, {"jour": "2026-10-08", "de": "CEN", "vers": "CAL", "nm": 36.6, "h": 7.0, "moteur": 0.0, "tws_max": 17, "hs_max": 1.2, "arrivee": "08/10 13:00", "rejeu_nm": 36.6, "de_c": "Centuri", "vers_c": "Calvi"}, {"jour": "2026-10-09", "de": "CAL", "vers": "GAL", "nm": 13.7, "h": 2.84, "moteur": 0.74, "tws_max": 4, "hs_max": null, "arrivee": "09/10 08:50", "rejeu_nm": 13.7, "de_c": "Calvi", "vers_c": "Galéria"}, {"jour": "2026-10-11", "de": "GAL", "vers": "CAR", "nm": 23.7, "h": 5.54, "moteur": 0.32, "tws_max": 13, "hs_max": 0.7, "arrivee": "11/10 11:32", "rejeu_nm": 23.7, "de_c": "Galéria", "vers_c": "Cargèse"}, {"jour": "2026-10-12", "de": "CAR", "vers": "AJA", "nm": 21.2, "h": 4.01, "moteur": 0.78, "tws_max": 4, "hs_max": 0.3, "arrivee": "12/10 10:00", "rejeu_nm": 21.2, "de_c": "Cargèse", "vers_c": "Ajaccio"}], "nuits": [{"nuit": "2026-10-03", "id": "ROC", "nom": "Golfe de Roccapina", "classe": 0, "p": 3, "p_plan": 3, "replis": [{"id": "BON", "nom": "Port de Bonifacio", "p": 0, "court": "Bonifacio"}, {"id": "AJA", "nom": "Port de plaisance Tino Rossi", "p": 0, "court": "Ajaccio"}, {"id": "CAR", "nom": "Port de Cargèse", "p": 0, "court": "Cargèse"}], "court": "Roccapina"}, {"nuit": "2026-10-04", "id": "RON", "nom": "Baie de Rondinara", "classe": 1, "p": 19, "p_plan": 19, "replis": [{"id": "BON", "nom": "Port de Bonifacio", "p": 0, "court": "Bonifacio"}, {"id": "LAV", "nom": "Golfe de Lava", "p": 0, "court": "Lava"}, {"id": "AJA", "nom": "Port de plaisance Tino Rossi", "p": 0, "court": "Ajaccio"}], "court": "Rondinara"}, {"nuit": "2026-10-05", "id": "SOL", "nom": "Port de Solenzara", "classe": 2, "p": 3, "p_plan": 3, "replis": [{"id": "PRO", "nom": "Port Jean-Baptiste Tomi", "p": 3, "court": "Propriano"}, {"id": "PVE", "nom": "Port de plaisance et de pêche de Porto-Vecchio", "p": 3, "court": "Porto-Vecchio"}, {"id": "BON", "nom": "Port de Bonifacio", "p": 10, "court": "Bonifacio"}], "court": "Solenzara"}, {"nuit": "2026-10-06", "id": "TAV", "nom": "Port de Taverna", "classe": 1, "p": 3, "p_plan": 3, "replis": [{"id": "PVE", "nom": "Port de plaisance et de pêche de Porto-Vecchio", "p": 3, "court": "Porto-Vecchio"}, {"id": "SOL", "nom": "Port de Solenzara", "p": 3, "court": "Solenzara"}, {"id": "PIN", "nom": "Golfe de Pinarellu", "p": 16, "court": "Golfe de Pinarellu"}], "court": "Taverna"}, {"nuit": "2026-10-07", "id": "CEN", "nom": "Port de Centuri", "classe": 1, "p": 13, "p_plan": 13, "replis": [{"id": "SOL", "nom": "Port de Solenzara", "p": 0, "court": "Solenzara"}, {"id": "BAS", "nom": "Bastia Vieux Port", "p": 3, "court": "Bastia"}, {"id": "TAV", "nom": "Port de Taverna", "p": 3, "court": "Taverna"}], "court": "Centuri"}, {"nuit": "2026-10-08", "id": "CAL", "nom": "Port de Calvi", "classe": 0, "p": 6, "p_plan": 6, "replis": [{"id": "BAS", "nom": "Bastia Vieux Port", "p": 3, "court": "Bastia"}, {"id": "SFL", "nom": "Port de Saint-Florent", "p": 3, "court": "Saint-Florent"}, {"id": "TAV", "nom": "Port de Taverna", "p": 3, "court": "Taverna"}], "court": "Calvi"}, {"nuit": "2026-10-09", "id": "GAL", "nom": "Golfe de Galéria", "classe": 1, "p": 16, "p_plan": 16, "replis": [{"id": "SFL", "nom": "Port de Saint-Florent", "p": 3, "court": "Saint-Florent"}, {"id": "IRO", "nom": "Port Isula Grande", "p": 6, "court": "Île-Rousse"}, {"id": "CAL", "nom": "Port de Calvi", "p": 10, "court": "Calvi"}], "court": "Galéria"}, {"nuit": "2026-10-10", "id": "GAL", "nom": "Golfe de Galéria", "classe": 0, "p": 19, "p_plan": 19, "replis": [{"id": "CAR", "nom": "Port de Cargèse", "p": 13, "court": "Cargèse"}, {"id": "IRO", "nom": "Port Isula Grande", "p": 13, "court": "Île-Rousse"}, {"id": "CAL", "nom": "Port de Calvi", "p": 16, "court": "Calvi"}], "court": "Galéria"}, {"nuit": "2026-10-11", "id": "CAR", "nom": "Port de Cargèse", "classe": 0, "p": 16, "p_plan": 16, "replis": [{"id": "CAL", "nom": "Port de Calvi", "p": 23, "court": "Calvi"}, {"id": "IRO", "nom": "Port Isula Grande", "p": 23, "court": "Île-Rousse"}, {"id": "FEC", "nom": "Cala di Fecciajo", "p": 39, "court": "Cala di Fecciajo"}], "court": "Cargèse"}], "etapes": [{"id": "AJA", "nom": "Port de plaisance Tino Rossi", "type": "port", "role": "etape", "xy": [107.9, 389.8], "court": "Ajaccio"}, {"id": "CAL", "nom": "Port de Calvi", "type": "port", "role": "etape", "xy": [112.3, 176.7], "court": "Calvi"}, {"id": "CAR", "nom": "Port de Cargèse", "type": "port", "role": "etape", "xy": [73.1, 320.2], "court": "Cargèse"}, {"id": "CEN", "nom": "Port de Centuri", "type": "port", "role": "etape", "xy": [256.7, 44.1], "court": "Centuri"}, {"id": "GAL", "nom": "Golfe de Galéria", "type": "mouillage", "role": "etape", "xy": [85.1, 226.0], "court": "Galéria"}, {"id": "ROC", "nom": "Golfe de Roccapina", "type": "mouillage", "role": "etape", "xy": [142.1, 523.8], "court": "Roccapina"}, {"id": "RON", "nom": "Baie de Rondinara", "type": "mouillage", "role": "etape", "xy": [235.5, 541.3], "court": "Rondinara"}, {"id": "SOL", "nom": "Port de Solenzara", "type": "port", "role": "etape", "xy": [269.8, 409.9], "court": "Solenzara"}, {"id": "TAV", "nom": "Port de Taverna", "type": "port", "role": "etape", "xy": [303.5, 250.8], "court": "Taverna"}, {"id": "BAS", "nom": "Bastia Vieux Port", "type": "port", "role": "repli", "xy": [282.1, 133.7], "court": "Bastia"}, {"id": "BON", "nom": "Port de Bonifacio", "type": "port", "role": "repli", "xy": [210.0, 566.4], "court": "Bonifacio"}, {"id": "PRO", "nom": "Port Jean-Baptiste Tomi", "type": "port", "role": "repli", "xy": [121.0, 459.6], "court": "Propriano"}, {"id": "PVE", "nom": "Port de plaisance et de pêche de Porto-Vecchio", "type": "port", "role": "repli", "xy": [241.4, 497.9], "court": "Porto-Vecchio"}, {"id": "SFL", "nom": "Port de Saint-Florent", "type": "port", "role": "repli", "xy": [244.3, 139.1], "court": "Saint-Florent"}], "totaux": {"nm": 265.0, "h": 54.0, "moteur_h": 18.9}, "regrets": {"horaire-mixte": {"score_moyen": 1.5, "regret_max": 26.8, "regret_moyen": 5.9, "membres_meilleur": 0}, "horaire-det": {"score_moyen": -3.9, "regret_max": 29.3, "regret_moyen": 11.4, "membres_meilleur": 2}, "horaire-ens": {"score_moyen": 4.3, "regret_max": 24.2, "regret_moyen": 3.1, "membres_meilleur": 12}, "antihoraire-mixte": {"score_moyen": 0.6, "regret_max": 21.1, "regret_moyen": 6.8, "membres_meilleur": 1}, "antihoraire-det": {"score_moyen": -0.9, "regret_max": 31.2, "regret_moyen": 8.3, "membres_meilleur": 6}, "antihoraire-ens": {"score_moyen": 2.8, "regret_max": 16.8, "regret_moyen": 4.6, "membres_meilleur": 10}}, "retenu": "antihoraire-ens"}</script>
+<script>
+/* Le Tour de Corse et la traversée de l'Atlantique Sud (étude Sparring Skipper), traduits. */
+(function () {
+  var NS = "http://www.w3.org/2000/svg";
+  function el(p, n, a, t) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); if (t !== undefined) e.textContent = t; p.appendChild(e); return e; }
+  function nb(x, d) { return SW.n(x, d || 0); }
+
+  // ── Coastal : le Tour de Corse retenu (étude pilote, prévisions du 27/09/2026) ──
+  var C = JSON.parse(document.getElementById("corse-data").textContent);
+  // tout se redessine quand la langue change (la carte, le journal, les scénarios, les périodes)
+  function tout() {
+  var svg = document.getElementById("carte-corse"), W = C.cadre[0], H = C.cadre[1];
+  svg.innerHTML = "";
+  svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+  el(svg, "rect", { x: 0, y: 0, width: W, height: H, fill: "var(--sea)" });
+  C.cote.forEach(function (d) { el(svg, "path", { d: d, fill: "var(--land)", stroke: "var(--coast)", "stroke-width": 1 }); });
+  var gRoutes = el(svg, "g", {}), gSel = el(svg, "g", {}), gPts = el(svg, "g", {});
+  var traits = C.routes.map(function (pts) { return el(gRoutes, "polyline", { points: pts, fill: "none", stroke: "var(--route)", "stroke-width": 2.2, "stroke-linejoin": "round", "stroke-linecap": "round", opacity: .9 }); });
+  var pos = {};
+  C.etapes.forEach(function (e) {
+    pos[e.id] = e.xy;
+    var COTE = { SFL: true, CEN: true, BAS: false }, gauche = e.id in COTE ? COTE[e.id] : e.xy[0] < W * 0.47, x = e.xy[0], y = e.xy[1];
+    if (e.role === "repli") el(gPts, "circle", { cx: x, cy: y, r: 3.6, fill: "var(--sea)", stroke: "var(--muted)", "stroke-width": 1.4 });
+    else el(gPts, "circle", { cx: x, cy: y, r: 4.6, fill: "var(--accent)", stroke: "var(--sea)", "stroke-width": 1.5 });
+    el(gPts, "text", { x: x + (gauche ? -8 : 8), y: y + 3.5, "text-anchor": gauche ? "end" : "start", "font-size": e.role === "repli" ? 10 : 11.5, "font-weight": e.role === "repli" ? 500 : 600, fill: e.role === "repli" ? "var(--dim)" : "var(--fg)", "paint-order": "stroke", stroke: "var(--sea)", "stroke-width": 3 }, e.court);
+  });
+  el(svg, "text", { x: 12, y: H - 12, "font-size": 10, fill: "var(--dim)" }, SW.t("Tour retenu : par le sud d'abord", "Chosen tour: south first"));
+
+  var JOURS = SW.lang() === "en" ? ["Sat 3", "Sun 4", "Mon 5", "Tue 6", "Wed 7", "Thu 8", "Fri 9", "Sat 10", "Sun 11", "Mon 12"]
+                                  : ["sam. 3", "dim. 4", "lun. 5", "mar. 6", "mer. 7", "jeu. 8", "ven. 9", "sam. 10", "dim. 11", "lun. 12"];
+  var CLASSE = SW.lang() === "en" ? ["comfortable", "fair", "uncomfortable", "to avoid"] : ["confortable", "correct", "inconfortable", "à éviter"];
+  var journal = document.getElementById("journal"), iRoute = 0, lignes = [];
+  journal.innerHTML = "";
+  JOURS.forEach(function (jour, k) {
+    var date = "2026-10-" + String(3 + k).padStart(2, "0");
+    var j = C.jambes.filter(function (x) { return x.jour === date; })[0];
+    var n = C.nuits.filter(function (x) { return x.nuit === date; })[0];
+    var li = document.createElement("li"); li.className = "jour"; li.tabIndex = 0;
+    var jambe = j ? "<b>" + j.de_c + " → " + j.vers_c + "</b><span>" + Math.round(j.nm) + SW.t(" milles · ", " miles · ") + nb(j.h, 1) + " h" + (j.moteur > 0 ? SW.t(", dont " + Math.round(j.moteur * 100) + " % au moteur", ", " + Math.round(j.moteur * 100) + "% under engine") : SW.t(" à la voile", " under sail")) + "</span>"
+      : SW.t("<b>Séjour à Galéria</b><span>une journée de repos, deux nuits au même endroit</span>", "<b>Stay in Galéria</b><span>a rest day, two nights in the same place</span>");
+    var nuit = n ? '<b><i class="pastille c' + n.classe + '"></i>' + n.court + " · " + CLASSE[n.classe] + "</b><span>" + SW.t("risque " + n.p + " % · repli : ", "risk " + n.p + "% · fallback: ") + n.replis[0].court + "</span>"
+      : SW.t("<b>Retour à Ajaccio</b><span>arrivée à 10 h UTC</span>", "<b>Back to Ajaccio</b><span>arrival at 10:00 UTC</span>");
+    li.innerHTML = '<span class="date">' + jour + "<small>" + SW.t("oct.", "Oct") + "</small></span>" + '<span class="jambe">' + jambe + "</span>" + '<span class="nuit">' + nuit + "</span>";
+    var r = j ? iRoute++ : -1;
+    li.addEventListener("mouseenter", function () { choisir(k, r, n); });
+    li.addEventListener("focus", function () { choisir(k, r, n); });
+    li.addEventListener("click", function () { choisir(k, r, n); });
+    journal.appendChild(li); lignes.push(li);
+  });
+  function choisir(k, r, n) {
+    lignes.forEach(function (l, i) { l.classList.toggle("choisi", i === k); });
+    traits.forEach(function (t, i) { t.setAttribute("opacity", r < 0 || i === r ? .95 : .22); t.setAttribute("stroke-width", i === r ? 3.4 : 2.2); });
+    while (gSel.firstChild) gSel.removeChild(gSel.firstChild);
+    if (n) {
+      var a = pos[n.id], rp = pos[n.replis[0].id];
+      if (rp) el(gSel, "line", { x1: a[0], y1: a[1], x2: rp[0], y2: rp[1], stroke: "var(--muted)", "stroke-width": 1.4, "stroke-dasharray": "3 4" });
+      el(gSel, "circle", { cx: a[0], cy: a[1], r: 10, fill: "none", stroke: ["#4ade80", "#facc15", "#fb923c", "#f87171"][n.classe], "stroke-width": 2.4 });
+    }
+  }
+
+  // les quatre familles de scénarios (31 membres de l'ensemble)
+  var SC = SW.lang() === "en" ? [["Active cut-off low: easterly, then north-westerly", 15], ["Easterly episode only", 6], ["Westerly blow only", 6], ["Slack pressure", 4]]
+                              : [["Goutte froide active : est, puis nord-ouest", 15], ["Épisode d'est seul", 6], ["Coup d'ouest seul", 6], ["Marais barométrique", 4]];
+  var barre = document.getElementById("scen-barre");
+  barre.innerHTML = "";
+  SC.forEach(function (s) {
+    var d = document.createElement("div"); d.className = "scen"; d.style.flex = s[1] + " 1 0";
+    d.innerHTML = "<b>" + Math.round(s[1] / 31 * 100) + SW.t(" %", "%") + "</b><span>" + s[0] + " · " + s[1] + SW.t(" sur 31", " of 31") + "</span>";
+    barre.appendChild(d);
+  });
+
+  // ── Offshore : les quatre périodes de la page d'équipage, avec leur confiance ──
+  var P = SW.lang() === "en" ? [["D0 to D3 · Sat 10 → Tue 13", 4, "Light to moderate easterly, possible calm on Sunday, then north-westerly on Tuesday."],
+           ["D4 to D7 · Wed 14 → Fri 16", 3, "Fronts passing, then a rising easterly, close-hauled."],
+           ["D8 to D11 · Fri 16 → Tue 20", 3, "Moderate easterly, rising probability of strong wind."],
+           ["D12 to D16 · Tue 20 → Sun 25", 2, "Northerly regime, little certainty on the detail."]]
+         : [["J0 à J3 · sam. 10 → mar. 13", 4, "Vent d'est faible à modéré, calme possible dimanche, puis vent de nord-ouest mardi."],
+           ["J4 à J7 · mer. 14 → ven. 16", 3, "Passage de fronts puis vent d'est qui monte, allure de près."],
+           ["J8 à J11 · ven. 16 → mar. 20", 3, "Vent moyen d'est, probabilité de vent fort en hausse."],
+           ["J12 à J16 · mar. 20 → dim. 25", 2, "Régime de nord, peu de certitude sur le détail."]];
+  document.getElementById("periodes").innerHTML = P.map(function (p) {
+    return '<div class="periode"><span class="quand">' + p[0] + '</span><p>' + p[2] + '</p><span class="etoiles" aria-label="' + SW.t("confiance ", "confidence ") + p[1] + SW.t(" sur 4", " of 4") + '">' + "★".repeat(p[1]) + "<i>" + "★".repeat(4 - p[1]) + "</i></span></div>";
+  }).join("");
+  }
+  // « Être prévenu » : un courriel préparé, dans la langue de la page (comme la demande d'accès du site précédent)
+  function courriel() {
+    var sujet = SW.t("Sparring Skipper — être prévenu de l'ouverture", "Sparring Skipper — notify me at launch");
+    var corps = SW.t("Bonjour,\n\nPrévenez-moi quand Sparring Skipper ouvrira.\n\n- Mon programme (côtier, hauturier) : \n- Mon bateau : \n\nMerci !",
+                     "Hello,\n\nPlease let me know when Sparring Skipper opens.\n\n- My sailing (coastal, offshore): \n- My boat: \n\nThanks!");
+    document.querySelectorAll(".mail-prevenir").forEach(function (a) { a.setAttribute("href", "mailto:alrter@gmail.com?subject=" + encodeURIComponent(sujet) + "&body=" + encodeURIComponent(corps)); });
+  }
+  function refaire() { tout(); courriel(); }
+  refaire(); document.addEventListener("langue", refaire);
+})();
+</script>
+</body>
+</html>

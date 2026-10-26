@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title data-en="Download Sailaware">Télécharger Sailaware</title>
+<meta name="description" content="Télécharger Sailaware pour Mac (Apple Silicon) et Windows : bêta privée, accès par clé ; configuration requise, installation et mises à jour." data-en-content="Download Sailaware for Mac (Apple Silicon) and Windows: private beta, access by key; system requirements, installation and updates.">
+<meta name="theme-color" content="#0E1822">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23bef264'/%3E%3Cg fill='none' stroke='%230E1822' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' transform='scale(0.72) translate(4.6 4.6)'%3E%3Cpath d='M2 20a2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1'/%3E%3Cpath d='M4 18 2 6l10 6 10-6-2 12'/%3E%3C/g%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Télécharger Sailaware">
+<meta property="og:description" content="Télécharger Sailaware pour Mac (Apple Silicon) et Windows : bêta privée, accès par clé ; configuration requise, installation et mises à jour.">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:locale:alternate" content="en_US">
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js"></script>
+<style>
+/* page Offshore */
+.duo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 48px; align-items: center; }
+section.bloc > .wrap.duo { padding-block: 72px; }
+.duo.inverse { grid-template-columns: minmax(0, .9fr) minmax(0, 1.2fr); }
+.duo h2 { margin-top: 12px; }
+.duo .intro { color: var(--muted); font-size: 18px; margin: 16px 0 22px; }
+.planche { margin: 0; background: var(--surface); border: 1px solid var(--line-strong); border-radius: 14px; overflow: hidden; }
+.planche svg { display: block; width: 100%; height: auto; }
+.frise-meteo { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-top: 1px solid var(--line); font: 500 12px/1 var(--mono); color: var(--dim); }
+.frise-meteo .piste { flex: 1; height: 4px; border-radius: 4px; background: var(--surface-2); position: relative; }
+.frise-meteo .piste b { position: absolute; left: 0; top: 0; bottom: 0; width: 22%; border-radius: 4px; background: var(--accent); animation: avance 12s linear infinite; }
+.frise-meteo .piste u { display: none; }
+@keyframes avance { from { width: 4%; } to { width: 96%; } }
+.profils { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-bottom: 22px; }
+.profil { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 16px 14px; display: grid; gap: 10px; align-content: start; }
+.profil.choisi { border-color: var(--accent); }
+.profil .nom { font: 700 17px/1.1 var(--mono); }
+.profil .sous { font: 500 12px/1 var(--mono); color: var(--dim); text-transform: uppercase; letter-spacing: .1em; }
+.profil .jauge { display: grid; gap: 4px; font: 500 12px/1.3 var(--mono); color: var(--muted); }
+.profil .barre { height: 6px; border-radius: 6px; background: var(--surface-2); overflow: hidden; }
+.profil .barre i { display: block; height: 100%; border-radius: 6px; background: var(--accent); }
+.profil .barre.temps i { background: var(--iso); }
+.cases.trois { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cases.quatre { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.ligne-temps { margin: 0 0 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px 8px; }
+.ligne-temps svg { display: block; width: 100%; height: auto; }
+.ligne-temps svg text { font-family: var(--mono); }
+.tableau-route { width: 100%; margin-top: 14px; border-collapse: collapse; font: 500 13px/1.3 var(--mono); font-variant-numeric: tabular-nums; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.tableau-route th { text-align: right; font-weight: 600; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); padding: 9px 10px; border-bottom: 1px solid var(--line); }
+.tableau-route td { text-align: right; padding: 8px 10px; color: var(--muted); border-bottom: 1px solid var(--line); }
+.tableau-route th:first-child, .tableau-route td:first-child { text-align: left; }
+.tableau-route tr.vire td { color: var(--fg); background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.tableau-route tr:last-child td { border-bottom: 0; }
+@media (max-width: 960px) {
+  .duo, .duo.inverse { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .profils { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cases.trois, .cases.quatre { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .profils, .cases.trois, .cases.quatre { grid-template-columns: minmax(0, 1fr); }
+  .tableau-route { font-size: 11.5px; }
+  .tableau-route th, .tableau-route td { padding: 7px 6px; }
+}
+
+/* page Sparring Skipper */
+.badge-ss { display: inline-block; font: 600 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--on-accent); background: var(--accent); padding: 6px 9px; border-radius: 5px; }
+.hero h1 { margin-top: 16px; }
+.hero .chapeau b { color: var(--fg); font-weight: 600; }
+.bulletin { margin: 0; background: var(--surface); border: 1px solid var(--line-strong); border-radius: 14px; padding: 22px 24px; display: grid; gap: 12px; box-shadow: 0 30px 80px -40px rgb(0 0 0 / .6); }
+.b-tete { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font: 600 12px/1.3 var(--mono); color: var(--dim); text-transform: uppercase; letter-spacing: .08em; }
+.b-verdict { background: color-mix(in srgb, var(--accent) 10%, transparent); border-left: 3px solid var(--accent); border-radius: 6px; padding: 12px 14px; display: grid; gap: 4px; }
+.b-verdict b { font: 700 19px/1.25 var(--mono); }
+.b-verdict span { color: var(--muted); font-size: 15px; }
+.b-ligne { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--line); padding-bottom: 8px; font-size: 15px; color: var(--muted); }
+.b-ligne b { font: 600 15px/1.3 var(--mono); color: var(--fg); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 4px; }
+.b-ligne b u { text-decoration: none; }
+.b-ligne .etoiles { text-decoration: none; color: var(--accent); letter-spacing: 2px; }
+.b-ligne .etoiles i { font-style: normal; color: var(--surface-2); }
+.b-pied { font: 500 12px/1.4 var(--mono); color: var(--dim); }
+.chaine { list-style: none; margin: 0 0 22px; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; counter-reset: c; }
+.chaine li { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 14px 16px; display: grid; gap: 6px; align-content: start; }
+.chaine li:not(:last-child)::after { content: "→"; position: absolute; right: -10px; top: 18px; font: 700 14px/1 var(--mono); color: var(--accent); background: var(--bg); padding: 2px 0; z-index: 1; }
+.chaine .n { font: 700 12px/1 var(--mono); color: var(--on-accent); background: var(--accent); width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; }
+.chaine b { font: 600 14.5px/1.3 var(--mono); }
+.chaine li > span:last-child { color: var(--muted); font-size: 14px; line-height: 1.45; }
+.chaine li:nth-child(4) { border-color: var(--accent); }
+.a-trous { margin: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 16px; align-items: center; }
+.a-trous-l { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; display: grid; gap: 8px; }
+.a-trous-l .lib { font: 600 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+.a-trous-l p { font-size: 17px; }
+.a-trous code { font: 600 14px/1 var(--mono); color: var(--iso); background: var(--surface-2); padding: 3px 6px; border-radius: 5px; }
+.a-trous mark { font: 700 17px/1 var(--mono); color: var(--on-accent); background: var(--accent); padding: 2px 6px; border-radius: 5px; }
+.a-trous .fleche { font: 700 24px/1 var(--mono); color: var(--accent); }
+.niveaux3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.niveau { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; display: grid; gap: 8px; align-content: start; }
+.niveau b { font: 700 18px/1.2 var(--mono); }
+.niveau span { color: var(--muted); font-size: 15.5px; }
+.pages { display: flex; height: 70px; align-items: flex-end; margin-bottom: 8px; }
+.pages i { display: block; width: 46px; height: 62px; border-radius: 4px; background: var(--surface-2); border: 1px solid var(--line-strong); margin-left: -30px; box-shadow: -3px 3px 0 rgb(0 0 0 / .15); }
+.pages i:first-child { margin-left: 0; }
+.pages i:last-child { background: color-mix(in srgb, var(--accent) 18%, var(--surface-2)); }
+.deux-volets { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.volet-c { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: grid; align-content: start; }
+.volet-c > svg { display: block; width: 100%; height: auto; }
+.volet-c .txt { padding: 18px 22px 22px; }
+.volet-c h3 { font-size: 20px; margin-bottom: 10px; }
+.liste-c { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.liste-c li { display: grid; grid-template-columns: 18px 1fr; gap: 8px; color: var(--muted); }
+.liste-c li::before { content: "→"; font-family: var(--mono); color: var(--accent); }
+@media (max-width: 960px) {
+  .chaine { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .chaine li::after { display: none; }
+  .niveaux3, .deux-volets { grid-template-columns: minmax(0, 1fr); }
+  .a-trous { grid-template-columns: minmax(0, 1fr); }
+  .a-trous .fleche { transform: rotate(90deg); justify-self: center; }
+}
+
+/* appel final */
+.fin .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; padding-block: 64px; }
+.fin h2 { max-width: 18em; }
+.fin p { color: var(--muted); margin-top: 10px; }
+
+footer { border-top: 1px solid var(--line); color: var(--dim); font-size: 14px; }
+footer .wrap { padding-block: 34px 44px; display: grid; grid-template-columns: 1.2fr repeat(3, minmax(0, 1fr)); gap: 24px; }
+footer h4 { font: 600 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+footer a { text-decoration: none; }
+footer a:hover { color: var(--fg); }
+
+@media (max-width: 960px) {
+  nav.menu { display: none; }
+  nav.menu.ouvert { display: grid; position: absolute; top: 100%; left: 0; right: 0; gap: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  nav.menu.ouvert a { padding-block: 14px; border-top: 1px solid var(--line); }
+  .burger { display: inline-block; }
+  header.top .langue { display: none; }
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); gap: 34px; padding-block: 40px; }
+  .forts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .preuve .chiffres, .familles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .abord .wrap.grille { grid-template-columns: minmax(0, 1fr); }
+  footer .wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  body { font-size: 16px; }
+  header.top .btn-plein { display: none; }
+  .portes, .ss .volets, .forts { grid-template-columns: minmax(0, 1fr); }
+  section.bloc > .wrap { padding-block: 52px; }
+  .porte, .volet { padding: 22px; }
+  .instruments { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .instr.large { grid-column: span 2; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+/* page Télécharger — le téléchargement par clé du site actuel (sailaware.app, 14/09/2026), repris tel quel */
+.hero .wrap.dl-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+.dl-panel { background: var(--surface); border: 1px solid var(--line-strong); border-radius: 14px; padding: 24px; display: grid; gap: 14px; box-shadow: 0 30px 80px -40px rgb(0 0 0 / .6); }
+.dl-titre { font-size: 21px; }
+.dl-sub { color: var(--muted); font-size: 15.5px; }
+.dl-platforms { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.dl-os { display: inline-flex; align-items: center; justify-content: center; gap: 9px; font: 600 15px/1 var(--mono); color: var(--fg); background: var(--surface-2); border: 1px solid var(--line-strong); border-radius: 10px; padding: 14px 12px; cursor: pointer; }
+.dl-os:hover { border-color: var(--accent); }
+.dl-os[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.dl-avert { font: 500 13px/1.5 var(--mono); color: var(--c-heading); background: color-mix(in srgb, var(--c-heading) 10%, transparent); border-radius: 8px; padding: 10px 12px; }
+.dl-key { display: none; gap: 8px; }
+.dl-key.open { display: grid; }
+.dl-key-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
+.dl-key-row input { min-width: 0; font: 500 15px/1 var(--mono); letter-spacing: .04em; color: var(--fg); background: var(--bg); border: 1px solid var(--line-strong); border-radius: 8px; padding: 12px; }
+.dl-key-row input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.dl-msg { font: 500 13.5px/1.4 var(--mono); color: var(--muted); min-height: 1.4em; }
+.dl-msg.ok { color: var(--accent); }
+.dl-msg.err { color: #f87171; }
+.dl-target { font: 500 12.5px/1.4 var(--mono); color: var(--dim); }
+.dl-target b { color: var(--accent); }
+.dl-sans-cle { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; border-top: 1px solid var(--line); padding-top: 14px; font: 600 14px/1.3 var(--mono); }
+.dl-pied { font-size: 13.5px; color: var(--dim); }
+.dl-pied b { color: var(--muted); font-weight: 600; user-select: all; }
+.plateformes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.plateforme { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; display: grid; gap: 14px; align-content: start; }
+.pf-tete { display: flex; align-items: center; gap: 10px; color: var(--accent); }
+.pf-tete b { font: 700 19px/1 var(--mono); color: var(--fg); }
+.exig { margin: 0; display: grid; gap: 10px; }
+.exig div { display: grid; gap: 2px; }
+.exig dt { font: 600 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+.exig dd { margin: 0; color: var(--fg); font-size: 15.5px; }
+.pf-note { font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 12px; }
+.installs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.install { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; display: grid; gap: 14px; align-content: start; }
+.inst-titre { font: 700 18px/1 var(--mono); }
+.etapes { margin: 0; padding: 0; list-style: none; counter-reset: e; display: grid; gap: 9px; }
+.etapes li { counter-increment: e; display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; color: var(--muted); font-size: 15.5px; }
+.etapes li::before { content: counter(e); font: 700 12px/22px var(--mono); text-align: center; width: 22px; height: 22px; border-radius: 50%; color: var(--on-accent); background: var(--accent); }
+.dl-help { border: 1px solid var(--line); border-radius: 10px; background: var(--bg); }
+.dl-help summary { cursor: pointer; padding: 12px 14px; font: 600 13.5px/1.35 var(--mono); color: var(--fg); list-style: none; display: flex; justify-content: space-between; gap: 10px; }
+.dl-help summary::-webkit-details-marker { display: none; }
+.dl-help summary::after { content: "+"; color: var(--accent); }
+.dl-help[open] summary::after { content: "−"; }
+.dl-help p { padding: 0 14px 12px; color: var(--muted); font-size: 14.5px; }
+.dl-help .alt { color: var(--dim); font-size: 13.5px; }
+.dl-cmd { margin: 0 14px 12px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: center; background: var(--surface-2); border-radius: 8px; padding: 9px 10px; }
+.dl-cmd code { font: 500 12.5px/1.4 var(--mono); color: var(--iso); overflow-x: auto; white-space: nowrap; }
+.dl-copy { font: 600 12px/1 var(--mono); color: var(--fg); background: transparent; border: 1px solid var(--line-strong); border-radius: 6px; padding: 7px 10px; cursor: pointer; }
+.dl-copy.done { color: var(--on-accent); background: var(--accent); border-color: var(--accent); }
+.duo-dl { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+section.bloc > .wrap.duo-dl { padding-block: 72px; }
+.duo-dl h2 { margin-top: 12px; }
+.duo-dl .intro { color: var(--muted); font-size: 18px; margin-top: 14px; }
+.version { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; display: grid; gap: 12px; }
+.v-tete { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.v-tete b { font: 700 22px/1 var(--mono); color: var(--accent); }
+.v-tete span { font: 500 13px/1 var(--mono); color: var(--dim); }
+@media (max-width: 960px) {
+  .hero .wrap.dl-hero, .duo-dl, .installs { grid-template-columns: minmax(0, 1fr); }
+  .plateformes { grid-template-columns: minmax(0, 1fr); }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="marque" href="index.html"><img alt="" src="assets/logo.png">Sailaware</a>
+    <nav class="menu" id="menu" aria-label="Navigation principale" data-en-aria-label="Main navigation">
+      <a href="offshore.html">Offshore</a>
+      <a href="coastal.html">Coastal</a>
+      <a href="features.html" data-en="Features">Fonctionnalités</a>
+      <a href="routing.html" data-en="Routing">Le routage</a>
+      <a href="sparring-skipper.html">Sparring Skipper</a>
+      <a href="about.html" data-en="About">À propos</a>
+    </nav>
+    <div class="outils" style="display:flex;gap:10px;align-items:center">
+      <div class="pill-toggle" role="group" aria-label="Langue" data-en-aria-label="Language"><button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+      <button class="icon-btn theme-btn" type="button" aria-label="Basculer jour / nuit" data-en-aria-label="Switch day / night" title="Jour / Nuit" data-en-title="Day / Night"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+    </div>
+    <a class="btn btn-plein btn-petit" href="download.html#acces" data-en="Request access">Demander l'accès</a>
+    <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+  </div>
+</header>
+
+<main id="haut">
+<section class="hero">
+  <div class="wrap dl-hero">
+    <div>
+      <div class="eyebrow" data-en="Download">Télécharger</div>
+      <h1 data-en="Sailaware 0.3.42.<br><em>On Mac and on Windows.</em>">Sailaware 0.3.42.<br><em>Sur Mac et sur Windows.</em></h1>
+      <p class="chapeau" data-en="Sailaware is in private beta: access is by key. Got yours? Choose your system, enter it, and the download of the latest version starts.">Sailaware est en bêta privée : l'accès se fait par clé. Vous avez reçu la vôtre ? Choisissez votre système, saisissez-la, et le téléchargement de la dernière version démarre.</p>
+      <div class="faits"><span data-en="version of 25 October 2026">version du 25 octobre 2026</span><span data-en="built-in updates">mises à jour intégrées</span><span>français · English</span></div>
+    </div>
+
+    <!-- Téléchargement par clé : le mécanisme du site actuel, repris tel quel -->
+    <div class="dl-panel" id="telecharger">
+      <h2 class="dl-titre" data-en="Download the app">Télécharger l'application</h2>
+      <p class="dl-sub" data-en="Pick your platform, then enter your beta key to start downloading the latest build.">Choisissez votre système, puis saisissez votre clé bêta pour lancer le téléchargement de la dernière version.</p>
+      <div class="dl-platforms">
+        <button type="button" class="dl-os" data-os="mac" aria-pressed="false">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.417 2.2-1.11 2.98-.834.94-2.203 1.66-3.34 1.57-.14-1.11.42-2.29 1.09-3.02.76-.83 2.13-1.46 3.36-1.53zM20.94 17.02c-.53 1.23-.78 1.78-1.46 2.87-.95 1.53-2.29 3.43-3.95 3.44-1.47.02-1.85-.96-3.85-.95-2 .01-2.42.97-3.9.95-1.66-.01-2.93-1.72-3.88-3.25C1.36 15.9.9 11.1 2.46 8.6c1.11-1.77 2.86-2.81 4.5-2.81 1.67 0 2.72.97 4.1.97 1.34 0 2.15-.97 4.09-.97 1.46 0 3.01.8 4.11 2.17-3.61 1.98-3.02 7.14.68 9.06z"/></svg>
+          <span>macOS</span>
+        </button>
+        <button type="button" class="dl-os" data-os="win" aria-pressed="false">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5.1 10.4 4v7.6H3V5.1zM10.4 12.6V20L3 18.9v-6.3h7.4zM11.3 3.9 21 2.5v9.1h-9.7V3.9zM21 12.6v9.1l-9.7-1.4v-7.7H21z"/></svg>
+          <span>Windows</span>
+        </button>
+      </div>
+      <p class="dl-avert" id="dlAvert" hidden></p>
+      <div class="dl-key" id="dlKey">
+        <div class="dl-key-row">
+          <input type="text" id="dlKeyInput" autocomplete="off" spellcheck="false" placeholder="NAVAWAY-XXXX-XXXX-XXXX" aria-label="Clé bêta" data-en-aria-label="Beta key">
+          <button type="button" class="btn btn-plein" id="dlKeyBtn" data-en="Download">Télécharger</button>
+        </div>
+        <p class="dl-msg" id="dlMsg" role="status" aria-live="polite"></p>
+        <span class="dl-target" id="dlTarget"></span>
+      </div>
+      <div class="dl-sans-cle" id="acces">
+        <span data-en="No key yet?">Pas encore de clé ?</span>
+        <a class="btn btn-trait btn-petit" id="betaMail" href="#" data-en="Request access">Demander un accès</a>
+      </div>
+      <p class="dl-pied" data-en="The button opens your mail app to <b class='selectable'>alrter@gmail.com</b>, with a message ready: your system, your type of Mac, your sailing program and your boat.">Le bouton ouvre votre messagerie vers <b class="selectable">alrter@gmail.com</b>, avec un message prêt : votre système, votre type de Mac, votre programme de navigation et votre bateau.</p>
+    </div>
+  </div>
+</section>
+
+<section class="bloc" id="configuration">
+  <div class="wrap">
+    <div class="tete">
+      <div class="eyebrow" data-en="System requirements">Configuration requise</div>
+      <h2 data-en="What your computer needs.">Ce qu'il faut à votre ordinateur.</h2>
+    </div>
+    <div class="plateformes">
+      <article class="plateforme">
+        <div class="pf-tete"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.417 2.2-1.11 2.98-.834.94-2.203 1.66-3.34 1.57-.14-1.11.42-2.29 1.09-3.02.76-.83 2.13-1.46 3.36-1.53zM20.94 17.02c-.53 1.23-.78 1.78-1.46 2.87-.95 1.53-2.29 3.43-3.95 3.44-1.47.02-1.85-.96-3.85-.95-2 .01-2.42.97-3.9.95-1.66-.01-2.93-1.72-3.88-3.25C1.36 15.9.9 11.1 2.46 8.6c1.11-1.77 2.86-2.81 4.5-2.81 1.67 0 2.72.97 4.1.97 1.34 0 2.15-.97 4.09-.97 1.46 0 3.01.8 4.11 2.17-3.61 1.98-3.02 7.14.68 9.06z"/></svg><b>macOS</b></div>
+        <dl class="exig">
+          <div><dt data-en="Processor">Processeur</dt><dd data-en="Apple Silicon: M1, M2, M3, M4">Apple Silicon : M1, M2, M3, M4</dd></div>
+          <div><dt data-en="System">Système</dt><dd data-en="macOS 11 or later">macOS 11 ou plus récent</dd></div>
+          <div><dt data-en="File">Fichier</dt><dd data-en="a .dmg disk image">une image disque .dmg</dd></div>
+        </dl>
+        <p class="pf-note" data-en="An Intel Mac, that is any Mac bought before late 2020, cannot run Sailaware.">Un Mac Intel, donc tout Mac acheté avant fin 2020, ne peut pas exécuter Sailaware.</p>
+      </article>
+      <article class="plateforme">
+        <div class="pf-tete"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5.1 10.4 4v7.6H3V5.1zM10.4 12.6V20L3 18.9v-6.3h7.4zM11.3 3.9 21 2.5v9.1h-9.7V3.9zM21 12.6v9.1l-9.7-1.4v-7.7H21z"/></svg><b>Windows</b></div>
+        <dl class="exig">
+          <div><dt data-en="Processor">Processeur</dt><dd data-en="64-bit, Intel or AMD">64 bits, Intel ou AMD</dd></div>
+          <div><dt data-en="System">Système</dt><dd data-en="Windows 10 or 11">Windows 10 ou 11</dd></div>
+          <div><dt data-en="File">Fichier</dt><dd data-en="an .exe installer, no administrator rights needed">un installeur .exe, sans droits d'administrateur</dd></div>
+        </dl>
+        <p class="pf-note" data-en="Installation happens in your own user session, without asking for an administrator password.">L'installation se fait dans votre session, sans demander de mot de passe d'administrateur.</p>
+      </article>
+      <article class="plateforme">
+        <div class="pf-tete"><svg width="22" height="22" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 8 l 8 -3 l 10 3 l 8 -3 v 21 l -8 3 l -10 -3 l -8 3 z" opacity=".55"/><path d="M11 17 l 4 4 l 8 -9"/></svg><b data-en="On board">À bord</b></div>
+        <dl class="exig">
+          <div><dt>Internet</dt><dd data-en="for weather, charts and updates">pour la météo, les cartes et les mises à jour</dd></div>
+          <div><dt data-en="Offline">Hors ligne</dt><dd data-en="routing, instruments and alarms, once the charts and weather are downloaded">routage, instruments et alarmes, une fois les cartes et la météo téléchargées</dd></div>
+          <div><dt>Instruments</dt><dd data-en="NMEA 0183 over the boat's network (TCP)">NMEA 0183 par le réseau du bord (TCP)</dd></div>
+        </dl>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="bloc" id="installer">
+  <div class="wrap">
+    <div class="tete">
+      <div class="eyebrow" data-en="Install">Installer</div>
+      <h2 data-en="Three steps, and one message to know about the first time.">Trois gestes, et un message à connaître la première fois.</h2>
+      <p data-en="Sailaware is not yet signed by Apple or Microsoft. Your system therefore warns you the first time you open it: the app is safe, here is how to allow it.">Sailaware n'est pas encore signé par Apple ni par Microsoft. Votre système vous prévient donc à la première ouverture : l'application est saine, voici comment l'autoriser.</p>
+    </div>
+    <div class="installs">
+      <article class="install">
+        <b class="inst-titre" data-en="On Mac">Sur Mac</b>
+        <ol class="etapes">
+          <li data-en="Open the .dmg file and drag Sailaware into the Applications folder.">Ouvrez le fichier .dmg et glissez Sailaware dans le dossier Applications.</li>
+          <li data-en="Open Sailaware from the Applications folder.">Ouvrez Sailaware depuis le dossier Applications.</li>
+          <li data-en="Enter your key at first launch.">Saisissez votre clé au premier lancement.</li>
+        </ol>
+        <details class="dl-help" open>
+          <summary data-en="macOS says the app is “damaged”?">macOS affiche «&nbsp;endommagé&nbsp;» à l’ouverture&nbsp;?</summary>
+          <p data-en="macOS blocks unsigned apps downloaded from the web (the “damaged” message). The app is fine — here's how to allow it. First move Sailaware to your Applications folder, then paste this command into Terminal:">macOS bloque les apps non signées téléchargées sur Internet (message « endommagée »). L'application est saine : voici comment l'autoriser. Placez d'abord Sailaware dans le dossier Applications, puis collez cette commande dans le Terminal :</p>
+          <div class="dl-cmd"><code id="dlCmd">xattr -dr com.apple.quarantine "/Applications/Sailaware.app"</code><button type="button" class="dl-copy" id="dlCopy" data-en="Copy">Copier</button></div>
+          <p class="alt" data-en="Alternative: in the Applications folder, right-click Sailaware → Open → Open.">Autre méthode : dans le dossier Applications, faites un clic droit sur Sailaware, puis Ouvrir, puis Ouvrir.</p>
+        </details>
+      </article>
+      <article class="install">
+        <b class="inst-titre" data-en="On Windows">Sur Windows</b>
+        <ol class="etapes">
+          <li data-en="Run the .exe installer.">Lancez l'installeur .exe.</li>
+          <li data-en="Open Sailaware from the Start menu.">Ouvrez Sailaware depuis le menu Démarrer.</li>
+          <li data-en="Enter your key at first launch.">Saisissez votre clé au premier lancement.</li>
+        </ol>
+        <details class="dl-help" open>
+          <summary data-en="Windows shows “Windows protected your PC”?">Windows affiche «&nbsp;Windows a protégé votre ordinateur&nbsp;»&nbsp;?</summary>
+          <p data-en="This is Windows' warning for unsigned installers. Click “More info”, then “Run anyway”.">C'est l'avertissement de Windows pour les installeurs non signés. Cliquez sur « Informations complémentaires », puis sur « Exécuter quand même ».</p>
+        </details>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="bloc" id="nouveautes">
+  <div class="wrap duo-dl">
+    <div>
+      <div class="eyebrow" data-en="Updates">Les mises à jour</div>
+      <h2 data-en="Once installed, Sailaware keeps itself up to date.">Une fois installé, Sailaware se tient à jour.</h2>
+      <p class="intro" data-en="The app looks for a new version at launch, then every six hours. It offers it to you, and only installs it with your consent.">L'application cherche une nouvelle version à son lancement, puis toutes les six heures. Elle vous la propose, et ne l'installe qu'avec votre accord.</p>
+    </div>
+    <div class="version">
+      <div class="v-tete"><b>0.3.42</b><span data-en="25 October 2026">25 octobre 2026</span></div>
+      <ul class="liste-c">
+        <li data-en="The new routing engine: passage times held to within a minute.">Le nouveau moteur de routage : des heures de passage tenues à moins d'une minute.</li>
+        <li data-en="Instruments redone on a grid, laid out as you like.">Les instruments refaits sur une grille, disposée à votre goût.</li>
+        <li data-en="Course marks: a buoy to leave to port or starboard.">Les marques de parcours : une bouée à laisser à bâbord ou à tribord.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><a class="marque" href="index.html" style="font-size:16px"><img alt="" src="assets/logo.png" style="width:24px;height:24px;border-radius:6px">Sailaware</a><p style="margin-top:12px" data-en="Navigation software for macOS and Windows.">Logiciel de navigation pour macOS et Windows.</p></div>
+    <div><h4 data-en="Explore">Naviguer</h4><ul><li><a href="offshore.html">Offshore</a></li><li><a href="coastal.html">Coastal</a></li><li><a href="features.html" data-en="Features">Fonctionnalités</a></li><li><a href="routing.html" data-en="Routing">Le routage</a></li></ul></div>
+    <div><h4 data-en="Get started">Commencer</h4><ul><li><a href="download.html#acces" data-en="Request access">Demander l'accès</a></li><li><a href="download.html" data-en="Download">Télécharger</a></li><li><a href="sparring-skipper.html">Sparring Skipper</a></li></ul></div>
+    <div><h4>Sailaware</h4><ul><li><a href="about.html" data-en="About and contact">À propos et contact</a></li><li class="reglages"><div class="pill-toggle" role="group" aria-label="Langue" data-en-aria-label="Language"><button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div><button class="icon-btn theme-btn" type="button" aria-label="Basculer jour / nuit" data-en-aria-label="Switch day / night"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button></li></ul></div>
+  </div>
+</footer>
+
+<script>
+/* Le téléchargement par clé du site précédent, repris tel quel, dans les deux langues. */
+(function () {
+  // Textes du téléchargement : ceux du site précédent (son I18N.fr et son I18N.en), mot pour mot.
+  var T = {
+    fr: {
+      "dl.checking": "Vérification de la clé…",
+      "dl.ok": "Clé valide — téléchargement en cours…",
+      "dl.invalid": "Clé non reconnue. Vérifiez la saisie ou demandez un accès.",
+      "dl.empty": "Saisissez votre clé bêta pour continuer.",
+      "dl.avertMac": "⚠️ Mac Apple Silicon uniquement (M1, M2, M3, M4), macOS 11 ou plus récent. Un Mac Intel — donc tout Mac acheté avant fin 2020 — ne peut pas exécuter cette application.",
+      "dl.targetMac": "Cible : macOS (Apple Silicon · .dmg)",
+      "dl.targetWin": "Cible : Windows (installeur .exe)",
+      "dl.help.copy": "Copier",
+      "dl.help.copied": "Copié !"
+    },
+    en: {
+      "dl.checking": "Checking key…",
+      "dl.ok": "Valid key — download starting…",
+      "dl.invalid": "Key not recognized. Check your entry or request access.",
+      "dl.empty": "Enter your beta key to continue.",
+      "dl.avertMac": "⚠️ Apple Silicon Macs only (M1, M2, M3, M4), macOS 11 or later. An Intel Mac — that is, any Mac bought before late 2020 — cannot run this application.",
+      "dl.targetMac": "Target: macOS (Apple Silicon · .dmg)",
+      "dl.targetWin": "Target: Windows (installer .exe)",
+      "dl.help.copy": "Copy",
+      "dl.help.copied": "Copied!"
+    }
+  };
+  function t(k) { return (T[SW.lang()] || T.fr)[k] || k; }
+
+  // courriel de demande d'accès — sujet et corps du site précédent, dans les deux langues
+  function mailAcces() {
+    var mail = document.getElementById("betaMail"); if (!mail) return;
+    var en = SW.lang() === "en";
+    var subj = en ? "Sailaware — beta access request" : "Sailaware — demande d'accès bêta";
+    var body = en
+      ? "Hello,\n\nI'd like to join the Sailaware beta.\n\n- Platform (macOS / Windows): \n- If Mac: Apple Silicon (M1/M2/M3/M4) or Intel? \n- Sailing program: \n- Boat: \n\nThanks!"
+      : "Bonjour,\n\nJe souhaite rejoindre la bêta de Sailaware.\n\n- Système (macOS / Windows) : \n- Si Mac : Apple Silicon (M1/M2/M3/M4) ou Intel ? \n- Programme de navigation : \n- Bateau : \n\nMerci !";
+    mail.setAttribute("href", "mailto:alrter@gmail.com?subject=" + encodeURIComponent(subj) + "&body=" + encodeURIComponent(body));
+  }
+  mailAcces();
+
+  /* ---------- Téléchargement gated par clé bêta (repris du site actuel) ----------
+     La validation est côté client : une friction, pas un verrou ; le vrai verrou est l'écran de clé DANS l'application.
+     Seules les empreintes SHA-256 sont embarquées, jamais les clés : les 100 du site précédent, identiques à celles de
+     l'application (packages/app/src/assets/beta-key-hashes.json). */
+  var RELEASE_BASE = "https://github.com/alrter-dev/Sailaware-Releases/releases/latest/download/";
+  var ASSET = { mac: "Sailaware-macos-arm64.dmg", win: "Sailaware-windows-x64-setup.exe" };
+  var HASHES = ["cbed0fc2335a87c2897cf2943ce294c1a25ca5ecf33b7589f81e21398736fe7f","be05b79eb487a34132cd61d82cc2adddb62f32ff7a7d49a4b6912e31646ff593","f87bb0ae88467f24a560a1b23788155c19db6299fe2cbdb1e7388f690ddfb7e0","38846958a106e36afa943458141d058a6b054fe5315baba76860e7c01f5d937f","01f8722551aed17722049b3ba9ee1ce27d30e6deda654538253f92605842362b","6174388691506d9ef69ffb061ab8bbd5d88cec06e0ba249df99d7c9e377ba371","c2345ce57b0e4c7daad2420d0525c3bb273cab6a244d9af9b5dbe57d0093a836","76f5d3696f30824d5c16130699ca2be8158b83beba45edb52e9779955c45456e","fa30e692dcfd81ca8be5c97eeaba676f6359e55b21ec419bf88acd5752c2c068","bd354d5dffbf8db6b62e4ad93f7d09c183cc2491723dd1070b88d1fe2b721fd0","27b6a8f147db27dce0b474caf7d03e510886aaccf17d3cd477ec49d755f0578c","fba691f8941a1bccf1cd74bfc2a0c1e08ffd789ad9f7f67c5af1ba523d117036","02fec99e115261277f8ec1e7ea0903cd2e874577c47f1baaaae449341fa06990","dc4f2bae7d6314acd5f8128d84bd1d1c255ebb00e273f7f6b844dc9b769e584a","5a759dcd14538194c2c41d36e606bce7eb0a22bc86068ab87d60a554c04632c7","d06abd887e4947d2faf60e62c8b41d83b44a204cdbd7bd9aa24b3f53b4668c21","f5279296a9132710b3a5c3f2dc5bcd5eeb71a08316840ea5bf3c0f0881ec11b5","04b04e84ce390349fa59cb9eec4427f1b78e5c416d5f0ff49ecbf84838faa15f","eaf8fadbccf0f8bbf37da88e59d68048f86a6b8f3ddcd62aced9327e26879e06","a0b6b160cedd664696f5f5c167e8ea2cbb733d00c39a18e445dacd503c938d1e","5e6485112e7a415ee3a346cdeafde077751e77f6eca512caba532441e1f72656","e77ff16ab29290b62360c924a9f5c7e146924e4ad56197cc4475d5e3b7c86d65","2a33f157b9b25eb24d34a8197a1aa4e5a1f1731fbf681b0697b1815eb4815f06","ba78e819f9d4d29731b5b670a730693664429ba256927ba1a5319c6e93e4328e","240466b2abdc465b2facbaf2246ab3a3465b7d963a7ff34e919ffd8858a3dcf9","bf99ddd377674dcedd9055bc418a70e44b9950ccde0f3c73d4ef89442745f70e","2ff271c81c0bb61252a30b1f3ce7fe6bcacc3999fe55bfb651d868a8652aeaf8","98855f8959436f4853e5fac946c70c710f1a2d4adf168fdc9c84538e169d8df0","f56078b5cd46e83607a34dc14380fae212fcab301182d078fa87ae376edaa4f1","df9e7e665a6ac129cae01094b082c830cedc7647dcdf1f00c5a2f823f1912d7e","17fffdd40ee47f133c1703079f2937f696ee43903d65be936bb547bc6de31408","b3a2a8d25e9af1169a4c85e5a106586fe9a724e58143b2913af2333b3fab6ce1","7a4ac573aa72fd4ba8e051b88ed439feaf543bc4724f50c5330f0f4ee6f423e3","3d21a62215162b488e54fc47ec5fe502bd903ef889c57df94114f3f4eb27ddca","48cf3c2bc16fbfcbcecd63c960d54ca062d65b0b78a2abfd39b50c6eb3a54d1e","80901f234ff7cf1f5924d6d40df437fb2a21b6e7b0d1c7e12281435efef44996","b7e24916bc388c3eedc2b9e8b44d7d4c8909f39efe94534a18ca61500c49a24a","530dd93c4776b1d784b5c28dbb1171e01ff30cf6ebbc518ab336494b31ae1f0b","4f2af62cc5a3048313df5415da4efcb15fa696ad11e8248df5858012dad01b9d","2df2f5731e1780d63357137ce1130ed6dd140e806e313d44c8aed0e8d6b50e3a","4e769804fb2e96ec9d1ad81f90944a8f2ed309b9b9ef5ed4fd57ed3fc70bb427","0abdbc7d7b1e1ac51bab90c50261b54aa60055ef9698e9950cf5bbde2483ca57","5d772e18dd4b5aa3164c44081b3fcffd59a8d14a6746d80c7c17ac1621f68dcb","9919342287a2c31347a2ac595c82cd08953e402fe4fa96e79c62c49c5d5b9da8","733ae00aed1ed51baf2f3a60d569e378c40e36e6e2d0bf0bb2ae906d3c3194f4","7e6d4bb8e4b1da9c5e425dea718481ac7cb00be5c8c2c07d9e0f7ff0a56b0784","c51b6fe5f737f797ece2510334279f7103b3eed0eb50b58bbebe54f924a268d5","c0005d474e4792c20d54648fc1081383390f2b602fac034b605c7f7791de01ba","6b70d48e7233f1066e2eda5460948d444027ec5dcd3658b21ed0366dedb93d3b","2a000fd14df5e7f39df11a3e4ab6b515f3309dfce69139f4a15a0d67d593566f","2ff5d0fdaa2cf5047ed3e6047260fe6d3d8abb4b9f6fab2bd151468dcae317c9","620850e70e51a96940aca585ae2484cd4b32a6331a987a7f360d29eb3a16a5a4","dc07b3eabf3ba71f97cfeeeb63a9a5814a45276d60689f21509511e5f237dd45","0a6ce8cca29124708f4acdcc3a3e06d6f93ac73aca6d48ef89034c84633c5961","d43d27b21ef97012930e4950cfa4dd989039756d904a55264c4de19611e2b076","6563691abb98b5505be14d5f815ee640dea28d4c9f610987d45559911b576443","0294be081f7536044394d0c5aad25789b8b6b17f31c7cafe807854a849c374cc","bcdbf184f3263b9aa68ea959bf41105c37c21de1c459fb9824c0042d4c7f9f87","f546fd342f078e1a01d5f630cece3ed6a854b6fd0f3938340c4ae3c28a9f2f00","2c0989f3d391ef9f18f0d8f4adcbe7f1fe380048a26adc0bfd601e30f5d31a52","0f130cf6bc572e6ea239683d11e13df5844837158f4811cdf2d84c7d8f373889","761b454a1b6b8ec76e78ad33ae4b9980657d2e047955ddcf07a9c43d8a03bc14","e509cdc8158a384ad99c25f9f29a42a8fdbe1ed0cb691aa35be15a6d9a711272","23424e196eaf0f2a3ee33a6052b92c428a181696ee36bc4b2681b8e52ddb2751","1cb7072da3cefb99ed28ea9d104263e6e60c861d9c786e54fed28ac335f779b8","746bf99dff837cfdb0b770ed377f4bff17fc0139abfbd9fab279a73c5eecf49a","0b8100e8480f40bfd0ae05fd48b435fba9c8b02274ea49ba5681872ca0aa5e06","aff552adee63489a07a32382902ff05e5018963a8bf94c479392177510357673","ba1f326312d8383da12adcaca209f0094c03e9383e4a2743bbe52071ecd49e89","b458d0285f707ecf67e7feac5b7198c69fa30d8e0b498eec5f8e5ea65249c7e3","b3c653bf0c7107660df2479ad73504fbf311df7bfa62970121d28e1bad77163d","0da54e0544128271fca3367d0e47c67ac875c055154023b5b88e96ea365e3fff","251278c21087fb17cf1dadb842b96d367a354243249677fe5afef9a4b14b8688","a7e2f873f43b01dd83e186957304f9c73b4f4e564db42779b1ea70c0fb269870","c88224b3aed6cce689b4352ae320fa4d4258c8fcf0fa1f2fd96b29ed2f123ca8","03f457e9a37033b98e3fb4da49c864f801daea13e7f56994b37f4c594718c281","1f7a99be25ca7ef4d2882464d2a1cf643d916597fd492643e1150547dc7b0525","840930c158c09287055e4863487342b408279da5342239e86b53261921210f39","3e1a75fdef586a54642542c952ae2d0cb056d0500d8716eb5009e9b23b550175","75ad184f0d3b33eeb1c763adb9b8db83c2487c03e0ee7b6547766a7d5d6432a6","761b344f5e4e7f54c07a501bc71a31c105cccc08d11de14abfd321c224ada2ac","e94d6fdb7ce16b8364d631eadabe4460fc4bad4ccc8ecb3d25e163e7fb87a8b7","4d89da5669852617aeb9af631debd43a18aaf848aae799324710076a06332b43","7ffac2479c6f04930da3ff1d93ab9473c4e98fadcbd7b63e0add623dd4cb3f89","66884054089c0ac3d8fe531d498465e9f19f0ee85cb472768e8b29633e62f28e","507dd9d25872bc15ee0f6552d98c64304a629c60394b655739bba6d4be0970d5","df02b64a68de7585b21c85e14fd7991f61049bcc5ce3d41dee5780cc3002ceec","be5e18362ba48fa88e9d92916a7871e29e0b55c7343a739db072dbd0e840c567","6954cc7ce75cf76050dd5070c1afbb19399a96de15a54b9c3c45382977c0fabf","1d258eb2de0bcb8fe0b1c6189b90d951546de6f98ea2bdf5e5bf0396775eeb30","8c90825c97953e1a1ebd59ef8b21fe1c4f4c5c2d2d3838907da8a757c84ca53e","91d916bf20302f4fe23269fbcb7db735f70f990eadc8c006ceb47fd06d76c038","69a53b33349c771e32849b3db944ae5509b2225e67be72d7a7dc9895ea41cf9f","4c9a3f8617e2f76c937b5ad45f75a582e3eb99815055e7100a6fe1e3b4baaad1","5d3d3d1925bc92f1f131b84624cce70e66c31929669fe401dadb9daf8d6adf65","4748170772d7bd555b992f6555e95e7347bd1d8b66fa60d6c884297b707bb75e","c4c31825e4111a321b8e1b31a755cd1cdff4aeef82ef90e8eb837cf293d08f94","97cee76d137a75cf7f9bbaba031e3e7d470840742bacea89168ee475958bbb4e","1569d0f3883a040955124e9b1d1a761e375be4489078d514c6073a2e757d890d","008f81f96d31f08dee7f6a5ea13bdbd76b61d1afbf19ca0b72be20e527e6ff41"];
+  var selectedOs = null;
+  var keyBox = document.getElementById("dlKey"), input = document.getElementById("dlKeyInput"), btn = document.getElementById("dlKeyBtn");
+  var msg = document.getElementById("dlMsg"), target = document.getElementById("dlTarget");
+
+  // Miroir EXACT de normalizeBetaKey() de l'application (packages/app/src/lib/betaKey.ts).
+  function normalizeKey(raw) {
+    var cleaned = (raw || "").trim().toUpperCase().replace(/\s+/g, "");
+    var body = cleaned.replace(/^NAVAWAY-?/, "").replace(/-/g, "");
+    if (!/^[A-Z0-9]+$/.test(body)) return null;
+    if (body.length !== 12) return null;
+    var segs = [];
+    for (var i = 0; i < 3; i++) segs.push(body.slice(i * 4, (i + 1) * 4));
+    return "NAVAWAY-" + segs.join("-");
+  }
+  function sha256Hex(str) {
+    var enc = new TextEncoder().encode(str);
+    return crypto.subtle.digest("SHA-256", enc).then(function (buf) {
+      var b = new Uint8Array(buf), hex = "";
+      for (var i = 0; i < b.length; i++) hex += b[i].toString(16).padStart(2, "0");
+      return hex;
+    });
+  }
+  function setMsg(txt, cls) { msg.textContent = txt || ""; msg.className = "dl-msg" + (cls ? " " + cls : ""); }
+  function refreshTarget() {
+    var avert = document.getElementById("dlAvert");
+    if (!selectedOs) { target.textContent = ""; if (avert) avert.hidden = true; return; }
+    target.innerHTML = "<b>&#8595;</b> " + (selectedOs === "mac" ? t("dl.targetMac") : t("dl.targetWin"));
+    if (avert) { avert.hidden = selectedOs !== "mac"; if (selectedOs === "mac") avert.textContent = t("dl.avertMac"); }
+  }
+  document.querySelectorAll(".dl-os").forEach(function (b) {
+    b.addEventListener("click", function () {
+      selectedOs = b.getAttribute("data-os");
+      document.querySelectorAll(".dl-os").forEach(function (o) { o.setAttribute("aria-pressed", String(o === b)); });
+      keyBox.classList.add("open"); setMsg("", ""); refreshTarget(); input.focus();
+    });
+  });
+  // Copier la commande Terminal
+  var copyBtn = document.getElementById("dlCopy"), cmdEl = document.getElementById("dlCmd");
+  function fallbackCopy(text) {
+    try { var ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove(); } catch (e) {}
+  }
+  if (copyBtn && cmdEl) copyBtn.addEventListener("click", function () {
+    var text = cmdEl.textContent;
+    var done = function () { copyBtn.classList.add("done"); copyBtn.textContent = t("dl.help.copied"); setTimeout(function () { copyBtn.classList.remove("done"); copyBtn.textContent = t("dl.help.copy"); }, 1800); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+    else { fallbackCopy(text); done(); }
+  });
+  function attempt() {
+    if (!selectedOs) return;
+    var raw = (input.value || "").trim();
+    if (!raw) { setMsg(t("dl.empty"), "err"); input.focus(); return; }
+    var norm = normalizeKey(raw);
+    if (!norm) { setMsg(t("dl.invalid"), "err"); input.focus(); return; }
+    setMsg(t("dl.checking"), ""); btn.disabled = true;
+    sha256Hex(norm).then(function (hex) {
+      btn.disabled = false;
+      if (HASHES.indexOf(hex) !== -1) {
+        setMsg(t("dl.ok"), "ok");
+        var a = document.createElement("a"); a.href = RELEASE_BASE + ASSET[selectedOs]; a.rel = "noopener";
+        document.body.appendChild(a); a.click(); a.remove();
+      } else setMsg(t("dl.invalid"), "err");
+    }).catch(function () { btn.disabled = false; setMsg(t("dl.invalid"), "err"); });
+  }
+  btn.addEventListener("click", attempt);
+  input.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); attempt(); } });
+  document.addEventListener("langue", function () { refreshTarget(); mailAcces(); setMsg("", ""); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title data-en="Sailaware — routing">Sailaware — le routage</title>
+<meta name="description" content="Le moteur de routage de Sailaware : ses principes, ses subtilités et la preuve sur 161 essais, 20 trajets réels, du chenal breton à la traversée du Pacifique." data-en-content="Sailaware's routing engine: its principles, its subtleties and the proof over 161 tests, 20 real passages, from Breton channels to crossing the Pacific.">
+<meta name="theme-color" content="#0E1822">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23bef264'/%3E%3Cg fill='none' stroke='%230E1822' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' transform='scale(0.72) translate(4.6 4.6)'%3E%3Cpath d='M2 20a2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1'/%3E%3Cpath d='M4 18 2 6l10 6 10-6-2 12'/%3E%3C/g%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sailaware — le routage">
+<meta property="og:description" content="Le moteur de routage de Sailaware : ses principes, ses subtilités et la preuve sur 161 essais, 20 trajets réels, du chenal breton à la traversée du Pacifique.">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:locale:alternate" content="en_US">
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js"></script>
+<script src="assets/scenes.js"></script>
+<script src="assets/resultats.js"></script>
+<style>
+/* page Offshore */
+.duo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 48px; align-items: center; }
+section.bloc > .wrap.duo { padding-block: 72px; }
+.duo.inverse { grid-template-columns: minmax(0, .9fr) minmax(0, 1.2fr); }
+.duo h2 { margin-top: 12px; }
+.duo .intro { color: var(--muted); font-size: 18px; margin: 16px 0 22px; }
+.planche { margin: 0; background: var(--surface); border: 1px solid var(--line-strong); border-radius: 14px; overflow: hidden; }
+.planche svg { display: block; width: 100%; height: auto; }
+.frise-meteo { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-top: 1px solid var(--line); font: 500 12px/1 var(--mono); color: var(--dim); }
+.frise-meteo .piste { flex: 1; height: 4px; border-radius: 4px; background: var(--surface-2); position: relative; }
+.frise-meteo .piste b { position: absolute; left: 0; top: 0; bottom: 0; width: 22%; border-radius: 4px; background: var(--accent); animation: avance 12s linear infinite; }
+.frise-meteo .piste u { display: none; }
+@keyframes avance { from { width: 4%; } to { width: 96%; } }
+.profils { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-bottom: 22px; }
+.profil { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 16px 14px; display: grid; gap: 10px; align-content: start; }
+.profil.choisi { border-color: var(--accent); }
+.profil .nom { font: 700 17px/1.1 var(--mono); }
+.profil .sous { font: 500 12px/1 var(--mono); color: var(--dim); text-transform: uppercase; letter-spacing: .1em; }
+.profil .jauge { display: grid; gap: 4px; font: 500 12px/1.3 var(--mono); color: var(--muted); }
+.profil .barre { height: 6px; border-radius: 6px; background: var(--surface-2); overflow: hidden; }
+.profil .barre i { display: block; height: 100%; border-radius: 6px; background: var(--accent); }
+.profil .barre.temps i { background: var(--iso); }
+.cases.trois { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cases.quatre { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.ligne-temps { margin: 0 0 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px 8px; }
+.ligne-temps svg { display: block; width: 100%; height: auto; }
+.ligne-temps svg text { font-family: var(--mono); }
+.tableau-route { width: 100%; margin-top: 14px; border-collapse: collapse; font: 500 13px/1.3 var(--mono); font-variant-numeric: tabular-nums; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.tableau-route th { text-align: right; font-weight: 600; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); padding: 9px 10px; border-bottom: 1px solid var(--line); }
+.tableau-route td { text-align: right; padding: 8px 10px; color: var(--muted); border-bottom: 1px solid var(--line); }
+.tableau-route th:first-child, .tableau-route td:first-child { text-align: left; }
+.tableau-route tr.vire td { color: var(--fg); background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.tableau-route tr:last-child td { border-bottom: 0; }
+@media (max-width: 960px) {
+  .duo, .duo.inverse { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .profils { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cases.trois, .cases.quatre { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .profils, .cases.trois, .cases.quatre { grid-template-columns: minmax(0, 1fr); }
+  .tableau-route { font-size: 11.5px; }
+  .tableau-route th, .tableau-route td { padding: 7px 6px; }
+}
+
+/* page Le routage — les résultats à l'écran */
+.filtres { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 16px; }
+.filtres button { font: 600 12.5px/1 var(--mono); color: var(--muted); background: transparent; border: 1px solid var(--line-strong); border-radius: 999px; padding: 8px 12px; cursor: pointer; }
+.filtres button[aria-pressed="true"] { color: var(--on-accent); background: var(--accent); border-color: var(--accent); }
+.trajets { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.trajet { text-align: left; font: inherit; color: inherit; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; cursor: pointer; padding: 0; display: grid; align-content: start; }
+.trajet:hover, .trajet[aria-expanded="true"] { border-color: var(--accent); }
+.trajet .vig { aspect-ratio: 760 / 420; overflow: hidden; background: var(--sea); }
+.trajet .vig svg, .detail-carte svg { display: block; width: 100%; height: 100%; object-fit: cover; }
+.trajet .txt { padding: 10px 12px 12px; display: grid; gap: 4px; }
+.trajet b { font: 600 14px/1.25 var(--mono); }
+.trajet span { font: 500 12px/1.3 var(--mono); color: var(--dim); }
+svg .mer { fill: var(--sea); }
+svg .terre { fill: var(--land); stroke: var(--coast); stroke-width: 1; }
+svg .rt { fill: none; stroke: var(--route); stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; opacity: .35; }
+svg .rt.vue { opacity: 1; stroke-width: 3.2; }
+svg .dep { fill: var(--fg); }
+svg .arr { fill: none; stroke: var(--route); stroke-width: 2.5; }
+.trajet svg .rt { opacity: .8; stroke-width: 3; }
+.detail { margin-top: 18px; background: var(--surface); border: 1px solid var(--line-strong); border-radius: 14px; padding: 20px; }
+.detail-tete { display: flex; justify-content: space-between; align-items: start; gap: 12px; margin-bottom: 14px; }
+.detail-tete h3 { font-size: 22px; margin-top: 4px; }
+.detail-corps { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.detail-carte { margin: 0; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); }
+.detail-table .tableau-route { margin-top: 0; }
+.detail-table tr { cursor: pointer; }
+.detail-table tr.vue td { color: var(--fg); background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.detail-table td small { display: block; color: var(--dim); font-size: 11px; }
+/* page Le routage — les principes */
+.etapes { display: grid; gap: 16px; }
+.etape { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 26px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 24px; }
+.etape:nth-child(even) svg { order: 2; }
+.etape svg { display: block; width: 100%; height: auto; background: var(--sea); border-radius: 10px; }
+.etape .num { font: 700 13px/1 var(--mono); color: var(--accent); letter-spacing: .12em; }
+.etape h3 { font-size: 20px; margin: 8px 0 10px; }
+.etape p { color: var(--muted); font-size: 16px; }
+.etape p + p { margin-top: 8px; }
+.subtilites { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 22px; }
+.subtilite { border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; }
+.subtilite b { display: block; font: 600 15.5px/1.35 var(--mono); margin-bottom: 4px; }
+.subtilite span { color: var(--muted); font-size: 15px; line-height: 1.5; }
+@media (max-width: 960px) {
+  .trajets { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .detail-corps, .etape, .subtilites { grid-template-columns: minmax(0, 1fr); }
+  .etape:nth-child(even) svg { order: 0; }
+}
+@media (max-width: 620px) { .detail { padding: 14px; } .detail-table { overflow-x: auto; } }
+
+/* appel final */
+.fin .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; padding-block: 64px; }
+.fin h2 { max-width: 18em; }
+.fin p { color: var(--muted); margin-top: 10px; }
+
+footer { border-top: 1px solid var(--line); color: var(--dim); font-size: 14px; }
+footer .wrap { padding-block: 34px 44px; display: grid; grid-template-columns: 1.2fr repeat(3, minmax(0, 1fr)); gap: 24px; }
+footer h4 { font: 600 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+footer a { text-decoration: none; }
+footer a:hover { color: var(--fg); }
+
+@media (max-width: 960px) {
+  nav.menu { display: none; }
+  nav.menu.ouvert { display: grid; position: absolute; top: 100%; left: 0; right: 0; gap: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  nav.menu.ouvert a { padding-block: 14px; border-top: 1px solid var(--line); }
+  .burger { display: inline-block; }
+  header.top .langue { display: none; }
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); gap: 34px; padding-block: 40px; }
+  .forts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .preuve .chiffres, .familles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .abord .wrap.grille { grid-template-columns: minmax(0, 1fr); }
+  footer .wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  body { font-size: 16px; }
+  header.top .btn-plein { display: none; }
+  .portes, .ss .volets, .forts { grid-template-columns: minmax(0, 1fr); }
+  section.bloc > .wrap { padding-block: 52px; }
+  .porte, .volet { padding: 22px; }
+  .instruments { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .instr.large { grid-column: span 2; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="marque" href="index.html"><img alt="" src="assets/logo.png">Sailaware</a>
+    <nav class="menu" id="menu" aria-label="Navigation principale" data-en-aria-label="Main navigation">
+      <a href="offshore.html">Offshore</a>
+      <a href="coastal.html">Coastal</a>
+      <a href="features.html" data-en="Features">Fonctionnalités</a>
+      <a href="routing.html" aria-current="page" data-en="Routing">Le routage</a>
+      <a href="sparring-skipper.html">Sparring Skipper</a>
+      <a href="about.html" data-en="About">À propos</a>
+    </nav>
+    <div class="outils" style="display:flex;gap:10px;align-items:center">
+      <div class="pill-toggle" role="group" aria-label="Langue" data-en-aria-label="Language"><button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+      <button class="icon-btn theme-btn" type="button" aria-label="Basculer jour / nuit" data-en-aria-label="Switch day / night" title="Jour / Nuit" data-en-title="Day / Night"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+    </div>
+    <a class="btn btn-plein btn-petit" href="download.html#acces" data-en="Request access">Demander l'accès</a>
+    <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+  </div>
+</header>
+
+<main id="haut">
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow" data-en="Routing">Le routage</div>
+      <h1 data-en="Complex routes.<br>Computed fast.<br><em>And held.</em>">Des routes complexes.<br>Vite calculées.<br><em>Et tenues.</em></h1>
+      <p class="chapeau" data-en="Sailaware's engine looks for the fastest route where a simple router gives up: between islands, in straits, around marks. And the time it announces, the boat keeps. Here is how, with the proof over 161 tests.">Le moteur de Sailaware cherche la route la plus rapide là où un routeur simple renonce : entre les îles, dans les détroits, autour des marques. Et l'heure qu'il annonce, le bateau la tient. Voici comment, et la preuve sur 161 essais.</p>
+      <div class="actions">
+        <a class="btn btn-plein" href="#resultats" data-en="See the results">Voir les résultats</a>
+        <a class="btn btn-trait" href="#principes" data-en="How it computes">Comment il calcule</a>
+      </div>
+    </div>
+    <div class="scene">
+      <div class="onglets" role="tablist" aria-label="Exemples de routage" data-en-aria-label="Routing examples">
+        <div class="paquet"><span class="groupe">Coastal</span>
+        <button type="button" role="tab" id="o-morbihan" aria-selected="true" data-en="Gulf of Morbihan">Golfe du Morbihan</button>
+        <button type="button" role="tab" id="o-corfou" aria-selected="false">Marseille → Split</button></div>
+        <div class="paquet"><span class="groupe">Offshore</span>
+        <button type="button" role="tab" id="o-new-york" aria-selected="false">Lorient → New York</button>
+        <button type="button" role="tab" id="o-papeete" aria-selected="false" data-en="New Zealand → Papeete">Nouvelle-Zélande → Papeete</button></div>
+      </div>
+      <figure class="ecran">
+        <canvas id="eventail" width="600" height="400" aria-label="Les isochrones partent dans toutes les directions, puis la route la plus rapide apparaît" data-en-aria-label="The isochrones spread out in every direction, then the fastest route appears"></canvas>
+        <figcaption class="legende"><b id="leg-t"></b><span id="leg-p"></span></figcaption>
+      </figure>
+      <p class="avert" id="leg-s" hidden></p>
+    </div>
+  </div>
+</section>
+
+<section class="bloc preuve" id="resultats">
+  <div class="wrap">
+    <div class="tete">
+      <div class="eyebrow" data-en="The results">Les résultats</div>
+      <h2 data-en="161 tests, 20 real passages, all on screen.">161 essais, 20 trajets réels, tous à l'écran.</h2>
+      <p data-en="Each computed route was then sailed by a simulated boat, on the same weather, re-reading the wind every five minutes to the end of each leg. We compare the time the engine promised with the time the boat actually arrives. Choose a passage to see its routes and the detail of each test.">Chaque route calculée a ensuite été suivie par un bateau simulé, sur la même météo, en relisant le vent toutes les cinq minutes jusqu'au bout de chaque trait. On compare l'heure que le moteur a promise à l'heure à laquelle le bateau arrive vraiment. Choisissez un trajet pour voir ses routes et le détail de chaque essai.</p>
+    </div>
+    <div class="chiffres">
+      <div class="chiffre"><b>161 / 161</b><span data-en="routes reached port">routes arrivées au port</span></div>
+      <div class="chiffre"><b>&lt; 1 min</b><span data-en="off the promised time, all along each route">d'écart à l'heure promise, tout au long de chaque route</span></div>
+      <div class="chiffre"><b>1 s</b><span data-en="of computation for half of the tests; 73 s at most">de calcul pour la moitié des essais ; 73 s au plus</span></div>
+      <div class="chiffre"><b>3 · 5</b><span data-en="boats · precision profiles">bateaux · profils de précision</span></div>
+    </div>
+    <div class="filtres" role="group" aria-label="Filtrer les trajets" data-en-aria-label="Filter the passages">
+      <button type="button" data-f="-1" aria-pressed="true" data-en="All">Tous</button>
+      <button type="button" data-f="0" aria-pressed="false" data-en="Very coastal">Très côtier</button>
+      <button type="button" data-f="1" aria-pressed="false" data-en="Coastal">Côtier</button>
+      <button type="button" data-f="2" aria-pressed="false" data-en="Offshore">Au large</button>
+      <button type="button" data-f="3" aria-pressed="false">Bluewater</button>
+    </div>
+    <div class="trajets" id="trajets"></div>
+    <div class="detail" id="detail" hidden>
+      <div class="detail-tete"><div><div class="eyebrow" id="d-fam"></div><h3 id="d-nom"></h3></div><button type="button" class="btn btn-trait btn-petit" id="d-fermer" data-en="Close">Fermer</button></div>
+      <div class="detail-corps">
+        <figure class="detail-carte" id="d-carte"></figure>
+        <div class="detail-table">
+          <table class="tableau-route" id="d-table" aria-label="Les essais du trajet" data-en-aria-label="The tests for this passage">
+            <thead><tr><th data-en="Profile">Profil</th><th data-en="Boat">Bateau</th><th data-en="Departure">Départ</th><th data-en="Promised duration">Durée promise</th><th data-en="Gap">Écart</th><th data-en="Computation">Calcul</th></tr></thead>
+            <tbody></tbody>
+          </table>
+          <p class="legende-instr" data-en="Gap: the largest difference between the promised time and the simulated boat's time, along the whole route. Computation: computation time on an Apple-silicon Mac.">Écart : le plus grand écart entre l'heure promise et l'heure du bateau simulé, sur toute la route. Calcul : temps de calcul sur un Mac à puce Apple.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bloc" id="principes">
+  <div class="wrap">
+    <div class="tete">
+      <div class="eyebrow" data-en="How it computes">Comment il calcule</div>
+      <h2 data-en="The engine's principles, and its subtleties.">Les principes du moteur, et ses subtilités.</h2>
+      <p id="principes-intro" data-en="Sailaware computes with isochrones, the method used by racing routers: start from the boat and see how far it can go, step by step. What makes the difference is in the details: how the front spreads, how the weather and the coast are read, how the final route is checked. In six steps, with the precise term underneath for specialists.">Sailaware calcule par isochrones, la méthode des routeurs de course : partir du bateau et regarder jusqu'où il peut aller, pas à pas. Ce qui fait la différence est dans les détails : comment le front s'étend, comment la météo et la côte sont lues, comment la route finale est vérifiée. En six étapes, avec, pour les spécialistes, le mot juste en dessous.</p>
+    </div>
+    <div class="etapes" id="etapes">
+      <article class="etape">
+        <svg viewBox="0 0 360 220" aria-hidden="true">
+          <g fill="none" stroke="var(--iso)" stroke-width="1.4"><path d="M120 110 m -26 0 a 26 22 0 1 0 52 0 a 26 22 0 1 0 -52 0" opacity=".45"/><path d="M70 110 C 70 60, 150 44, 200 66 S 270 100, 250 140 S 140 186, 90 160 S 70 130, 70 110 Z" opacity=".7"/><path d="M34 110 C 30 40, 160 14, 240 40 S 340 100, 310 160 S 170 214, 80 196 S 36 150, 34 110 Z"/></g>
+          <g stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round"><path d="M240 40 l 16 -12 M 240 40 l 20 -2 M 240 40 l 14 -18 M 240 40 l 19 7"/><path d="M310 160 l 20 6 M 310 160 l 18 14 M 310 160 l 21 -3 M 310 160 l 12 18"/><path d="M80 196 l -10 14 M 80 196 l -18 6 M 80 196 l -2 18"/></g>
+          <g fill="var(--accent)"><circle cx="240" cy="40" r="3"/><circle cx="310" cy="160" r="3"/><circle cx="80" cy="196" r="3"/></g>
+          <circle cx="120" cy="110" r="5" fill="var(--fg)"/>
+          <text x="16" y="24" font-family="var(--mono)" font-size="11" fill="var(--dim)" data-en="a fan of headings at each point of the front">un éventail de caps à chaque point du front</text>
+        </svg>
+        <div><div class="num" data-en="1 · THE FRONT">1 · LE FRONT</div><h3 data-en="Spreading out in every direction">S'étendre dans toutes les directions</h3>
+          <p data-en="At the start, the boat heads off in every direction. At each step, each point of the front launches a fan of headings, every 10° to 2° depending on the profile, plus the four headings that give the best speed upwind and downwind. The fan opens outward from the front: wide on the bulges, tight in the hollows.">Au départ, le bateau part dans toutes les directions. À chaque pas, chaque point du front lance un éventail de caps, tous les 10° à 2° selon le profil, plus les quatre caps qui donnent la meilleure vitesse au près et au portant. L'éventail s'ouvre vers l'extérieur du front : large sur les bosses, serré dans les creux.</p>
+          <p class="mono" style="font-size:13px;color:var(--dim)" data-en="Isochrones with an adaptive step, from 4 min at the start to 60 min offshore; fan oriented along the front's normal.">Isochrones à pas adaptatif, de 4 min au départ à 60 min au large ; éventail orienté sur la normale du front.</p></div>
+      </article>
+      <article class="etape">
+        <svg viewBox="0 0 360 220" aria-hidden="true">
+          <path d="M160 70 C 190 56, 230 70, 226 104 S 200 150, 168 140 S 132 92, 160 70 Z" fill="var(--land)" stroke="var(--coast)"/>
+          <g fill="none" stroke="var(--iso)" stroke-width="1.5"><path d="M30 200 C 60 120, 110 60, 150 50 C 120 80, 128 130, 170 150 C 210 160, 240 120, 236 80 C 260 70, 300 90, 330 120"/></g>
+          <path d="M30 200 C 80 90, 200 30, 330 120" fill="none" stroke="#f87171" stroke-width="1.4" stroke-dasharray="5 4"/>
+          <path d="M120 180 C 150 170, 190 172, 220 160 S 260 150, 280 132" fill="none" stroke="var(--route)" stroke-width="2.6" stroke-linecap="round"/>
+          <text x="16" y="24" font-family="var(--mono)" font-size="11" fill="var(--dim)" data-en="concave outline: the pocket behind the island">contour concave : la poche derrière l'île</text>
+          <text x="214" y="44" font-family="var(--mono)" font-size="11" fill="#f87171" data-en="convex outline">contour convexe</text>
+        </svg>
+        <div><div class="num" data-en="2 · THE OUTLINE">2 · LE CONTOUR</div><h3 data-en="Hugging islands and headlands">Épouser les îles et les caps</h3>
+          <p data-en="Of all the points reached, the engine keeps the outer outline. A ‘taut’ outline, like an elastic band, would jump over the islands and forget what happens behind them. Sailaware's follows the hollows: the pockets behind an island or a headland stay explored, and that is often where the fastest route goes.">De tous les points atteints, le moteur garde le contour extérieur. Un contour « tendu », comme un élastique, sauterait par-dessus les îles et oublierait ce qui se passe derrière. Celui de Sailaware suit les creux : les poches derrière une île ou un cap restent explorées, et c'est souvent par là que passe la route la plus rapide.</p>
+          <p class="mono" style="font-size:13px;color:var(--dim)" data-en="Concave hull of the cloud of candidates, number of vertices bounded by profile, front memory and coastal anchors.">Enveloppe concave du nuage de candidats, nombre de sommets borné selon le profil, mémoire du front et ancres de côte.</p></div>
+      </article>
+      <article class="etape">
+        <svg viewBox="0 0 360 220" aria-hidden="true">
+          <line x1="40" y1="150" x2="320" y2="70" stroke="var(--route)" stroke-width="3" stroke-linecap="round"/>
+          <g fill="var(--fg)"><circle cx="40" cy="150" r="5"/><circle cx="320" cy="70" r="5"/></g>
+          <g stroke="var(--dim)" stroke-width="1"><line x1="96" y1="128" x2="96" y2="140"/><line x1="152" y1="112" x2="152" y2="124"/><line x1="208" y1="96" x2="208" y2="108"/><line x1="264" y1="80" x2="264" y2="92"/></g>
+          <g stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" fill="#22d3ee"><path d="M68 112 l 0 -26"/><path d="M124 96 l 4 -26"/><path d="M180 80 l 8 -25"/><path d="M236 64 l 12 -23"/><path d="M292 48 l 15 -20"/></g>
+          <g fill="#22d3ee"><circle cx="68" cy="142" r="3"/><circle cx="124" cy="126" r="3"/><circle cx="180" cy="110" r="3"/><circle cx="236" cy="94" r="3"/><circle cx="292" cy="78" r="3"/></g>
+          <g font-family="var(--mono)" font-size="11" fill="var(--dim)"><text x="16" y="24" data-en="one heading per step, the distance slice by slice">un cap par pas, la distance tranche par tranche</text><text x="16" y="186" data-en="5-min slices · wind re-read in the middle of each">tranches de 5 min · vent relu au milieu de chacune</text></g>
+        </svg>
+        <div><div class="num" data-en="3 · THE WEATHER">3 · LA MÉTÉO</div><h3 data-en="Reading the wind at the right moment">Lire le vent au bon moment</h3>
+          <p data-en="The heading is chosen once per step, but the distance covered is computed in five-minute slices, with the wind re-read in the middle of each slice, where the boat really is. The wind changes in strength and direction between two hours of the file: it is followed in strength and in direction, not as a simple average. With a current file, the current is added to the boat's speed and taken out of the wind.">Le cap est choisi une fois par pas, mais la distance parcourue se calcule par tranches de cinq minutes, avec le vent relu au milieu de chaque tranche, là où le bateau se trouve vraiment. Le vent change de force et de direction entre deux heures du fichier : il est suivi en force et en direction, pas en simple moyenne. Avec un fichier de courant, le courant s'ajoute à la vitesse du bateau et se retire du vent.</p>
+          <p class="mono" style="font-size:13px;color:var(--dim)" data-en="Bench measurement, 120 tests with current: actual duration within ±0.13% of the promised duration, against up to 2.35% with a reading at the start of the step.">Mesure du banc, 120 essais avec courant : durée réelle à ±0,13 % de la durée promise, contre jusqu'à 2,35 % avec une lecture en début de pas.</p></div>
+      </article>
+      <article class="etape">
+        <svg viewBox="0 0 360 220" aria-hidden="true">
+          <path d="M200 0 C 190 40, 220 70, 210 110 S 240 170, 230 220 H 360 V 0 Z" fill="var(--land)" stroke="var(--coast)"/>
+          <circle cx="80" cy="110" r="5" fill="var(--fg)"/>
+          <g stroke-width="1.8" stroke-linecap="round"><path d="M80 110 L 190 40" stroke="var(--vert, #4ade80)"/><path d="M80 110 L 196 92" stroke="#4ade80"/><path d="M80 110 L 250 120" stroke="#f87171"/><path d="M80 110 L 260 70" stroke="#f87171"/><path d="M80 110 L 186 168" stroke="#4ade80"/><path d="M80 110 L 260 180" stroke="#f87171"/></g>
+          <g font-family="var(--mono)" font-size="11"><text x="16" y="24" fill="var(--dim)" data-en="each leg tested against the coast">chaque trait testé contre la côte</text><text x="16" y="206" fill="#4ade80" data-en="kept">gardé</text><text x="70" y="206" fill="#f87171" data-en="rejected: it crosses land">rejeté : il traverse la terre</text></g>
+        </svg>
+        <div><div class="num" data-en="4 · THE COAST">4 · LA CÔTE</div><h3 data-en="Checking each leg against land">Vérifier chaque trait contre la terre</h3>
+          <p data-en="Each candidate leg is checked against the worldwide coastline, with a safety margin of a tenth of a mile. To keep this fast despite the number of legs to test, the coast is cut into indexed tiles, a single search serves a boat's whole fan, and the test is skipped when the coast is out of reach.">Chaque trait candidat est confronté au trait de côte mondial, avec une marge de sécurité d'un dixième de mille. Pour que ce soit rapide malgré le nombre de traits à tester, la côte est découpée en tuiles indexées, une seule recherche sert à tout l'éventail d'un bateau, et le test est sauté quand la côte est hors de portée.</p>
+          <p class="mono" style="font-size:13px;color:var(--dim)" data-en="GSHHS coastline in 10° tiles in an R-tree, exact segment–edge intersection, cache kept between computations.">Côte GSHHS en tuiles de 10° dans un R-tree, intersection exacte segment-arête, cache conservé entre les calculs.</p></div>
+      </article>
+      <article class="etape">
+        <svg viewBox="0 0 360 220" aria-hidden="true">
+          <rect x="172" y="96" width="14" height="20" fill="#dc2626" stroke="var(--fg)"/>
+          <circle cx="179" cy="106" r="34" fill="none" stroke="var(--dim)" stroke-dasharray="3 4"/>
+          <path d="M30 60 C 120 60, 150 150, 200 156 S 300 120, 330 60" fill="none" stroke="var(--route)" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M30 60 C 110 60, 140 50, 180 54 S 280 50, 330 60" fill="none" stroke="#f87171" stroke-width="1.6" stroke-dasharray="5 4"/>
+          <g font-family="var(--mono)" font-size="11"><text x="16" y="24" fill="var(--dim)" data-en="mark to leave to port">marque à laisser à bâbord</text><text x="200" y="40" fill="#f87171" data-en="wrong side: eliminated">mauvais côté : éliminée</text><text x="220" y="176" fill="var(--route)" data-en="right side">bon côté</text><text x="216" y="104" fill="var(--dim)" data-en="clearance">garde</text></g>
+        </svg>
+        <div><div class="num" data-en="5 · THE CONSTRAINTS">5 · LES CONTRAINTES</div><h3 data-en="Leaving marks on the right side">Laisser les marques du bon côté</h3>
+          <p data-en="Each branch of the computation measures the angle it has travelled around each mark: one that passes on the wrong side is eliminated, and a branch is never erased by another that has passed fewer marks. A clearance distance keeps the boat away. A cone sets aside boats heading away from the goal, without ever emptying the computation.">Chaque branche du calcul mesure l'angle qu'elle a parcouru autour de chaque marque : celle qui passe du mauvais côté est éliminée, et une branche n'est jamais effacée par une autre qui a passé moins de marques. Une distance de garde tient le bateau à l'écart. Un cône écarte les bateaux qui partent à l'opposé du but, sans jamais vider le calcul.</p>
+          <p class="mono" style="font-size:13px;color:var(--dim)" data-en="Angular tracking per mark, passage line, sorting by progress; 240° selection cone by default; the arrived route is re-judged before being returned.">Suivi angulaire par marque, ligne de passage, tri par avancement ; cône de sélection de 240° par défaut ; route arrivée rejugée avant d'être rendue.</p></div>
+      </article>
+      <article class="etape">
+        <svg viewBox="0 0 360 220" aria-hidden="true">
+          <path d="M30 180 L 70 150 L 90 165 L 130 120 L 150 140 L 190 96 L 210 112 L 250 70 L 270 86 L 320 40" fill="none" stroke="var(--dim)" stroke-width="1.6" stroke-dasharray="4 4"/>
+          <path d="M30 180 L 130 120 L 250 70 L 320 40" fill="none" stroke="var(--route)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <g fill="var(--fg)"><circle cx="30" cy="180" r="5"/></g><circle cx="320" cy="40" r="6.5" fill="none" stroke="var(--route)" stroke-width="2"/>
+          <g font-family="var(--mono)" font-size="11"><text x="16" y="24" fill="var(--dim)" data-en="the route traced back, then straightened">la route remontée, puis redressée</text><text x="16" y="204" fill="var(--route)" data-en="kept only if it is never slower">gardée seulement si elle n'est jamais plus lente</text></g>
+        </svg>
+        <div><div class="num" data-en="6 · THE FINAL ROUTE">6 · LA ROUTE FINALE</div><h3 data-en="Arriving as early as possible, then straightening without losing anything">Arriver au plus tôt, puis redresser sans rien perdre</h3>
+          <p data-en="Each point within reach of port proposes its arrival time; the computation stops when no further step can do better. The route is traced back to the start, then straightened: longer straight legs, grouped tacks. The straightened version is kept only if it is never slower, and each new leg is checked minute by minute: can the boat really hold it? The times shown are those of this stopwatch.">Chaque point à portée du port propose son heure d'arrivée ; le calcul s'arrête quand plus aucun pas ne peut faire mieux. La route est remontée jusqu'au départ, puis redressée : des traits droits plus longs, des bords regroupés. La version redressée n'est gardée que si elle n'est jamais plus lente, et chaque nouveau trait est vérifié minute par minute : le bateau peut-il vraiment le tenir ? Les heures affichées sont celles de ce chronomètre.</p>
+          <p class="mono" style="font-size:13px;color:var(--dim)" data-en="Earliest arrival with a safety net on the front line; ‘never slower’ shortcut pass; point of sail re-read every 60 s on each new leg.">Arrivée au plus tôt avec filet sur la ligne du front ; passe de raccourci « jamais plus lente » ; allure relue toutes les 60 s sur chaque trait neuf.</p></div>
+      </article>
+    </div>
+    <div class="subtilites">
+      <div class="subtilite"><b data-en="A fan that follows the front">Un éventail qui suit le front</b><span data-en="Oriented outward, wider on the bulges, tighter in the hollows: the search goes where it is useful.">Orienté vers l'extérieur, plus large sur les bosses, plus serré dans les creux : la recherche va là où elle sert.</span></div>
+      <div class="subtilite"><b data-en="An outline that keeps the hollows">Un contour qui garde les creux</b><span data-en="The pockets behind headlands and islands stay in the computation: that is what makes slalom routes and gulf exits possible.">Les poches derrière les caps et les îles restent dans le calcul : c'est ce qui permet les routes de slalom et les sorties de golfe.</span></div>
+      <div class="subtilite"><b data-en="The wind re-read every five minutes">Le vent relu toutes les cinq minutes</b><span data-en="One heading per step, a distance integrated slice by slice: the promised time is the one the boat will keep.">Un cap par pas, une distance intégrée tranche par tranche : l'heure promise est celle que le bateau tiendra.</span></div>
+      <div class="subtilite"><b data-en="A final route that is never slower">Une route finale jamais plus lente</b><span data-en="Straightening is kept only if it costs nothing, and each new leg is checked to be holdable.">Le redressement n'est gardé que s'il ne coûte rien, et chaque nouveau trait est vérifié pour être tenable.</span></div>
+      <div class="subtilite"><b data-en="Fast on every core, the same every time">Rapide sur tous les cœurs, identique à chaque fois</b><span data-en="The computation spreads over all the processor's cores, and returns exactly the same route as a step-by-step computation: run it again, it doesn't change its mind.">Le calcul se répartit sur tous les cœurs du processeur, et rend exactement la même route qu'un calcul fait pas à pas : relancé, il ne change pas d'avis.</span></div>
+      <div class="subtilite"><b data-en="Checked over 161 tests">Vérifié sur 161 essais</b><span data-en="From Breton channels to Pacific crossings, each route was sailed by a simulated boat: all arrive, within a minute of the promised time.">Des chenaux bretons aux traversées du Pacifique, chaque route a été suivie par un bateau simulé : toutes arrivent, à moins d'une minute de l'heure promise.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="bloc" id="profils-bloc">
+  <div class="wrap">
+    <div class="tete">
+      <div class="eyebrow" data-en="The five profiles">Les cinq profils</div>
+      <h2 data-en="From a quick look to racing precision.">Du coup d'œil rapide à la précision de régate.</h2>
+      <p data-en="Each profile sets how fine the computation is. The finer it is, the closer the route gets to the best possible, and the longer the computation takes. Measurements from the test bench of 13/10/2026.">Chaque profil règle la finesse du calcul. Plus il est fin, plus la route approche la meilleure possible, et plus le calcul prend de temps. Mesures du banc d'essai du 13/10/2026.</p>
+    </div>
+    <div class="profils" id="profils"></div>
+  </div>
+</section>
+
+<section class="bloc fin" id="fin">
+  <div class="wrap">
+    <div>
+      <h2 data-en="Try it on your own routes.">Essayez-le sur vos propres routes.</h2>
+      <p data-en="Sailaware is being tested by sailors. Request a key; it arrives by email.">Sailaware est en test auprès de navigateurs. Demandez une clé, elle arrive par courriel.</p>
+    </div>
+    <a class="btn btn-plein" href="download.html#acces" data-en="Request access">Demander l'accès</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><a class="marque" href="index.html" style="font-size:16px"><img alt="" src="assets/logo.png" style="width:24px;height:24px;border-radius:6px">Sailaware</a><p style="margin-top:12px" data-en="Navigation software for macOS and Windows.">Logiciel de navigation pour macOS et Windows.</p></div>
+    <div><h4 data-en="Explore">Naviguer</h4><ul><li><a href="offshore.html">Offshore</a></li><li><a href="coastal.html">Coastal</a></li><li><a href="features.html" data-en="Features">Fonctionnalités</a></li><li><a href="routing.html" data-en="Routing">Le routage</a></li></ul></div>
+    <div><h4 data-en="Get started">Commencer</h4><ul><li><a href="download.html#acces" data-en="Request access">Demander l'accès</a></li><li><a href="download.html" data-en="Download">Télécharger</a></li><li><a href="sparring-skipper.html">Sparring Skipper</a></li></ul></div>
+    <div><h4>Sailaware</h4><ul><li><a href="about.html" data-en="About and contact">À propos et contact</a></li><li class="reglages"><div class="pill-toggle" role="group" aria-label="Langue" data-en-aria-label="Language"><button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div><button class="icon-btn theme-btn" type="button" aria-label="Basculer jour / nuit" data-en-aria-label="Switch day / night"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button></li></ul></div>
+  </div>
+</footer>
+
+<script src="assets/eventail.js"></script>
+<script>
+/* Les 161 essais et les cinq profils (repris de la maquette, traduits). */
+(function () {
+  // page Le routage — les 161 essais du bilan (essais/n524/site/routage_donnees.py ⇐ n522/bilan), nouveau moteur seul
+  (function () {
+    var grille = document.getElementById("trajets"); if (!window.RESULTATS || !grille) return;
+    var T = window.RESULTATS, FAM = ["Très côtier, contraint", "Côtier", "Au large", "Bluewater"], FAM_EN = ["Very coastal, constrained", "Coastal", "Offshore", "Bluewater"];
+    // l'anglais des noms, des profils (ceux de l'application) et des bateaux
+    var MOTS = [["Passage du Fromveur", "Fromveur passage"], ["Large d'Ouessant", "Off Ushant"], ["nord de Belle-Île", "north of Belle-Île"], ["Lisbonne", "Lisbon"], ["Galice", "Galicia"],
+                ["Gênes", "Genoa"], ["Barcelone", "Barcelona"], ["Malte", "Malta"], ["Corfou", "Corfu"], ["Nouvelle-Zélande", "New Zealand"]];
+    var PROFILS = { "Aperçu": "Overview", "Hauturier": "Offshore", "Côtier": "Coastal", "Régate": "Racing" };
+    var BATEAUX = { "Zelenine, croisière": "Zelenine, cruising", "Class 60, rapide": "Class 60, fast" };
+    function en() { return SW.lang() === "en"; }
+    function nom(n) { if (en()) MOTS.forEach(function (m) { n = n.replace(m[0], m[1]); }); return n; }
+    function famille(f) { return (en() ? FAM_EN : FAM)[f]; }
+    function milles(m) { return m.toLocaleString(en() ? "en-GB" : "fr-FR") + SW.t(" milles", " miles"); }
+    var detail = document.getElementById("detail"), filtre = -1, ouvert = null;
+    function duree(s) { var m = Math.round(s / 60), h = Math.floor(m / 60), mm = m % 60; return h ? h + " h " + (mm < 10 ? "0" : "") + mm : mm + " min"; }
+    function sec(s) { s = Math.abs(s); return s < 1 ? "< 1 s" : s < 60 ? Math.round(s) + " s" : SW.n(s / 60, 1) + " min"; }
+    function calc(s) { return s < 10 ? SW.n(s, 1) + " s" : Math.round(s) + " s"; }
+    function dessiner() {
+      grille.innerHTML = "";
+      T.forEach(function (t, i) {
+        if (filtre >= 0 && t.famille !== filtre) return;
+        var b = document.createElement("button"); b.type = "button"; b.className = "trajet"; b.setAttribute("aria-expanded", ouvert === i ? "true" : "false");
+        b.innerHTML = '<div class="vig">' + t.svg + '</div><div class="txt"><b>' + nom(t.nom) + '</b><span>' + milles(t.milles) + " · " + t.essais.length + (t.essais.length > 1 ? SW.t(" essais", " tests") : SW.t(" essai", " test")) + "</span></div>";
+        b.querySelectorAll("svg defs path").forEach(function (p) { p.id = p.id + "-v" + i; });
+        b.querySelectorAll("svg use").forEach(function (u) { u.setAttribute("href", u.getAttribute("href") + "-v" + i); });
+        b.addEventListener("click", function () { montrer(i); });
+        grille.appendChild(b);
+      });
+    }
+    function montrer(i, surPlace) {
+      ouvert = i; var t = T[i];
+      document.getElementById("d-nom").textContent = nom(t.nom);
+      document.getElementById("d-fam").textContent = famille(t.famille) + " · " + milles(t.milles);
+      var carte = document.getElementById("d-carte"); carte.innerHTML = t.svg;
+      var corps = document.querySelector("#d-table tbody"); corps.innerHTML = "";
+      t.essais.forEach(function (e, k) {
+        var tr = document.createElement("tr");
+        tr.innerHTML = "<td>" + (en() ? PROFILS[e.profil] || e.profil : e.profil) + "</td><td>" + (en() ? BATEAUX[e.bateau] || e.bateau : e.bateau) + (e.courant ? "<small>" + SW.t("avec courant", "with current") + "</small>" : "") + "</td><td>" + e.depart + "</td><td>" + duree(e.promise_s) +
+          "<small>" + SW.t("bateau : ", "boat: ") + duree(e.courue_s) + "</small></td><td>" + sec(e.ecart_route_s) + "</td><td>" + calc(e.calcul_s) + "</td>";
+        tr.addEventListener("click", function () { choisir(k); });
+        corps.appendChild(tr);
+      });
+      choisir(0); detail.hidden = false; dessiner();
+      if (!surPlace) detail.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+    function choisir(k) {
+      document.querySelectorAll("#d-carte .rt").forEach(function (p) { p.classList.toggle("vue", +p.getAttribute("data-i") === k); });
+      var vue = document.querySelector('#d-carte .rt[data-i="' + k + '"]'); if (vue) vue.parentNode.appendChild(vue);
+      document.querySelectorAll("#d-table tbody tr").forEach(function (r, j) { r.classList.toggle("vue", j === k); });
+    }
+    document.getElementById("d-fermer").addEventListener("click", function () { detail.hidden = true; ouvert = null; dessiner(); });
+    document.querySelectorAll(".filtres button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        filtre = +b.getAttribute("data-f");
+        document.querySelectorAll(".filtres button").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+        dessiner();
+      });
+    });
+    dessiner();
+    document.addEventListener("langue", function () { if (ouvert !== null) montrer(ouvert, true); else dessiner(); });
+  })();
+
+  // page Offshore — les cinq profils (lib/reglagesProfilRoutage.ts : banc du 13/10/2026)
+  // noms anglais des profils : ceux de l'application (i18n/locales/en/routages.json, « preset »)
+  function profils() {
+    var b = document.getElementById("profils"); if (!b) return;
+    function nb(x) { return SW.lang() === "en" ? String(x) : String(x).replace(".", ","); }
+    // + le balayage des caps du catalogue (wr-engine presets.rs, `dcap_deg`)
+    var P = [[SW.t("Aperçu", "Overview"), SW.t("rapide", "fast"), 2.7, .45, 10], [SW.t("Hauturier", "Offshore"), SW.t("large", "open sea"), 1.6, .6, 8], ["Standard", SW.t("équilibré", "balanced"), 1.1, 1, 6],
+             [SW.t("Côtier", "Coastal"), SW.t("côtes", "coasts"), .5, 1.6, 4], [SW.t("Régate", "Racing"), SW.t("précis", "precise"), .3, 3.25, 2]];
+    b.innerHTML = P.map(function (p) {
+      return '<div class="profil' + (p[2] === 1.6 ? " choisi" : "") + '"><div><div class="nom">' + p[0] + '</div><div class="sous">' + p[1] + '</div></div>' +
+        '<div class="jauge">' + SW.t("à " + nb(p[2]) + " % de la meilleure route", "within " + nb(p[2]) + "% of the best route") + '<div class="barre"><i style="width:' + Math.max(8, 100 - p[2] * 30) + '%"></i></div></div>' +
+        '<div class="jauge">' + SW.t("calcul ×", "computation ×") + nb(p[3]) + '<div class="barre temps"><i style="width:' + (p[3] / 3.25 * 100) + '%"></i></div></div>' +
+        (p[4] ? '<div class="jauge" style="color:var(--dim)">' + SW.t("caps tous les ", "headings every ") + p[4] + '°</div>' : "") + '</div>';
+    }).join("");
+  }
+  profils(); document.addEventListener("langue", profils);
+})();
+</script>
+</body>
+</html>

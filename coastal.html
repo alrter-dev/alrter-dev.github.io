@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title data-en="Sailaware Coastal — sail simply, arrive at ease">Sailaware Coastal — naviguer simplement, arriver serein</title>
+<meta name="description" content="Sailaware pour la navigation côtière : la météo du jour d'un coup d'œil, la route vers l'étape, les instruments du bord, l'alarme de mouillage et les cartes hors ligne." data-en-content="Sailaware for coastal sailing: today's weather at a glance, the route to the next stop, onboard instruments, the anchor alarm and offline charts.">
+<meta name="theme-color" content="#0E1822">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23bef264'/%3E%3Cg fill='none' stroke='%230E1822' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' transform='scale(0.72) translate(4.6 4.6)'%3E%3Cpath d='M2 20a2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1'/%3E%3Cpath d='M4 18 2 6l10 6 10-6-2 12'/%3E%3C/g%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sailaware Coastal — naviguer simplement, arriver serein">
+<meta property="og:description" content="Sailaware pour la navigation côtière : la météo du jour d'un coup d'œil, la route vers l'étape, les instruments du bord, l'alarme de mouillage et les cartes hors ligne.">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:locale:alternate" content="en_US">
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js"></script>
+<script src="assets/scenes.js"></script>
+<style>
+/* page Offshore */
+.duo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 48px; align-items: center; }
+section.bloc > .wrap.duo { padding-block: 72px; }
+.duo.inverse { grid-template-columns: minmax(0, .9fr) minmax(0, 1.2fr); }
+.duo h2 { margin-top: 12px; }
+.duo .intro { color: var(--muted); font-size: 18px; margin: 16px 0 22px; }
+.planche { margin: 0; background: var(--surface); border: 1px solid var(--line-strong); border-radius: 14px; overflow: hidden; }
+.planche svg { display: block; width: 100%; height: auto; }
+.frise-meteo { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-top: 1px solid var(--line); font: 500 12px/1 var(--mono); color: var(--dim); }
+.frise-meteo .piste { flex: 1; height: 4px; border-radius: 4px; background: var(--surface-2); position: relative; }
+.frise-meteo .piste b { position: absolute; left: 0; top: 0; bottom: 0; width: 22%; border-radius: 4px; background: var(--accent); animation: avance 12s linear infinite; }
+.frise-meteo .piste u { display: none; }
+@keyframes avance { from { width: 4%; } to { width: 96%; } }
+.profils { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-bottom: 22px; }
+.profil { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 16px 14px; display: grid; gap: 10px; align-content: start; }
+.profil.choisi { border-color: var(--accent); }
+.profil .nom { font: 700 17px/1.1 var(--mono); }
+.profil .sous { font: 500 12px/1 var(--mono); color: var(--dim); text-transform: uppercase; letter-spacing: .1em; }
+.profil .jauge { display: grid; gap: 4px; font: 500 12px/1.3 var(--mono); color: var(--muted); }
+.profil .barre { height: 6px; border-radius: 6px; background: var(--surface-2); overflow: hidden; }
+.profil .barre i { display: block; height: 100%; border-radius: 6px; background: var(--accent); }
+.profil .barre.temps i { background: var(--iso); }
+.cases.trois { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cases.quatre { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.ligne-temps { margin: 0 0 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px 8px; }
+.ligne-temps svg { display: block; width: 100%; height: auto; }
+.ligne-temps svg text { font-family: var(--mono); }
+.tableau-route { width: 100%; margin-top: 14px; border-collapse: collapse; font: 500 13px/1.3 var(--mono); font-variant-numeric: tabular-nums; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.tableau-route th { text-align: right; font-weight: 600; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); padding: 9px 10px; border-bottom: 1px solid var(--line); }
+.tableau-route td { text-align: right; padding: 8px 10px; color: var(--muted); border-bottom: 1px solid var(--line); }
+.tableau-route th:first-child, .tableau-route td:first-child { text-align: left; }
+.tableau-route tr.vire td { color: var(--fg); background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.tableau-route tr:last-child td { border-bottom: 0; }
+@media (max-width: 960px) {
+  .duo, .duo.inverse { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .profils { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cases.trois, .cases.quatre { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .profils, .cases.trois, .cases.quatre { grid-template-columns: minmax(0, 1fr); }
+  .tableau-route { font-size: 11.5px; }
+  .tableau-route th, .tableau-route td { padding: 7px 6px; }
+}
+
+/* page Coastal — le rapport d'étape */
+.planche.rapport { padding: 22px 24px 20px; display: grid; gap: 18px; }
+.rapport-tete { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; }
+.rapport-tete b { font: 700 16px/1.3 var(--mono); }
+.rapport-tete span { font: 500 13px/1 var(--mono); color: var(--dim); }
+.rapport-chiffres { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.rapport-chiffres div { background: var(--surface-2); border-radius: 10px; padding: 12px; display: grid; gap: 4px; }
+.rapport-chiffres b { font: 700 22px/1 var(--mono); font-variant-numeric: tabular-nums; }
+.rapport-chiffres span { font-size: 13px; color: var(--muted); line-height: 1.3; }
+.rapport-allures { display: flex; align-items: center; gap: 0; height: 14px; border-radius: 7px; overflow: hidden; }
+.rapport-allures span { font: 600 11px/1 var(--mono); color: var(--dim); text-transform: uppercase; letter-spacing: .1em; margin-right: 12px; }
+.rapport-allures i { display: block; height: 100%; }
+.rapport-leg { display: flex; flex-wrap: wrap; gap: 6px 18px; font: 500 12.5px/1 var(--mono); color: var(--muted); }
+.rapport-leg i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+@media (max-width: 620px) { .rapport-chiffres { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* appel final */
+.fin .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; padding-block: 64px; }
+.fin h2 { max-width: 18em; }
+.fin p { color: var(--muted); margin-top: 10px; }
+
+footer { border-top: 1px solid var(--line); color: var(--dim); font-size: 14px; }
+footer .wrap { padding-block: 34px 44px; display: grid; grid-template-columns: 1.2fr repeat(3, minmax(0, 1fr)); gap: 24px; }
+footer h4 { font: 600 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+footer a { text-decoration: none; }
+footer a:hover { color: var(--fg); }
+
+@media (max-width: 960px) {
+  nav.menu { display: none; }
+  nav.menu.ouvert { display: grid; position: absolute; top: 100%; left: 0; right: 0; gap: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  nav.menu.ouvert a { padding-block: 14px; border-top: 1px solid var(--line); }
+  .burger { display: inline-block; }
+  header.top .langue { display: none; }
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); gap: 34px; padding-block: 40px; }
+  .forts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .preuve .chiffres, .familles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .abord .wrap.grille { grid-template-columns: minmax(0, 1fr); }
+  footer .wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  body { font-size: 16px; }
+  header.top .btn-plein { display: none; }
+  .portes, .ss .volets, .forts { grid-template-columns: minmax(0, 1fr); }
+  section.bloc > .wrap { padding-block: 52px; }
+  .porte, .volet { padding: 22px; }
+  .instruments { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .instr.large { grid-column: span 2; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="marque" href="index.html"><img alt="" src="assets/logo.png">Sailaware</a>
+    <nav class="menu" id="menu" aria-label="Navigation principale" data-en-aria-label="Main navigation">
+      <a href="offshore.html">Offshore</a>
+      <a href="coastal.html" aria-current="page">Coastal</a>
+      <a href="features.html" data-en="Features">Fonctionnalités</a>
+      <a href="routing.html" data-en="Routing">Le routage</a>
+      <a href="sparring-skipper.html">Sparring Skipper</a>
+      <a href="about.html" data-en="About">À propos</a>
+    </nav>
+    <div class="outils" style="display:flex;gap:10px;align-items:center">
+      <div class="pill-toggle" role="group" aria-label="Langue" data-en-aria-label="Language"><button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+      <button class="icon-btn theme-btn" type="button" aria-label="Basculer jour / nuit" data-en-aria-label="Switch day / night" title="Jour / Nuit" data-en-title="Day / Night"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+    </div>
+    <a class="btn btn-plein btn-petit" href="download.html#acces" data-en="Request access">Demander l'accès</a>
+    <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+  </div>
+</header>
+
+<main id="haut">
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow" data-en="Coastal · along the coast">Coastal · à la côte</div>
+      <h1 data-en="Sail simply.<br><em>Arrive at ease.</em>">Naviguer simplement.<br><em>Arriver serein.</em></h1>
+      <p class="chapeau" data-en="For sailors who go from one stop to the next: today's weather readable at a glance, the route to the next stop that hugs the coastline, the onboard instruments on a single screen, and a watch that never sleeps at anchor.">Pour les plaisanciers qui vont d'une étape à l'autre : la météo du jour lisible d'un coup d'œil, la route vers l'étape qui serre les côtes, les instruments du bord sur un seul écran, et une veille qui ne dort pas au mouillage.</p>
+      <div class="actions">
+        <a class="btn btn-plein" href="download.html#acces" data-en="Request access">Demander l'accès</a>
+        <a class="btn btn-trait" href="#route" data-en="See the route">Voir la route</a>
+      </div>
+      <div class="faits"><span data-en="macOS and Windows">macOS et Windows</span><span data-en="Works offline">Fonctionne sans réseau</span><span>Français · English</span></div>
+    </div>
+    <div class="scene">
+      <div class="onglets" role="tablist" aria-label="Exemples de routage à la côte" data-en-aria-label="Coastal routing examples">
+        <div class="paquet"><span class="groupe">Coastal</span>
+        <button type="button" role="tab" id="o-morbihan" aria-selected="true" data-en="Gulf of Morbihan">Golfe du Morbihan</button>
+        <button type="button" role="tab" id="o-corfou" aria-selected="false">Marseille → Split</button></div>
+      </div>
+      <figure class="ecran">
+        <canvas id="eventail" width="600" height="400" aria-label="Les isochrones se faufilent entre les îles, puis la route la plus rapide apparaît" data-en-aria-label="The isochrones slip between the islands, then the fastest route appears"></canvas>
+        <figcaption class="legende"><b id="leg-t"></b><span id="leg-p"></span></figcaption>
+      </figure>
+      <p class="avert" id="leg-s" hidden></p>
+    </div>
+  </div>
+</section>
+
+<section class="bloc" id="meteo">
+  <div class="wrap duo">
+    <div>
+      <div class="eyebrow">Sky above.</div>
+      <h2 data-en="Today's weather, at a glance.">La météo de la journée, d'un coup d'œil.</h2>
+      <p class="intro" data-en="Wind, waves and current downloaded for your area, on the chart. The timeline moves the hours forward: you see the weather where you'll be this afternoon.">Le vent, les vagues et le courant téléchargés pour votre zone, sur la carte. La frise fait avancer les heures : vous voyez le temps qu'il fera là où vous serez cet après-midi.</p>
+      <div class="cases">
+        <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 26 L 22 10"/><path d="M22 10 l 6 4 M 18 14 l 6 4 M 14 18 l 4 3"/></svg><span data-en="Wind for your area">Le vent pour votre zone</span></div>
+        <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12 q 7 -6 14 0 t 14 0"/><path d="M3 20 q 7 -6 14 0 t 14 0" opacity=".7"/><path d="M3 28 q 7 -6 14 0 t 14 0" opacity=".45"/></svg><span data-en="Waves and current">Les vagues et le courant</span></div>
+        <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 22 h 26"/><path d="M8 18 v 8 M 14 20 v 4 M 20 20 v 4 M 26 18 v 8"/><circle cx="16" cy="11" r="3" fill="currentColor"/></svg><span data-en="The timeline to see the afternoon">La frise pour voir l'après-midi</span></div>
+        <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="7" cy="27" r="2.5"/><path d="M9 25 C 16 14, 14 10, 26 7" stroke-dasharray="4 3"/></svg><span data-en="The wind met, leg by leg">Le vent rencontré, trait par trait</span></div>
+      </div>
+    </div>
+    <figure class="planche">
+      <svg id="journee" viewBox="0 0 560 300" role="img" aria-label="Le vent heure par heure sur une journée, de 7 h à 21 h" data-en-aria-label="The wind hour by hour over a day, from 07:00 to 21:00"></svg>
+    </figure>
+  </div>
+</section>
+
+<section class="bloc" id="route">
+  <div class="wrap duo inverse">
+    <div>
+      <div class="eyebrow">Sea ahead.</div>
+      <h2 data-en="The route to the next stop, no surprises.">La route vers l'étape, sans surprise.</h2>
+      <p class="intro" data-en="Choose the stop: Sailaware computes the fastest route for your boat. It rounds islands and headlands, accounts for current, and leaves marks on the right side.">Choisissez l'étape : Sailaware calcule la route la plus rapide pour votre bateau. Elle contourne les îles et les caps, tient compte du courant, et laisse les marques du bon côté.</p>
+      <div class="cases">
+        <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 26 C 10 26, 8 10, 16 10 S 22 22, 30 20"/><path d="M4 8 h 6 M 24 6 h 6" opacity=".6"/></svg><span data-en="The Coastal profile, made for coastlines">Le profil Côtier, fait pour les côtes</span></div>
+        <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="13" y="8" width="8" height="12" fill="currentColor" opacity=".9"/><path d="M4 28 C 12 28, 10 14, 17 14 S 24 28, 30 28"/></svg><span data-en="Marks left on the right side">Les marques laissées du bon côté</span></div>
+        <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 10 q 6 4 10 0 t 10 0 t 8 0" opacity=".7"/><path d="M6 26 C 12 18, 20 24, 28 16"/><path d="M24 14 l 4 2 l -2 4"/></svg><span data-en="Current taken into account">Le courant pris en compte</span></div>
+        <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 26 C 12 14, 20 22, 29 8"/><path d="M5 26 C 14 24, 22 20, 29 8" opacity=".5" stroke-dasharray="3 3"/></svg><span data-en="Several routes compared">Plusieurs routes comparées</span></div>
+      </div>
+    </div>
+    <figure class="planche">
+      <canvas class="vignette" data-scene="morbihan" width="600" height="400" style="display:block;width:100%;height:auto;aspect-ratio:600/400" aria-label="La route sort du golfe du Morbihan, contourne une marque à bâbord et rejoint Belle-Île" data-en-aria-label="The route leaves the Gulf of Morbihan, rounds a mark to port and reaches Belle-Île"></canvas>
+    </figure>
+  </div>
+</section>
+
+<section class="bloc instru" id="instruments">
+  <div class="wrap duo">
+    <div>
+      <div class="eyebrow">Wind abeam.</div>
+      <h2 data-en="Onboard instruments, on a single screen.">Les instruments du bord, sur un seul écran.</h2>
+      <p class="intro" data-en="Connected to the boat's electronics, Sailaware shows wind, heading, speed and depth wherever you want them on the chart. Depth changes colour as the bottom comes up.">Branché sur l'électronique du bord, Sailaware affiche le vent, le cap, la vitesse et la profondeur, là où vous les voulez sur la carte. La profondeur change de couleur quand le fond remonte.</p>
+      <div class="cases">
+        <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 10 q 7 -5 14 0 t 14 0"/><path d="M17 14 v 14 M 12 23 l 5 5 l 5 -5"/></svg><span data-en="Depth in colours">La profondeur en couleurs</span></div>
+        <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="17" cy="17" r="12"/><path d="M17 8 l 4 12 l -4 -3 l -4 3 z" fill="currentColor"/></svg><span data-en="Course to steer to the next stop">Le cap à suivre vers l'étape</span></div>
+        <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="5" width="11" height="11" rx="2"/><rect x="19" y="5" width="11" height="24" rx="2"/><rect x="4" y="19" width="11" height="10" rx="2"/></svg><span data-en="Your layouts, saved">Vos dispositions, enregistrées</span></div>
+        <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M17 5 l 7 20 l -7 -4 l -7 4 z"/><circle cx="17" cy="17" r="14" stroke-dasharray="2 4" opacity=".6"/></svg><span data-en="AIS ships around you">Les navires AIS autour</span></div>
+      </div>
+    </div>
+    <div class="ecran-instr" id="ecran-instr">
+      <canvas id="fond-instr" data-scene="corfou" width="600" height="400" aria-hidden="true"></canvas>
+      <div class="plateau" id="plateau" data-fixe="cotier" aria-label="Les instruments de Sailaware en navigation côtière" data-en-aria-label="Sailaware's instruments for coastal sailing"></div>
+    </div>
+  </div>
+</section>
+
+<section class="bloc" id="mouillage">
+  <div class="wrap duo inverse">
+    <div>
+      <div class="eyebrow" data-en="At anchor">Au mouillage</div>
+      <h2 data-en="A watch that never sleeps.">Une veille qui ne dort pas.</h2>
+      <p class="intro" data-en="Drop the anchor, choose a radius: if the boat leaves it, the alarm sounds every two seconds until it's back. And while sailing, other watches take over.">Posez l'ancre, choisissez un rayon : si le bateau en sort, l'alarme sonne toutes les deux secondes tant qu'il n'est pas revenu. Et pendant la navigation, d'autres veilles prennent le relais.</p>
+      <div class="cases">
+        <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="17" cy="7" r="3"/><path d="M17 10 v 19 M 10 15 h 14 M 6 21 q 2 8 11 8 q 9 0 11 -8"/></svg><span data-en="Anchor radius">Le rayon de mouillage</span></div>
+        <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 10 q 7 -5 14 0 t 14 0"/><path d="M17 14 v 14 M 12 23 l 5 5 l 5 -5"/></svg><span data-en="Minimum depth">Une profondeur minimale</span></div>
+        <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12 h 18 a 4 4 0 1 0 -4 -4 M 4 18 h 24 a 4 4 0 1 1 -4 4 M 4 24 h 10"/></svg><span data-en="Strong wind">Le vent fort</span></div>
+        <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="17" cy="17" r="12"/><path d="M17 5 v 6 M 17 23 v 6 M 5 17 h 6 M 23 17 h 6"/><circle cx="17" cy="17" r="2" fill="currentColor"/></svg><span data-en="AIS collision risk">Le risque de collision AIS</span></div>
+      </div>
+    </div>
+    <figure class="planche">
+      <svg viewBox="0 0 520 360" role="img" aria-label="Le bateau évite autour de son ancre à l'intérieur du rayon ; un dernier point en sort et déclenche l'alarme" data-en-aria-label="The boat swings around its anchor inside the radius; a last point leaves it and sets off the alarm">
+        <rect width="520" height="360" fill="var(--sea)"/>
+        <path d="M0 0 H 520 V 54 C 450 70, 380 40, 300 60 S 120 40, 0 64 Z" fill="var(--land)" stroke="var(--coast)"/>
+        <text x="40" y="34" font-family="var(--mono)" font-size="12" fill="var(--dim)">Port-Navalo</text>
+        <circle cx="250" cy="200" r="104" fill="color-mix(in srgb, var(--accent) 6%, transparent)" stroke="var(--accent)" stroke-width="1.6" stroke-dasharray="6 5"/>
+        <text x="250" y="88" text-anchor="middle" font-family="var(--mono)" font-size="12" fill="var(--accent)" data-en="radius 60 m">rayon 60 m</text>
+        <path d="M250 200 C 300 170, 320 210, 290 240 S 210 260, 200 220 S 240 150, 280 160 S 330 230, 300 262 S 220 290, 196 250" fill="none" stroke="var(--iso)" stroke-width="1.8" opacity=".85"/>
+        <path d="M196 250 C 180 270, 170 300, 150 318" fill="none" stroke="#f87171" stroke-width="2.4" stroke-linecap="round"/>
+        <g transform="translate(250 200)" fill="var(--fg)"><circle r="9" fill="var(--surface-2)" stroke="var(--fg)" stroke-width="1.4"/><path d="M0 -5 v 9 M -4 -1 h 8 M -5 2 q 1 4 5 4 q 4 0 5 -4" stroke="var(--fg)" stroke-width="1.3" fill="none"/></g>
+        <g transform="translate(150 318) rotate(-40)"><path d="M0 -12 C 5 -6, 5 6, 3 11 L -3 11 C -5 6, -5 -6, 0 -12 Z" fill="#f87171"/></g>
+        <g font-family="var(--mono)"><rect x="300" y="290" width="200" height="50" rx="8" fill="var(--surface)" stroke="#f87171"/><text x="316" y="311" font-size="13" font-weight="700" fill="#f87171" data-en="Anchor — dragging">Mouillage — chasse</text><text x="316" y="329" font-size="12" fill="var(--muted)" data-en="out of radius for 00:40">hors du rayon depuis 00:40</text></g>
+      </svg>
+    </figure>
+  </div>
+</section>
+
+<section class="bloc" id="hors-ligne">
+  <div class="wrap">
+    <div class="tete">
+      <div class="eyebrow" data-en="Offline">Sans réseau</div>
+      <h2 data-en="When the connection drops, everything stays on board.">Quand la connexion tombe, tout reste à bord.</h2>
+      <p data-en="Charts and weather files load in port; at sea, Sailaware uses them without a network.">Les cartes et les fichiers météo se chargent au port ; en mer, Sailaware s'en sert sans réseau.</p>
+    </div>
+    <div class="cases quatre">
+      <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 8 l 8 -3 l 10 3 l 8 -3 v 21 l -8 3 l -10 -3 l -8 3 z"/><path d="M12 5 v 21 M 22 8 v 21"/></svg><span data-en="Offline base maps">Les fonds de carte hors ligne</span></div>
+      <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="5" y="5" width="24" height="24" rx="3"/><path d="M5 22 l 7 -7 l 6 6 l 4 -4 l 7 7"/></svg><span data-en="Your nautical charts (.mbtiles)">Vos cartes marines (.mbtiles)</span></div>
+      <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 22 C 10 12, 16 26, 22 14 S 28 10, 30 12"/><path d="M4 28 h 26" opacity=".5"/></svg><span data-en="Coastlines of the whole world">Les côtes du monde entier</span></div>
+      <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 26 L 22 10"/><path d="M22 10 l 6 4 M 18 14 l 6 4"/></svg><span data-en="Weather already loaded">La météo déjà chargée</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="bloc" id="etapes">
+  <div class="wrap duo">
+    <div>
+      <div class="eyebrow" data-en="The leg log">Le carnet des étapes</div>
+      <h2 data-en="Every leg keeps its track.">Chaque étape garde sa trace.</h2>
+      <p class="intro" data-en="A voyage brings together the boat, the departure, the arrival and the waypoints. The track records underway; on arrival, the leg report is created in one click, as a PDF.">Un voyage réunit le bateau, le départ, l'arrivée et les points de passage. La trace s'enregistre en route ; à l'arrivée, le rapport de l'étape se crée en un clic, en PDF.</p>
+      <div class="cases">
+        <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="7" cy="27" r="2"/><circle cx="14" cy="20" r="2"/><circle cx="22" cy="17" r="2"/><circle cx="28" cy="9" r="2"/></svg><span data-en="The recorded track">La trace enregistrée</span></div>
+        <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M8 4 h 12 l 6 6 v 20 h -18 z"/><path d="M20 4 v 6 h 6 M 12 18 h 10 M 12 23 h 7"/></svg><span data-en="The leg report as PDF">Le rapport de l'étape en PDF</span></div>
+      </div>
+    </div>
+    <figure class="planche rapport">
+      <div class="rapport-tete"><b data-en="Leg · Port-Navalo → Le Palais">Étape · Port-Navalo → Le Palais</b><span data-en="Saturday 18 July">samedi 18 juillet</span></div>
+      <div class="rapport-chiffres">
+        <div><b data-en="17.4">17,4</b><span data-en="miles">milles</span></div><div><b>3 h 12</b><span data-en="underway">de route</span></div><div><b data-en="5.4">5,4</b><span data-en="knots on average">nœuds de moyenne</span></div><div><b>14</b><span data-en="knots of average wind">nœuds de vent moyen</span></div>
+      </div>
+      <div class="rapport-allures"><span data-en="Points of sail">Allures</span><i style="flex:22;background:var(--iso)"></i><i style="flex:51;background:var(--accent)"></i><i style="flex:27;background:#fbbf24"></i></div>
+      <div class="rapport-leg"><span data-en="<i style='background:var(--iso)'></i>close-hauled 22%"><i style="background:var(--iso)"></i>près 22 %</span><span data-en="<i style='background:var(--accent)'></i>reaching 51%"><i style="background:var(--accent)"></i>largue 51 %</span><span data-en="<i style='background:#fbbf24'></i>downwind 27%"><i style="background:#fbbf24"></i>portant 27 %</span></div>
+    </figure>
+  </div>
+</section>
+
+<section class="bloc ss" id="ss">
+  <div class="wrap">
+    <div class="tete">
+      <div><span class="badge" data-en="Coming soon">Bientôt</span></div>
+      <h2>Sparring Skipper Coastal</h2>
+      <p class="principe" data-en="Plan your legs with a partner: <em>AI advises, the computation provides every number.</em>">Planifier les étapes avec un partenaire : <em>l'IA conseille, le calcul fournit chaque chiffre.</em></p>
+      <p data-en="Peaceful anchorages and legs planned around your wishes and constraints: crew to pick up or drop off, supplies to take on, weather hazards.">Des mouillages sereins et des étapes planifiées selon vos envies et vos contraintes : équipiers à prendre ou à déposer, pleins à faire, aléas de la météo.</p>
+    </div>
+    <div class="actions"><a class="btn btn-trait" href="sparring-skipper.html#fin" data-en="Get notified">Être prévenu</a><small data-en="You'll receive a single message, at launch.">Vous recevrez un seul message, à l'ouverture.</small></div>
+  </div>
+</section>
+
+<section class="bloc fin" id="fin">
+  <div class="wrap">
+    <div>
+      <h2 data-en="Ready for the next leg?">Prêt pour la prochaine étape ?</h2>
+      <p data-en="Sailaware is being tested by sailors. Request a key; it arrives by email.">Sailaware est en test auprès de navigateurs. Demandez une clé, elle arrive par courriel.</p>
+    </div>
+    <a class="btn btn-plein" href="download.html#acces" data-en="Request access">Demander l'accès</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><a class="marque" href="index.html" style="font-size:16px"><img alt="" src="assets/logo.png" style="width:24px;height:24px;border-radius:6px">Sailaware</a><p style="margin-top:12px" data-en="Navigation software for macOS and Windows.">Logiciel de navigation pour macOS et Windows.</p></div>
+    <div><h4 data-en="Explore">Naviguer</h4><ul><li><a href="offshore.html">Offshore</a></li><li><a href="coastal.html">Coastal</a></li><li><a href="features.html" data-en="Features">Fonctionnalités</a></li><li><a href="routing.html" data-en="Routing">Le routage</a></li></ul></div>
+    <div><h4 data-en="Get started">Commencer</h4><ul><li><a href="download.html#acces" data-en="Request access">Demander l'accès</a></li><li><a href="download.html" data-en="Download">Télécharger</a></li><li><a href="sparring-skipper.html">Sparring Skipper</a></li></ul></div>
+    <div><h4>Sailaware</h4><ul><li><a href="about.html" data-en="About and contact">À propos et contact</a></li><li class="reglages"><div class="pill-toggle" role="group" aria-label="Langue" data-en-aria-label="Language"><button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div><button class="icon-btn theme-btn" type="button" aria-label="Basculer jour / nuit" data-en-aria-label="Switch day / night"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button></li></ul></div>
+  </div>
+</footer>
+
+<script src="assets/eventail.js"></script>
+<script>
+/* Le dessin propre à la page Coastal (repris de la maquette, traduit). */
+(function () {
+  // page Coastal — le vent de la journée, heure par heure (illustration : brise thermique qui forcit l'après-midi)
+  function journee() {
+    var s = document.getElementById("journee"); if (!s) return; s.innerHTML = "";
+    var NS = "http://www.w3.org/2000/svg";
+    function el(n, a, t) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); if (t !== undefined) e.textContent = t; s.appendChild(e); return e; }
+    el("rect", { width: 560, height: 300, fill: "var(--surface)" });
+    el("text", { x: 22, y: 30, "font-family": "var(--mono)", "font-size": 13, "font-weight": 600, fill: "var(--fg)" }, SW.t("Golfe du Morbihan · samedi", "Gulf of Morbihan · Saturday"));
+    var H = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
+    var V = [6, 7, 8, 9, 11, 13, 15, 17, 18, 18, 17, 15, 12, 9, 7], D = [60, 70, 90, 140, 200, 225, 235, 240, 245, 245, 250, 255, 260, 270, 280];
+    function couleur(v) { return v < 10 ? "#22d3ee" : v < 16 ? "#4ade80" : v < 22 ? "#fbbf24" : "#f472b6"; }
+    var x0 = 40, pas = 33, base = 250;
+    for (var y = 0; y <= 20; y += 5) {
+      el("line", { x1: x0 - 10, x2: x0 + pas * 14 + 10, y1: base - y * 7, y2: base - y * 7, stroke: "var(--line)", "stroke-width": 1 });
+      el("text", { x: 22, y: base - y * 7 + 4, "font-family": "var(--mono)", "font-size": 10, fill: "var(--dim)", "text-anchor": "middle" }, String(y));
+    }
+    var pts = H.map(function (h, i) { return [x0 + i * pas, base - V[i] * 7]; });
+    el("polygon", { points: pts.map(function (p) { return p.join(","); }).join(" ") + " " + (x0 + 14 * pas) + "," + base + " " + x0 + "," + base, fill: "var(--accent)", opacity: .08 });
+    el("polyline", { points: pts.map(function (p) { return p.join(","); }).join(" "), fill: "none", stroke: "var(--accent)", "stroke-width": 2.2, "stroke-linejoin": "round" });
+    H.forEach(function (h, i) {
+      var x = x0 + i * pas, c = couleur(V[i]), a = (D[i] + 180) * Math.PI / 180, ux = Math.sin(a), uy = -Math.cos(a), L = 11;
+      var g = document.createElementNS(NS, "g"); s.appendChild(g);
+      [["line", { x1: x - ux * L, y1: 62 - uy * L, x2: x + ux * L, y2: 62 + uy * L, stroke: c, "stroke-width": 2, "stroke-linecap": "round" }],
+       ["polygon", { points: [x + ux * (L + 4), 62 + uy * (L + 4), x + ux * (L - 3) - uy * 4, 62 + uy * (L - 3) + ux * 4, x + ux * (L - 3) + uy * 4, 62 + uy * (L - 3) - ux * 4].map(function (n) { return n.toFixed(1); }).join(","), fill: c }]].forEach(function (d) {
+        var e = document.createElementNS(NS, d[0]); for (var k in d[1]) e.setAttribute(k, d[1][k]); g.appendChild(e);
+      });
+      el("circle", { cx: pts[i][0], cy: pts[i][1], r: 3.2, fill: c });
+      el("text", { x: x, y: 95, "text-anchor": "middle", "font-family": "var(--mono)", "font-size": 11, fill: "var(--fg)" }, String(V[i]));
+      if (i % 2 === 0) el("text", { x: x, y: 274, "text-anchor": "middle", "font-family": "var(--mono)", "font-size": 11, fill: "var(--dim)" }, SW.t(h + " h", (h < 10 ? "0" : "") + h + ":00"));
+    });
+    el("text", { x: 538, y: 30, "text-anchor": "end", "font-family": "var(--mono)", "font-size": 11, fill: "var(--dim)" }, SW.t("vent en nœuds", "wind in knots"));
+    el("rect", { x: x0 + 7 * pas - 14, y: 104, width: 4 * pas + 28, height: 150, rx: 8, fill: "none", stroke: "#fbbf24", "stroke-dasharray": "4 4", opacity: .7 });
+    el("text", { x: x0 + 9 * pas, y: 120, "text-anchor": "middle", "font-family": "var(--mono)", "font-size": 11, fill: "#fbbf24" }, SW.t("brise de l'après-midi", "afternoon breeze"));
+  }
+  journee(); document.addEventListener("langue", journee);
+})();
+</script>
+</body>
+</html>

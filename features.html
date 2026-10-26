@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title data-en="Sailaware — features">Sailaware — les fonctionnalités</title>
+<meta name="description" content="Toutes les fonctions de Sailaware, par domaine : routage, météo, cartes hors ligne, instruments, polaires, position et astronomie, veille et AIS, voyages et rapports, échanges." data-en-content="Every Sailaware feature, by area: routing, weather, offline charts, instruments, polars, position and astronomy, watch and AIS, voyages and reports, exchanges.">
+<meta name="theme-color" content="#0E1822">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23bef264'/%3E%3Cg fill='none' stroke='%230E1822' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' transform='scale(0.72) translate(4.6 4.6)'%3E%3Cpath d='M2 20a2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1'/%3E%3Cpath d='M4 18 2 6l10 6 10-6-2 12'/%3E%3C/g%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sailaware — les fonctionnalités">
+<meta property="og:description" content="Toutes les fonctions de Sailaware, par domaine : routage, météo, cartes hors ligne, instruments, polaires, position et astronomie, veille et AIS, voyages et rapports, échanges.">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:locale:alternate" content="en_US">
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js"></script>
+<style>
+/* page Offshore */
+.duo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 48px; align-items: center; }
+section.bloc > .wrap.duo { padding-block: 72px; }
+.duo.inverse { grid-template-columns: minmax(0, .9fr) minmax(0, 1.2fr); }
+.duo h2 { margin-top: 12px; }
+.duo .intro { color: var(--muted); font-size: 18px; margin: 16px 0 22px; }
+.planche { margin: 0; background: var(--surface); border: 1px solid var(--line-strong); border-radius: 14px; overflow: hidden; }
+.planche svg { display: block; width: 100%; height: auto; }
+.frise-meteo { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-top: 1px solid var(--line); font: 500 12px/1 var(--mono); color: var(--dim); }
+.frise-meteo .piste { flex: 1; height: 4px; border-radius: 4px; background: var(--surface-2); position: relative; }
+.frise-meteo .piste b { position: absolute; left: 0; top: 0; bottom: 0; width: 22%; border-radius: 4px; background: var(--accent); animation: avance 12s linear infinite; }
+.frise-meteo .piste u { display: none; }
+@keyframes avance { from { width: 4%; } to { width: 96%; } }
+.profils { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-bottom: 22px; }
+.profil { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 16px 14px; display: grid; gap: 10px; align-content: start; }
+.profil.choisi { border-color: var(--accent); }
+.profil .nom { font: 700 17px/1.1 var(--mono); }
+.profil .sous { font: 500 12px/1 var(--mono); color: var(--dim); text-transform: uppercase; letter-spacing: .1em; }
+.profil .jauge { display: grid; gap: 4px; font: 500 12px/1.3 var(--mono); color: var(--muted); }
+.profil .barre { height: 6px; border-radius: 6px; background: var(--surface-2); overflow: hidden; }
+.profil .barre i { display: block; height: 100%; border-radius: 6px; background: var(--accent); }
+.profil .barre.temps i { background: var(--iso); }
+.cases.trois { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cases.quatre { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.ligne-temps { margin: 0 0 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px 8px; }
+.ligne-temps svg { display: block; width: 100%; height: auto; }
+.ligne-temps svg text { font-family: var(--mono); }
+.tableau-route { width: 100%; margin-top: 14px; border-collapse: collapse; font: 500 13px/1.3 var(--mono); font-variant-numeric: tabular-nums; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.tableau-route th { text-align: right; font-weight: 600; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); padding: 9px 10px; border-bottom: 1px solid var(--line); }
+.tableau-route td { text-align: right; padding: 8px 10px; color: var(--muted); border-bottom: 1px solid var(--line); }
+.tableau-route th:first-child, .tableau-route td:first-child { text-align: left; }
+.tableau-route tr.vire td { color: var(--fg); background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.tableau-route tr:last-child td { border-bottom: 0; }
+@media (max-width: 960px) {
+  .duo, .duo.inverse { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .profils { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cases.trois, .cases.quatre { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .profils, .cases.trois, .cases.quatre { grid-template-columns: minmax(0, 1fr); }
+  .tableau-route { font-size: 11.5px; }
+  .tableau-route th, .tableau-route td { padding: 7px 6px; }
+}
+
+/* page Sparring Skipper */
+.badge-ss { display: inline-block; font: 600 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--on-accent); background: var(--accent); padding: 6px 9px; border-radius: 5px; }
+.hero h1 { margin-top: 16px; }
+.hero .chapeau b { color: var(--fg); font-weight: 600; }
+.bulletin { margin: 0; background: var(--surface); border: 1px solid var(--line-strong); border-radius: 14px; padding: 22px 24px; display: grid; gap: 12px; box-shadow: 0 30px 80px -40px rgb(0 0 0 / .6); }
+.b-tete { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font: 600 12px/1.3 var(--mono); color: var(--dim); text-transform: uppercase; letter-spacing: .08em; }
+.b-verdict { background: color-mix(in srgb, var(--accent) 10%, transparent); border-left: 3px solid var(--accent); border-radius: 6px; padding: 12px 14px; display: grid; gap: 4px; }
+.b-verdict b { font: 700 19px/1.25 var(--mono); }
+.b-verdict span { color: var(--muted); font-size: 15px; }
+.b-ligne { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--line); padding-bottom: 8px; font-size: 15px; color: var(--muted); }
+.b-ligne b { font: 600 15px/1.3 var(--mono); color: var(--fg); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 4px; }
+.b-ligne b u { text-decoration: none; }
+.b-ligne .etoiles { text-decoration: none; color: var(--accent); letter-spacing: 2px; }
+.b-ligne .etoiles i { font-style: normal; color: var(--surface-2); }
+.b-pied { font: 500 12px/1.4 var(--mono); color: var(--dim); }
+.chaine { list-style: none; margin: 0 0 22px; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; counter-reset: c; }
+.chaine li { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 14px 16px; display: grid; gap: 6px; align-content: start; }
+.chaine li:not(:last-child)::after { content: "→"; position: absolute; right: -10px; top: 18px; font: 700 14px/1 var(--mono); color: var(--accent); background: var(--bg); padding: 2px 0; z-index: 1; }
+.chaine .n { font: 700 12px/1 var(--mono); color: var(--on-accent); background: var(--accent); width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; }
+.chaine b { font: 600 14.5px/1.3 var(--mono); }
+.chaine li > span:last-child { color: var(--muted); font-size: 14px; line-height: 1.45; }
+.chaine li:nth-child(4) { border-color: var(--accent); }
+.a-trous { margin: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 16px; align-items: center; }
+.a-trous-l { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; display: grid; gap: 8px; }
+.a-trous-l .lib { font: 600 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+.a-trous-l p { font-size: 17px; }
+.a-trous code { font: 600 14px/1 var(--mono); color: var(--iso); background: var(--surface-2); padding: 3px 6px; border-radius: 5px; }
+.a-trous mark { font: 700 17px/1 var(--mono); color: var(--on-accent); background: var(--accent); padding: 2px 6px; border-radius: 5px; }
+.a-trous .fleche { font: 700 24px/1 var(--mono); color: var(--accent); }
+.niveaux3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.niveau { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; display: grid; gap: 8px; align-content: start; }
+.niveau b { font: 700 18px/1.2 var(--mono); }
+.niveau span { color: var(--muted); font-size: 15.5px; }
+.pages { display: flex; height: 70px; align-items: flex-end; margin-bottom: 8px; }
+.pages i { display: block; width: 46px; height: 62px; border-radius: 4px; background: var(--surface-2); border: 1px solid var(--line-strong); margin-left: -30px; box-shadow: -3px 3px 0 rgb(0 0 0 / .15); }
+.pages i:first-child { margin-left: 0; }
+.pages i:last-child { background: color-mix(in srgb, var(--accent) 18%, var(--surface-2)); }
+.deux-volets { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.volet-c { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: grid; align-content: start; }
+.volet-c > svg { display: block; width: 100%; height: auto; }
+.volet-c .txt { padding: 18px 22px 22px; }
+.volet-c h3 { font-size: 20px; margin-bottom: 10px; }
+.liste-c { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.liste-c li { display: grid; grid-template-columns: 18px 1fr; gap: 8px; color: var(--muted); }
+.liste-c li::before { content: "→"; font-family: var(--mono); color: var(--accent); }
+@media (max-width: 960px) {
+  .chaine { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .chaine li::after { display: none; }
+  .niveaux3, .deux-volets { grid-template-columns: minmax(0, 1fr); }
+  .a-trous { grid-template-columns: minmax(0, 1fr); }
+  .a-trous .fleche { transform: rotate(90deg); justify-self: center; }
+}
+
+/* appel final */
+.fin .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; padding-block: 64px; }
+.fin h2 { max-width: 18em; }
+.fin p { color: var(--muted); margin-top: 10px; }
+
+footer { border-top: 1px solid var(--line); color: var(--dim); font-size: 14px; }
+footer .wrap { padding-block: 34px 44px; display: grid; grid-template-columns: 1.2fr repeat(3, minmax(0, 1fr)); gap: 24px; }
+footer h4 { font: 600 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+footer a { text-decoration: none; }
+footer a:hover { color: var(--fg); }
+
+@media (max-width: 960px) {
+  nav.menu { display: none; }
+  nav.menu.ouvert { display: grid; position: absolute; top: 100%; left: 0; right: 0; gap: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  nav.menu.ouvert a { padding-block: 14px; border-top: 1px solid var(--line); }
+  .burger { display: inline-block; }
+  header.top .langue { display: none; }
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); gap: 34px; padding-block: 40px; }
+  .forts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .preuve .chiffres, .familles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .abord .wrap.grille { grid-template-columns: minmax(0, 1fr); }
+  footer .wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  body { font-size: 16px; }
+  header.top .btn-plein { display: none; }
+  .portes, .ss .volets, .forts { grid-template-columns: minmax(0, 1fr); }
+  section.bloc > .wrap { padding-block: 52px; }
+  .porte, .volet { padding: 22px; }
+  .instruments { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .instr.large { grid-column: span 2; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+/* page Fonctionnalités — le catalogue par domaine ; les données sont dans le bloc JSON « catalogue » en fin de page */
+.hero .wrap.fn-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); }
+.index { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.idx { display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 11px 12px; font: 500 14px/1.3 var(--mono); text-decoration: none; color: var(--fg); transition: border-color .2s; }
+.idx:hover { border-color: var(--accent); }
+.idx svg { width: 30px; height: 30px; color: var(--accent); }
+.idx small { font: 600 12px/1 var(--mono); color: var(--dim); font-variant-numeric: tabular-nums; }
+.filtre { position: sticky; z-index: 4; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.filtre .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; padding-block: 10px; }
+.filtre .lib { font: 600 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--dim); margin-right: 4px; }
+.filtre button { font: 600 12.5px/1 var(--mono); color: var(--muted); background: transparent; border: 1px solid var(--line-strong); border-radius: 999px; padding: 8px 12px; cursor: pointer; }
+.filtre button[aria-pressed="true"] { color: var(--on-accent); background: var(--accent); border-color: var(--accent); }
+.filtre .note { margin-left: auto; font: 500 12px/1.3 var(--mono); color: var(--dim); }
+section.domaine { border-top: 1px solid var(--line); scroll-margin-top: 120px; }
+section.domaine > .wrap { padding-block: 64px; }
+.dom-tete { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: center; margin-bottom: 30px; }
+.dom-tete h2 { margin-top: 12px; }
+.dom-tete .intro { color: var(--muted); font-size: 18px; margin-top: 14px; }
+.capture { margin: 0; aspect-ratio: 16 / 10; border: 1px dashed var(--line-strong); border-radius: 14px; background: repeating-linear-gradient(135deg, var(--surface) 0 14px, color-mix(in srgb, var(--surface) 72%, var(--bg)) 14px 28px); display: grid; place-items: center; text-align: center; padding: 22px; }
+.capture span { font: 500 13px/1.5 var(--mono); color: var(--dim); max-width: 27em; }
+.capture b { display: block; color: var(--muted); font-weight: 600; margin-bottom: 6px; letter-spacing: .12em; text-transform: uppercase; font-size: 11px; }
+.fonctions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.fn { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 18px 16px; display: grid; grid-template-columns: 34px 1fr; gap: 6px 12px; align-content: start; transition: opacity .25s, border-color .25s; }
+.fn > svg { width: 34px; height: 34px; color: var(--accent); grid-row: span 3; }
+.fn h3 { font-size: 16px; }
+.fn p { color: var(--muted); font-size: 15px; line-height: 1.45; }
+.fn .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.tag { font: 600 11px/1 var(--mono); letter-spacing: .04em; color: var(--dim); border: 1px solid var(--line-strong); border-radius: 999px; padding: 5px 8px; }
+.tag.plateforme { color: var(--c-heading); border-color: color-mix(in srgb, var(--c-heading) 45%, transparent); }
+.fn.eteinte { opacity: .26; }
+.fn.allumee { border-color: var(--line-strong); }
+.tiroir { margin-top: 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.tiroir summary { cursor: pointer; padding: 14px 18px; font: 600 14px/1.3 var(--mono); color: var(--muted); list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+.tiroir summary::-webkit-details-marker { display: none; }
+.tiroir summary::after { content: "+"; color: var(--accent); font-size: 18px; line-height: 1; }
+.tiroir[open] summary::after { content: "−"; }
+.tiroir ul { list-style: none; margin: 0; padding: 2px 18px 18px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 28px; }
+.tiroir li { display: grid; grid-template-columns: 18px 1fr; gap: 8px; color: var(--muted); font-size: 15px; line-height: 1.45; }
+.tiroir li::before { content: "→"; font-family: var(--mono); color: var(--accent); }
+.tiroir li b { color: var(--fg); font-weight: 600; }
+.tiroir li .tag { margin-left: 6px; vertical-align: 1px; }
+.partout { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.partout .fn > svg { grid-row: span 2; }
+@media (max-width: 960px) {
+  .hero .wrap.fn-hero { grid-template-columns: minmax(0, 1fr); }
+  .dom-tete { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .fonctions, .partout { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .filtre .note { margin-left: 0; flex-basis: 100%; }
+}
+@media (max-width: 620px) {
+  .index, .fonctions, .partout, .tiroir ul { grid-template-columns: minmax(0, 1fr); }
+  section.domaine > .wrap { padding-block: 48px; }
+}
+/* un domaine sans capture : le texte seul, sur une colonne ; une vraie capture : l'image remplit le cadre */
+.dom-tete.sans-capture { grid-template-columns: minmax(0, 1fr); }
+.dom-tete.sans-capture > div { max-width: 46em; }
+.capture.image { background: var(--surface); border-style: solid; padding: 0; overflow: hidden; }
+.capture.image img { display: block; width: 100%; height: 100%; object-fit: cover; }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="marque" href="index.html"><img alt="" src="assets/logo.png">Sailaware</a>
+    <nav class="menu" id="menu" aria-label="Navigation principale" data-en-aria-label="Main navigation">
+      <a href="offshore.html">Offshore</a>
+      <a href="coastal.html">Coastal</a>
+      <a href="features.html" aria-current="page" data-en="Features">Fonctionnalités</a>
+      <a href="routing.html" data-en="Routing">Le routage</a>
+      <a href="sparring-skipper.html">Sparring Skipper</a>
+      <a href="about.html" data-en="About">À propos</a>
+    </nav>
+    <div class="outils" style="display:flex;gap:10px;align-items:center">
+      <div class="pill-toggle" role="group" aria-label="Langue" data-en-aria-label="Language"><button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+      <button class="icon-btn theme-btn" type="button" aria-label="Basculer jour / nuit" data-en-aria-label="Switch day / night" title="Jour / Nuit" data-en-title="Day / Night"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+    </div>
+    <a class="btn btn-plein btn-petit" href="download.html#acces" data-en="Request access">Demander l'accès</a>
+    <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+  </div>
+</header>
+
+<main id="haut">
+<section class="hero">
+  <div class="wrap fn-hero">
+    <div>
+      <div class="eyebrow" data-en="Features">Fonctionnalités</div>
+      <h1 data-en="Everything for navigation.<br><em>In a single app.</em>">Toute la navigation.<br><em>Dans un seul logiciel.</em></h1>
+      <p class="chapeau" data-en="Routing, weather, offline charts, instruments, polars, celestial fix, watch and voyages: it all fits in the same app, on Mac and on Windows. Charts and weather are downloaded before you leave; route computation, instruments and alarms then run on board, without a connection.">Routage, météo, cartes hors ligne, instruments, polaires, point astral, veille et voyages : tout tient dans la même application, sur Mac et sur Windows. Les cartes et la météo se téléchargent avant de partir ; le calcul des routes, les instruments et les alarmes tournent ensuite à bord, sans connexion.</p>
+      <div class="actions">
+        <a class="btn btn-plein" href="download.html#acces" data-en="Request access">Demander l'accès</a>
+        <a class="btn btn-trait" href="#d-routage" data-en="Start with routing">Commencer par le routage</a>
+      </div>
+      <div class="faits"><span data-en="macOS and Windows">macOS et Windows</span><span>Français · English</span><span id="compte"></span></div>
+    </div>
+    <nav class="index" id="index" aria-label="Les domaines" data-en-aria-label="The areas"></nav>
+  </div>
+</section>
+
+<div class="filtre" id="filtre"><div class="wrap">
+  <span class="lib" data-en="For whom">Pour qui</span>
+  <button type="button" data-pour="tous" aria-pressed="true" data-en="All">Tout</button>
+  <button type="button" data-pour="offshore" aria-pressed="false" data-en="Offshore · open ocean">Offshore · au large</button>
+  <button type="button" data-pour="coastal" aria-pressed="false" data-en="Coastal · along the coast">Coastal · à la côte</button>
+  <span class="note" id="filtre-note"></span>
+</div></div>
+
+<div id="catalogue-rendu"></div>
+
+<section class="bloc fin" id="fin">
+  <div class="wrap">
+    <div>
+      <h2 data-en="See it at work on your next trip.">Le voir à l'œuvre sur votre prochaine navigation.</h2>
+      <p data-en="Sailaware is in beta: request a key, install it, and your first route is computed straight away.">Sailaware est en bêta : demandez une clé, installez, et votre première route se calcule dans la foulée.</p>
+    </div>
+    <a class="btn btn-plein" href="download.html#acces" data-en="Request access">Demander l'accès</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><a class="marque" href="index.html" style="font-size:16px"><img alt="" src="assets/logo.png" style="width:24px;height:24px;border-radius:6px">Sailaware</a><p style="margin-top:12px" data-en="Navigation software for macOS and Windows.">Logiciel de navigation pour macOS et Windows.</p></div>
+    <div><h4 data-en="Explore">Naviguer</h4><ul><li><a href="offshore.html">Offshore</a></li><li><a href="coastal.html">Coastal</a></li><li><a href="features.html" data-en="Features">Fonctionnalités</a></li><li><a href="routing.html" data-en="Routing">Le routage</a></li></ul></div>
+    <div><h4 data-en="Get started">Commencer</h4><ul><li><a href="download.html#acces" data-en="Request access">Demander l'accès</a></li><li><a href="download.html" data-en="Download">Télécharger</a></li><li><a href="sparring-skipper.html">Sparring Skipper</a></li></ul></div>
+    <div><h4>Sailaware</h4><ul><li><a href="about.html" data-en="About and contact">À propos et contact</a></li><li class="reglages"><div class="pill-toggle" role="group" aria-label="Langue" data-en-aria-label="Language"><button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div><button class="icon-btn theme-btn" type="button" aria-label="Basculer jour / nuit" data-en-aria-label="Switch day / night"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button></li></ul></div>
+  </div>
+</footer>
+
+<script type="application/json" id="catalogue">{"domaines": [{"id": "routage", "num": "01", "nom": "Routage", "icone": "eventail", "titre": "La route la plus rapide, avec vos contraintes.", "intro": "Le moteur calcule à bord, avec la polaire de votre bateau et le vent, les vagues et le courant des fichiers choisis. Il tient la côte à distance et respecte vos marques.", "capture": "La carte pendant un calcul : l'éventail des isochrones qui s'ouvre, puis la route retenue et son tableau de route.", "fonctions": [{"nom": "Du départ, ou de là où vous êtes", "texte": "La route du voyage entier, ou de votre position (GPS, estime ou dernier point) jusqu'à l'arrivée.", "icone": "route", "pour": ["offshore", "coastal"]}, {"nom": "Cinq profils de calcul", "texte": "Aperçu, Hauturier, Standard, Côtier, Régate : du coup d'œil rapide au calcul le plus fin.", "icone": "profils", "pour": ["offshore"]}, {"nom": "Marques et passages obligés", "texte": "Une bouée à laisser à bâbord ou à tribord avec sa distance de garde, un point de passage : la route les respecte.", "icone": "marque", "pour": ["offshore", "coastal"]}, {"nom": "Le courant et la côte", "texte": "Le courant des fichiers s'applique de lui-même ; la route garde la marge à terre que vous avez fixée.", "icone": "courant", "pour": ["offshore", "coastal"]}, {"nom": "Le tableau de route", "texte": "Durée, temps au moteur, allures et forces de vent, détail point par point ; « Pourquoi ? » explique une route qui bloque.", "icone": "tableau", "pour": ["offshore"]}, {"nom": "En navigation, en continu", "texte": "Le routage en temps réel recalcule la route et donne l'heure d'arrivée, l'écart et le cap à suivre.", "icone": "recalcul", "pour": ["offshore"]}], "aussi": [{"nom": "Comparer des routages", "texte": "sous les mêmes hypothèses : même départ, mêmes fichiers, avec ou sans courant, classés par durée."}, {"nom": "« Et si… »", "texte": "changer l'heure de départ ou le fichier météo pour revoir une route."}, {"nom": "Les isochrones", "texte": "dessinées en direct pendant le calcul, à afficher ou masquer ensuite."}, {"nom": "Les conditions rencontrées", "texte": "la route avec, en chaque point, l'heure et la météo recalculées."}, {"nom": "Le bateau sur la route", "texte": "il avance sur le tracé au rythme de la frise du temps."}, {"nom": "Router vers ou depuis un point", "texte": "d'un clic droit sur la carte."}, {"nom": "Des profils réglables", "texte": "marge à la côte, angles interdits au près et au portant, vent et vagues maximums, moteur, virements et empannages de jour et de nuit."}, {"nom": "Un cône de recherche", "texte": "pour orienter le calcul vers l'arrivée."}, {"nom": "Garder ses routages", "texte": "chacun s'enregistre, s'affiche sur la carte et s'exporte en GPX."}]}, {"id": "meteo", "num": "02", "nom": "Météo", "icone": "vent", "titre": "La météo que vous choisissez, lisible sur la carte.", "intro": "Vous tracez une zone, choisissez le modèle et l'horizon : le service météo Sailaware prépare le fichier. Vos propres fichiers GRIB s'ouvrent aussi.", "capture": "La carte avec le vent en particules, la frise du temps en bas et le widget Météo ouvert.", "fonctions": [{"nom": "Demander une prévision", "texte": "Une zone tracée sur la carte, un modèle, les variables, l'horizon et le pas : le fichier arrive prêt.", "icone": "modeles", "pour": ["offshore", "coastal"], "tags": ["Internet"]}, {"nom": "Vos fichiers GRIB", "texte": "Glissez un fichier GRIB dans l'application : il s'ouvre comme les autres.", "icone": "fichiers", "pour": ["offshore"]}, {"nom": "Vent, vagues et courant", "texte": "Le vent en barbules ou en particules, les vagues et le courant, dessinés sur la carte.", "icone": "vagues", "pour": ["offshore", "coastal"]}, {"nom": "La frise du temps", "texte": "On avance pas à pas ou de trois heures en trois heures ; la molette fait défiler le temps.", "icone": "frise", "pour": ["offshore", "coastal"]}, {"nom": "Des fichiers tenus à jour", "texte": "Chaque fichier dit s'il est à jour ou si un nouveau bulletin est sorti ; la mise à jour se fait d'un geste.", "icone": "maj", "pour": ["offshore", "coastal"], "tags": ["Internet"]}, {"nom": "Fusionner des fichiers", "texte": "Un fichier de référence, des priorités par variable : plusieurs GRIB n'en font plus qu'un.", "icone": "couches", "pour": ["offshore"]}], "aussi": [{"nom": "La taille estimée", "texte": "affichée avant chaque téléchargement."}, {"nom": "La prévision la plus fraîche", "texte": "une option qui prend, pour chaque heure, le bulletin le plus récent."}, {"nom": "La valeur sous le curseur", "texte": "vent, vagues ou courant au point visé."}, {"nom": "La fiabilité du fichier", "texte": "le vent prévu comparé au vent mesuré à bord, sur la dernière heure.", "tags": ["NMEA"]}, {"nom": "Le widget Météo", "texte": "sur la carte : le fichier du voyage, « Tout réactualiser », en format standard ou réduit."}, {"nom": "Exporter une sélection", "texte": "les fichiers choisis copiés dans un dossier."}, {"nom": "L'état du service", "texte": "une pastille dit si le service météo répond."}]}, {"id": "cartes", "num": "03", "nom": "Cartes", "icone": "carte", "titre": "Des cartes qui restent à bord, même sans réseau.", "intro": "Avant de partir, vous téléchargez le monde entier ou vos zones, à la précision voulue. Vos cartes marines personnelles s'ajoutent aux fonds.", "capture": "Réglages › Cartes : une zone hors ligne tracée sur la carte, son téléchargement en cours.", "fonctions": [{"nom": "Hors ligne, le monde ou vos zones", "texte": "Un pré-pack mondial, ou des zones tracées à la main avec leur plage de zoom.", "icone": "horsligne", "pour": ["offshore", "coastal"], "tags": ["à télécharger avant"]}, {"nom": "Plusieurs fonds", "texte": "Un fond clair, un fond océan, l'imagerie satellite, et la signalisation maritime par-dessus.", "icone": "couches", "pour": ["offshore", "coastal"]}, {"nom": "Vos cartes marines", "texte": "Vos fichiers MBTiles s'affichent comme un fond ; un dossier entier est relu à chaque démarrage.", "icone": "carte", "pour": ["offshore", "coastal"]}, {"nom": "Le trait de côte du monde", "texte": "Téléchargé une fois, il sert au calcul des routes près de terre.", "icone": "marque", "pour": ["offshore", "coastal"]}, {"nom": "La règle", "texte": "Distance et relèvement, vrai et magnétique, d'un point à un autre.", "icone": "unites", "pour": ["coastal"]}, {"nom": "Le globe ou la carte à plat", "texte": "La Terre en relief pour les grandes traversées, ou la carte à plat.", "icone": "langue", "pour": ["offshore"]}], "aussi": [{"nom": "Un fond de jour, un fond de nuit", "texte": "choisis à l'avance."}, {"nom": "Le suivi des téléchargements", "texte": "temps restant, annuler, relancer, vider le cache."}, {"nom": "Centrer sur le bateau", "texte": "d'un bouton."}, {"nom": "Des boutons qui se replient", "texte": "pour laisser la carte entière ; Homme à la mer reste visible."}, {"nom": "Le fond océan", "texte": "demande une clé personnelle, saisie dans les réglages."}]}, {"id": "instruments", "num": "04", "nom": "Instruments", "icone": "instruments", "titre": "Les instruments du bord, disposés comme vous voulez.", "intro": "Sailaware lit vos instruments en NMEA 0183 par le réseau du bord et les affiche en grille : vingt-huit valeurs et six cadrans, placés où vous voulez.", "capture": "La carte de nuit et sa grille d'instruments : cap, vitesse, vent et polaire.", "fonctions": [{"nom": "Vingt-huit valeurs, six cadrans", "texte": "Position, caps, vitesses, vent réel et apparent, courant, pression ; les cadrans Cap, Vitesse, Vent, Polaire, Profondeur et le grand widget.", "icone": "cadran", "pour": ["offshore", "coastal"]}, {"nom": "Vos dispositions", "texte": "Un atelier pour placer les instruments, enregistrer la grille, en garder plusieurs et passer de l'une à l'autre.", "icone": "instruments", "pour": ["offshore", "coastal"]}, {"nom": "La liaison NMEA", "texte": "Une adresse et un port, un bouton Tester, le flux en direct, une trame décodée.", "icone": "prise", "pour": ["offshore", "coastal"], "tags": ["NMEA 0183 · TCP"]}, {"nom": "Le bateau face à sa polaire", "texte": "Vitesse polaire, efficacité, et un cadran pour simuler un cap ou un angle au vent.", "icone": "polaire", "pour": ["offshore"]}, {"nom": "La dernière heure", "texte": "Vitesses, vent, température et pression : la tendance de la dernière heure.", "icone": "pression", "pour": ["offshore"]}, {"nom": "Où sera le bateau", "texte": "Un clic droit sur le bateau projette sa position à venir, au cap, à la route ou à l'angle au vent.", "icone": "estime", "pour": ["offshore"]}], "aussi": [{"nom": "Vrai ou apparent, vrai ou magnétique", "texte": "un appui long sur l'instrument."}, {"nom": "La fiche de chaque instrument", "texte": "ce qu'il montre et d'où vient sa valeur."}, {"nom": "La déclinaison", "texte": "transmise par le bord, calculée, ou saisie à la main."}, {"nom": "La sortie NMEA", "texte": "les données réémises sur le réseau, pour une autre application de navigation."}, {"nom": "Avec le simulateur Sailaway III", "texte": "un préréglage de liaison, les navires AIS du jeu, le changement de bateau reconnu."}]}, {"id": "polaires", "num": "05", "nom": "Polaires", "icone": "polaire", "titre": "La polaire de votre bateau, et celle qu'il apprend.", "intro": "La polaire fait la route. Vous l'importez, la corrigez, la lissez ; Sailaware peut aussi l'affiner avec ce que mesurent vos instruments.", "capture": "Une polaire en diagramme, avec le panneau VMG et l'angle optimal.", "fonctions": [{"nom": "Importer ou créer", "texte": "Un fichier .pol, .csv ou .txt, ou une grille vierge à remplir.", "icone": "importer", "pour": ["offshore", "coastal"]}, {"nom": "La lire", "texte": "En diagramme ou en tableau, vent par vent, avec la VMG et l'angle optimal.", "icone": "polaire", "pour": ["offshore"]}, {"nom": "La corriger, la lisser", "texte": "Modifier la grille, la lisser, comparer avant et après.", "icone": "reglages", "pour": ["offshore"]}, {"nom": "L'apprendre en naviguant", "texte": "Une polaire d'apprentissage se remplit des vitesses mesurées à bord, au-dessus d'un seuil que vous fixez.", "icone": "bateau", "pour": ["offshore"], "tags": ["NMEA"]}], "aussi": [{"nom": "Dupliquer", "texte": "pour essayer une variante sans toucher l'originale."}, {"nom": "Exporter", "texte": "en .pol ou en .csv."}, {"nom": "Changer de polaire", "texte": "depuis la carte, d'un bouton."}, {"nom": "Ranger", "texte": "active, en apprentissage ou archivée."}]}, {"id": "position", "num": "06", "nom": "Position et astronomie", "icone": "sextant", "titre": "Faire le point, avec ou sans GPS.", "intro": "Quatre façons de faire le point, du GPS au sextant. Chaque point garde sa source et entre dans la trace du voyage.", "capture": "L'écran Point astral : trois droites de hauteur qui se croisent sur la carte.", "fonctions": [{"nom": "Le point GPS", "texte": "La position figée, avec les instruments du moment.", "icone": "gps", "pour": ["offshore", "coastal"], "tags": ["GPS"]}, {"nom": "L'estime", "texte": "Compas, déviation, déclinaison, dérive et courant, enchaînés jusqu'à la position estimée.", "icone": "estime", "pour": ["offshore"]}, {"nom": "Les relèvements", "texte": "Des amers relevés au compas : l'intersection est calculée.", "icone": "cap", "pour": ["coastal"]}, {"nom": "Le point astral", "texte": "Jusqu'à six astres parmi le Soleil, quatre planètes et 65 étoiles ; les droites de hauteur se tracent.", "icone": "sextant", "pour": ["offshore"]}, {"nom": "L'atlas du ciel", "texte": "Les 88 constellations, hémisphère nord ou sud ; une étoile se reporte dans le point astral.", "icone": "etoiles", "pour": ["offshore"]}], "aussi": []}, {"id": "veille", "num": "07", "nom": "Veille et AIS", "icone": "alarme", "titre": "Une veille qui ne dort pas.", "intro": "Mouillage, collision, vent fort, profondeur, performance, navires AIS autour : tant que l'application est ouverte, elle veille.", "capture": "Les navires AIS sur la carte avec leurs vecteurs, et le panneau des quatre plus proches.", "fonctions": [{"nom": "Le mouillage", "texte": "Le point d'ancrage, un rayon, une durée : l'alarme sonne si le bateau chasse.", "icone": "ancre", "pour": ["offshore", "coastal"], "tags": ["GPS"]}, {"nom": "La collision", "texte": "Seuils de collision et de vigilance, rayon de garde autour du bateau.", "icone": "ais", "pour": ["offshore", "coastal"], "tags": ["AIS"]}, {"nom": "Vent, fond, performance", "texte": "Le vent au-dessus d'un seuil, le fond sous le minimum, le bateau sous sa polaire.", "icone": "alarme", "pour": ["offshore", "coastal"]}, {"nom": "Les navires AIS", "texte": "Sur la carte avec leur route prévue à trois heures ; un écran pour les trier par distance, CPA ou TCPA.", "icone": "ais", "pour": ["offshore", "coastal"], "tags": ["AIS"]}, {"nom": "Homme à la mer", "texte": "Un bouton toujours visible pose la balise avec l'heure et la position.", "icone": "bouee", "pour": ["offshore", "coastal"]}, {"nom": "Les sonneries", "texte": "Six sonneries, un report de trente secondes, une coupure de cinq minutes, l'historique des dernières 24 h.", "icone": "horloge", "pour": ["offshore", "coastal"]}], "aussi": []}, {"id": "voyages", "num": "08", "nom": "Voyages et rapports", "icone": "journal", "titre": "Chaque voyage, du projet au rapport.", "intro": "Un bateau, un voyage, un parcours : la trace s'écrit au fil de la navigation et finit en rapport PDF.", "capture": "La page d'un voyage : son parcours sur la carte, sa trace et le bouton Rapport PDF.", "fonctions": [{"nom": "Vos bateaux", "texte": "Type, dimensions, pavillon, MMSI, table de déviation.", "icone": "bateau", "pour": ["offshore", "coastal"]}, {"nom": "Vos voyages", "texte": "Prévus, en cours ou archivés ; créés depuis la carte d'un clic droit.", "icone": "route", "pour": ["offshore", "coastal"]}, {"nom": "Le parcours", "texte": "Départ, arrivée, passages obligés et marques, posés et déplacés sur la carte.", "icone": "marque", "pour": ["offshore", "coastal"]}, {"nom": "La trace", "texte": "Chaque point avec sa source (GPS, estime, relèvement, astral) ; un point automatique toutes les 10 min à 3 h.", "icone": "traces", "pour": ["offshore"]}, {"nom": "Le rapport PDF", "texte": "La carte, la distance, la durée, la vitesse moyenne, le vent et les allures rencontrés.", "icone": "rapport", "pour": ["offshore", "coastal"]}, {"nom": "Quatre modes de navigation", "texte": "De l'Explorateur au Compétiteur, chaque mode ouvre plus ou moins d'aides ; sans GPS, le bateau avance à l'estime.", "icone": "reglages", "pour": ["offshore"]}], "aussi": [{"nom": "Archiver, réactiver", "texte": "un voyage fini se range, et revient quand on veut."}, {"nom": "Les routages du voyage", "texte": "réunis dans sa page."}, {"nom": "Bateau et voyage en cours", "texte": "changés depuis la carte, d'une pastille."}]}, {"id": "echanges", "num": "09", "nom": "Échanges", "icone": "echange", "titre": "Vos routes ne restent pas enfermées.", "intro": "Sailaware travaille avec les logiciels de routage que vous connaissez, et ses routes en sortent en GPX.", "capture": "Le menu Routage ouvert sur « Router avec LuckGrib » et « Router avec QtVlm ».", "fonctions": [{"nom": "Router avec LuckGrib", "texte": "Le parcours et la météo partent vers LuckGrib ; la route calculée revient d'elle-même.", "icone": "echange", "pour": ["offshore"], "tags": ["Mac seulement"]}, {"nom": "Router avec QtVlm", "texte": "Le parcours et les fichiers GRIB partent vers QtVlm ; la route revient en GPX.", "icone": "echange", "pour": ["offshore"]}, {"nom": "Les routes en GPX", "texte": "Chaque routage s'exporte en GPX, pour le reprendre ailleurs.", "icone": "exporter", "pour": ["offshore", "coastal"]}, {"nom": "Polaires et GRIB", "texte": "Les polaires en .pol et .csv, les fichiers GRIB en entrée comme en sortie.", "icone": "fichiers", "pour": ["offshore"]}, {"nom": "La sortie NMEA", "texte": "Les données du bord réémises sur le réseau, pour une autre application.", "icone": "prise", "pour": ["offshore"]}], "aussi": []}, {"id": "quotidien", "num": "10", "nom": "Au quotidien", "icone": "reglages", "titre": "Simple à prendre en main, à jour tout seul.", "intro": "Un guide pour commencer, le français ou l'anglais, la nuit ou le jour, et des mises à jour qui ne s'installent qu'avec votre accord.", "capture": "Le guide de prise en main, à sa première page.", "fonctions": [{"nom": "Un guide pour commencer", "texte": "Neuf pages, puis la création du bateau et du premier voyage ; on peut le revoir.", "icone": "journal", "pour": ["offshore", "coastal"]}, {"nom": "Français ou anglais", "texte": "La langue se change dans les réglages.", "icone": "langue", "pour": ["offshore", "coastal"]}, {"nom": "Nuit ou jour", "texte": "Un bouton passe la carte en couleurs de nuit.", "icone": "nuitjour", "pour": ["offshore", "coastal"]}, {"nom": "Des mises à jour sages", "texte": "Cherchées au lancement et toutes les six heures ; installées seulement avec votre accord.", "icone": "maj", "pour": ["offshore", "coastal"], "tags": ["Internet"]}, {"nom": "La sauvegarde", "texte": "Une sauvegarde à la demande, des copies automatiques, une restauration.", "icone": "importer", "pour": ["offshore", "coastal"]}, {"nom": "Un diagnostic transparent", "texte": "En cas de souci, un rapport que vous lisez avant de l'envoyer.", "icone": "rapport", "pour": ["offshore", "coastal"]}], "aussi": [{"nom": "La taille d'affichage", "texte": "100, 110 ou 125 %."}, {"nom": "Le signal de panne grave", "texte": "envoyé de lui-même, et désactivable."}]}]}</script>
+<script type="application/json" id="catalogue-en">{"domaines": [{"id": "routage", "num": "01", "icone": "eventail", "nom": "Routing", "titre": "The fastest route, with your constraints.", "intro": "The engine computes on board, with your boat's polar and the wind, waves and current from the files you choose. It keeps the coast at a distance and respects your marks.", "capture": "The chart during a computation: the fan of isochrones opening up, then the chosen route and its route table.", "fonctions": [{"nom": "From the start, or from where you are", "texte": "The route for the whole voyage, or from your position (GPS, dead reckoning or last fix) to the arrival.", "icone": "route", "pour": ["offshore", "coastal"]}, {"nom": "Five computation profiles", "texte": "Overview, Offshore, Standard, Coastal, Racing: from a quick look to the finest computation.", "icone": "profils", "pour": ["offshore"]}, {"nom": "Marks and mandatory passages", "texte": "A buoy to leave to port or starboard with its clearance distance, a waypoint: the route respects them.", "icone": "marque", "pour": ["offshore", "coastal"]}, {"nom": "Current and coastline", "texte": "Current from the files applies by itself; the route keeps the shore margin you set.", "icone": "courant", "pour": ["offshore", "coastal"]}, {"nom": "The route table", "texte": "Duration, time under engine, points of sail and wind strengths, point-by-point detail; “Why?” explains a route that gets stuck.", "icone": "tableau", "pour": ["offshore"]}, {"nom": "Underway, continuously", "texte": "Real-time routing recomputes the route and gives the arrival time, the deviation and the course to steer.", "icone": "recalcul", "pour": ["offshore"]}], "aussi": [{"nom": "Compare routings", "texte": "under the same assumptions: same start, same files, with or without current, ranked by duration."}, {"nom": "“What if…”", "texte": "change the departure time or the weather file to review a route."}, {"nom": "The isochrones", "texte": "drawn live during the computation, to show or hide afterwards."}, {"nom": "The conditions met", "texte": "the route with, at each point, the recomputed time and weather."}, {"nom": "The boat on the route", "texte": "it moves along the track in step with the timeline."}, {"nom": "Route to or from a point", "texte": "with a right-click on the chart."}, {"nom": "Adjustable profiles", "texte": "shore margin, no-go angles upwind and downwind, maximum wind and waves, engine, tacks and gybes by day and by night."}, {"nom": "A search cone", "texte": "to steer the computation towards the arrival."}, {"nom": "Keep your routings", "texte": "each one is saved, shown on the chart and exported as GPX."}]}, {"id": "meteo", "num": "02", "icone": "vent", "nom": "Weather", "titre": "The weather you choose, readable on the chart.", "intro": "You draw an area, choose the model and the horizon: the Sailaware weather service prepares the file. Your own GRIB files open too.", "capture": "The chart with the wind as particles, the timeline at the bottom and the Weather widget open.", "fonctions": [{"nom": "Request a forecast", "texte": "An area drawn on the chart, a model, the variables, the horizon and the step: the file arrives ready.", "icone": "modeles", "pour": ["offshore", "coastal"], "tags": ["Internet"]}, {"nom": "Your GRIB files", "texte": "Drag a GRIB file into the app: it opens like the others.", "icone": "fichiers", "pour": ["offshore"]}, {"nom": "Wind, waves and current", "texte": "Wind as barbs or particles, waves and current, drawn on the chart.", "icone": "vagues", "pour": ["offshore", "coastal"]}, {"nom": "The timeline", "texte": "Move one step at a time or three hours at a time; the scroll wheel moves through time.", "icone": "frise", "pour": ["offshore", "coastal"]}, {"nom": "Files kept up to date", "texte": "Each file says whether it is current or a newer forecast is out; updating takes one gesture.", "icone": "maj", "pour": ["offshore", "coastal"], "tags": ["Internet"]}, {"nom": "Merge files", "texte": "A reference file, priorities per variable: several GRIB files become one.", "icone": "couches", "pour": ["offshore"]}], "aussi": [{"nom": "The estimated size", "texte": "shown before each download."}, {"nom": "The freshest forecast", "texte": "an option that takes, for each hour, the most recent run."}, {"nom": "The value under the cursor", "texte": "wind, waves or current at the point you aim at."}, {"nom": "How reliable the file is", "texte": "forecast wind compared with wind measured on board, over the last hour.", "tags": ["NMEA"]}, {"nom": "The Weather widget", "texte": "on the chart: the voyage's file, “Refresh all”, in standard or compact format."}, {"nom": "Export a selection", "texte": "the chosen files copied to a folder."}, {"nom": "The service status", "texte": "a dot tells whether the weather service is responding."}]}, {"id": "cartes", "num": "03", "icone": "carte", "nom": "Charts", "titre": "Charts that stay on board, even without a network.", "intro": "Before leaving, you download the whole world or your own areas, at the level of detail you want. Your own nautical charts are added to the base maps.", "capture": "Settings › Charts: an offline area drawn on the chart, its download in progress.", "fonctions": [{"nom": "Offline: the world or your areas", "texte": "A worldwide pre-pack, or areas drawn by hand with their zoom range.", "icone": "horsligne", "pour": ["offshore", "coastal"], "tags": ["download beforehand"]}, {"nom": "Several base maps", "texte": "A light base map, an ocean base map, satellite imagery, and maritime marks on top.", "icone": "couches", "pour": ["offshore", "coastal"]}, {"nom": "Your nautical charts", "texte": "Your MBTiles files show as a base map; a whole folder is re-read at each start-up.", "icone": "carte", "pour": ["offshore", "coastal"]}, {"nom": "The world's coastline", "texte": "Downloaded once, it is used to compute routes close to land.", "icone": "marque", "pour": ["offshore", "coastal"]}, {"nom": "The ruler", "texte": "Distance and bearing, true and magnetic, from one point to another.", "icone": "unites", "pour": ["coastal"]}, {"nom": "Globe or flat chart", "texte": "The Earth in relief for long crossings, or the flat chart.", "icone": "langue", "pour": ["offshore"]}], "aussi": [{"nom": "A day base map, a night base map", "texte": "chosen in advance."}, {"nom": "Download tracking", "texte": "time remaining, cancel, restart, clear the cache."}, {"nom": "Centre on the boat", "texte": "with one button."}, {"nom": "Buttons that fold away", "texte": "to free the whole chart; Man overboard stays visible."}, {"nom": "The ocean base map", "texte": "requires a personal key, entered in the settings."}]}, {"id": "instruments", "num": "04", "icone": "instruments", "nom": "Instruments", "titre": "Onboard instruments, laid out as you like.", "intro": "Sailaware reads your instruments in NMEA 0183 over the boat's network and shows them on a grid: twenty-eight values and six dials, placed where you want.", "capture": "The chart at night with its instrument grid: heading, speed, wind and polar.", "fonctions": [{"nom": "Twenty-eight values, six dials", "texte": "Position, headings, speeds, true and apparent wind, current, pressure; the Heading, Speed, Wind, Polar and Depth dials and the large widget.", "icone": "cadran", "pour": ["offshore", "coastal"]}, {"nom": "Your layouts", "texte": "A workshop to place the instruments, save the grid, keep several and switch from one to another.", "icone": "instruments", "pour": ["offshore", "coastal"]}, {"nom": "The NMEA link", "texte": "An address and a port, a Test button, the live feed, a decoded sentence.", "icone": "prise", "pour": ["offshore", "coastal"], "tags": ["NMEA 0183 · TCP"]}, {"nom": "The boat against its polar", "texte": "Polar speed, efficiency, and a dial to simulate a heading or a wind angle.", "icone": "polaire", "pour": ["offshore"]}, {"nom": "The last hour", "texte": "Speeds, wind, temperature and pressure: the trend over the last hour.", "icone": "pression", "pour": ["offshore"]}, {"nom": "Where the boat will be", "texte": "A right-click on the boat projects its future position, on the heading, the course or the wind angle.", "icone": "estime", "pour": ["offshore"]}], "aussi": [{"nom": "True or apparent, true or magnetic", "texte": "a long press on the instrument."}, {"nom": "Each instrument's card", "texte": "what it shows and where its value comes from."}, {"nom": "Declination", "texte": "sent by the boat's electronics, computed, or entered by hand."}, {"nom": "NMEA output", "texte": "the data re-sent over the network, for another navigation app."}, {"nom": "With the Sailaway III simulator", "texte": "a link preset, the game's AIS ships, boat changes recognised."}]}, {"id": "polaires", "num": "05", "icone": "polaire", "nom": "Polars", "titre": "Your boat's polar, and the one it learns.", "intro": "The polar makes the route. You import it, correct it, smooth it; Sailaware can also refine it with what your instruments measure.", "capture": "A polar as a diagram, with the VMG panel and the optimal angle.", "fonctions": [{"nom": "Import or create", "texte": "A .pol, .csv or .txt file, or a blank grid to fill in.", "icone": "importer", "pour": ["offshore", "coastal"]}, {"nom": "Read it", "texte": "As a diagram or a table, wind by wind, with VMG and the optimal angle.", "icone": "polaire", "pour": ["offshore"]}, {"nom": "Correct it, smooth it", "texte": "Edit the grid, smooth it, compare before and after.", "icone": "reglages", "pour": ["offshore"]}, {"nom": "Learn it while sailing", "texte": "A learning polar fills with the speeds measured on board, above a threshold you set.", "icone": "bateau", "pour": ["offshore"], "tags": ["NMEA"]}], "aussi": [{"nom": "Duplicate", "texte": "to try a variant without touching the original."}, {"nom": "Export", "texte": "as .pol or .csv."}, {"nom": "Switch polar", "texte": "from the chart, with one button."}, {"nom": "Organise", "texte": "active, learning or archived."}]}, {"id": "position", "num": "06", "icone": "sextant", "nom": "Position and astronomy", "titre": "Fix your position, with or without GPS.", "intro": "Four ways to fix your position, from GPS to sextant. Each fix keeps its source and goes into the voyage track.", "capture": "The Celestial fix screen: three lines of position crossing on the chart.", "fonctions": [{"nom": "The GPS fix", "texte": "The position frozen, with the instruments of the moment.", "icone": "gps", "pour": ["offshore", "coastal"], "tags": ["GPS"]}, {"nom": "Dead reckoning", "texte": "Compass, deviation, declination, leeway and current, chained up to the estimated position.", "icone": "estime", "pour": ["offshore"]}, {"nom": "Bearings", "texte": "Landmarks taken with the compass: the intersection is computed.", "icone": "cap", "pour": ["coastal"]}, {"nom": "The celestial fix", "texte": "Up to six bodies among the Sun, four planets and 65 stars; the lines of position are drawn.", "icone": "sextant", "pour": ["offshore"]}, {"nom": "The sky atlas", "texte": "The 88 constellations, northern or southern hemisphere; a star carries over into the celestial fix.", "icone": "etoiles", "pour": ["offshore"]}], "aussi": []}, {"id": "veille", "num": "07", "icone": "alarme", "nom": "Watch and AIS", "titre": "A watch that never sleeps.", "intro": "Anchor, collision, strong wind, depth, performance, AIS ships around: as long as the app is open, it keeps watch.", "capture": "AIS ships on the chart with their vectors, and the panel of the four closest.", "fonctions": [{"nom": "Anchor", "texte": "The anchor point, a radius, a duration: the alarm sounds if the boat drags.", "icone": "ancre", "pour": ["offshore", "coastal"], "tags": ["GPS"]}, {"nom": "Collision", "texte": "Collision and vigilance thresholds, a guard radius around the boat.", "icone": "ais", "pour": ["offshore", "coastal"], "tags": ["AIS"]}, {"nom": "Wind, depth, performance", "texte": "Wind above a threshold, depth below the minimum, the boat below its polar.", "icone": "alarme", "pour": ["offshore", "coastal"]}, {"nom": "AIS ships", "texte": "On the chart with their predicted track three hours ahead; a screen to sort them by distance, CPA or TCPA.", "icone": "ais", "pour": ["offshore", "coastal"], "tags": ["AIS"]}, {"nom": "Man overboard", "texte": "An always-visible button drops the marker with the time and position.", "icone": "bouee", "pour": ["offshore", "coastal"]}, {"nom": "Alarm sounds", "texte": "Six sounds, a thirty-second snooze, a five-minute mute, the history of the last 24 h.", "icone": "horloge", "pour": ["offshore", "coastal"]}], "aussi": []}, {"id": "voyages", "num": "08", "icone": "journal", "nom": "Voyages and reports", "titre": "Every voyage, from plan to report.", "intro": "A boat, a voyage, a course: the track writes itself as you sail and ends as a PDF report.", "capture": "A voyage page: its course on the chart, its track and the PDF report button.", "fonctions": [{"nom": "Your boats", "texte": "Type, dimensions, flag, MMSI, deviation table.", "icone": "bateau", "pour": ["offshore", "coastal"]}, {"nom": "Your voyages", "texte": "Planned, in progress or archived; created from the chart with a right-click.", "icone": "route", "pour": ["offshore", "coastal"]}, {"nom": "The course", "texte": "Departure, arrival, mandatory passages and marks, placed and moved on the chart.", "icone": "marque", "pour": ["offshore", "coastal"]}, {"nom": "The track", "texte": "Each point with its source (GPS, dead reckoning, bearing, celestial); an automatic point every 10 min to 3 h.", "icone": "traces", "pour": ["offshore"]}, {"nom": "The PDF report", "texte": "The chart, distance, duration, average speed, the wind and points of sail met.", "icone": "rapport", "pour": ["offshore", "coastal"]}, {"nom": "Four navigation modes", "texte": "From Explorer to Racer, each mode opens more or fewer aids; without GPS, the boat moves by dead reckoning.", "icone": "reglages", "pour": ["offshore"]}], "aussi": [{"nom": "Archive, reactivate", "texte": "a finished voyage is put away, and comes back whenever you like."}, {"nom": "The voyage's routings", "texte": "gathered on its page."}, {"nom": "Current boat and voyage", "texte": "changed from the chart, with a chip."}]}, {"id": "echanges", "num": "09", "icone": "echange", "nom": "Exchanges", "titre": "Your routes don't stay locked in.", "intro": "Sailaware works with the routing software you know, and its routes come out as GPX.", "capture": "The Routing menu open on “Route with LuckGrib” and “Route with QtVLM”.", "fonctions": [{"nom": "Route with LuckGrib", "texte": "The course and the weather go to LuckGrib; the computed route comes back by itself.", "icone": "echange", "pour": ["offshore"], "tags": ["Mac only"]}, {"nom": "Route with QtVLM", "texte": "The course and the GRIB files go to QtVLM; the route comes back as GPX.", "icone": "echange", "pour": ["offshore"]}, {"nom": "Routes as GPX", "texte": "Each routing exports as GPX, to pick it up elsewhere.", "icone": "exporter", "pour": ["offshore", "coastal"]}, {"nom": "Polars and GRIB", "texte": "Polars as .pol and .csv, GRIB files in and out.", "icone": "fichiers", "pour": ["offshore"]}, {"nom": "NMEA output", "texte": "Boat data re-sent over the network, for another app.", "icone": "prise", "pour": ["offshore"]}], "aussi": []}, {"id": "quotidien", "num": "10", "icone": "reglages", "nom": "Everyday use", "titre": "Easy to pick up, up to date on its own.", "intro": "A guide to get started, French or English, night or day, and updates that only install with your consent.", "capture": "The getting-started guide, on its first page.", "fonctions": [{"nom": "A guide to get started", "texte": "Nine pages, then creating the boat and the first voyage; you can view it again.", "icone": "journal", "pour": ["offshore", "coastal"]}, {"nom": "French or English", "texte": "The language is changed in the settings.", "icone": "langue", "pour": ["offshore", "coastal"]}, {"nom": "Night or day", "texte": "A button switches the chart to night colours.", "icone": "nuitjour", "pour": ["offshore", "coastal"]}, {"nom": "Sensible updates", "texte": "Checked at launch and every six hours; installed only with your consent.", "icone": "maj", "pour": ["offshore", "coastal"], "tags": ["Internet"]}, {"nom": "Backup", "texte": "A backup on demand, automatic copies, a restore.", "icone": "importer", "pour": ["offshore", "coastal"]}, {"nom": "Transparent diagnostics", "texte": "If something goes wrong, a report you read before sending it.", "icone": "rapport", "pour": ["offshore", "coastal"]}], "aussi": [{"nom": "Display size", "texte": "100, 110 or 125%."}, {"nom": "The serious-crash signal", "texte": "sent by itself, and can be turned off."}]}]}</script>
+<script>
+/* Le catalogue relevé dans le code de l'application (maquette N+525), rendu dans la langue choisie. */
+(function () {
+  // les icônes : même trait que les cases des pages Offshore et Coastal (34 × 34, trait de 2)
+  var I = {
+    route: '<path d="M5 28 C 10 16, 16 22, 22 12 S 28 6, 30 5"/><circle cx="5" cy="28" r="2.5" fill="currentColor"/><path d="M26 5 h 4 v 4"/>',
+    eventail: '<path d="M6 28 L 14 6 M 6 28 L 22 9 M 6 28 L 28 16 M 6 28 L 29 25" opacity=".55"/><path d="M6 28 C 14 20, 18 14, 22 9" stroke-width="2.6"/>',
+    profils: '<path d="M5 27 h 24"/><rect x="7" y="18" width="4" height="9"/><rect x="15" y="13" width="4" height="14"/><rect x="23" y="7" width="4" height="20" fill="currentColor"/>',
+    marque: '<rect x="13" y="8" width="8" height="12" fill="currentColor" opacity=".9"/><path d="M4 28 C 12 28, 10 14, 17 14 S 24 28, 30 28"/>',
+    cone: '<path d="M17 30 L 5 8 M 17 30 L 29 8"/><path d="M5 8 Q 17 2 29 8" stroke-dasharray="2 3"/>',
+    courant: '<path d="M3 10 q 6 4 10 0 t 10 0 t 8 0" opacity=".7"/><path d="M6 26 C 12 18, 20 24, 28 16"/><path d="M24 14 l 4 2 l -2 4"/>',
+    horloge: '<circle cx="17" cy="17" r="12"/><path d="M17 10 v 7 l 5 3"/>',
+    cap: '<circle cx="17" cy="17" r="12"/><path d="M17 8 l 4 12 l -4 -3 l -4 3 z" fill="currentColor"/>',
+    tableau: '<rect x="4" y="6" width="26" height="22" rx="3"/><path d="M4 13 h 26 M 4 20 h 26 M 13 6 v 22"/>',
+    recalcul: '<path d="M28 17 a 11 11 0 1 1 -3.2 -7.8"/><path d="M28 6 v 5 h -5"/>',
+    vent: '<path d="M4 12 h 17 a 4 4 0 1 0 -4 -4"/><path d="M4 18 h 22 a 4 4 0 1 1 -4 4"/><path d="M4 24 h 10"/>',
+    vagues: '<path d="M3 12 q 7 -6 14 0 t 14 0"/><path d="M3 20 q 7 -6 14 0 t 14 0" opacity=".7"/><path d="M3 28 q 7 -6 14 0 t 14 0" opacity=".45"/>',
+    modeles: '<path d="M6 26 L 22 10"/><path d="M22 10 l 6 4 M 18 14 l 6 4 M 14 18 l 4 3"/>',
+    frise: '<path d="M4 22 h 26"/><path d="M8 18 v 8 M 14 20 v 4 M 20 20 v 4 M 26 18 v 8"/><circle cx="16" cy="11" r="3" fill="currentColor"/>',
+    fichiers: '<rect x="5" y="7" width="16" height="16" rx="3"/><rect x="13" y="13" width="16" height="16" rx="3"/>',
+    nuage: '<path d="M9 25 h 15 a 6 6 0 0 0 0 -12 a 8 8 0 0 0 -15 2 a 5 5 0 0 0 0 10 z"/>',
+    pression: '<circle cx="17" cy="17" r="5"/><circle cx="17" cy="17" r="10" opacity=".6"/><circle cx="17" cy="17" r="14" opacity=".3"/>',
+    carte: '<path d="M4 8 l 8 -3 l 10 3 l 8 -3 v 21 l -8 3 l -10 -3 l -8 3 z"/><path d="M12 5 v 21 M 22 8 v 21" opacity=".6"/>',
+    horsligne: '<path d="M4 8 l 8 -3 l 10 3 l 8 -3 v 21 l -8 3 l -10 -3 l -8 3 z" opacity=".55"/><path d="M11 17 l 4 4 l 8 -9"/>',
+    couches: '<path d="M17 5 l 13 7 l -13 7 l -13 -7 z"/><path d="M4 18 l 13 7 l 13 -7" opacity=".65"/><path d="M4 23 l 13 7 l 13 -7" opacity=".4"/>',
+    sonde: '<path d="M4 9 q 6 3 13 0 t 13 0"/><path d="M17 9 v 15"/><path d="M12 24 h 10"/><path d="M8 29 q 9 -3 18 0" opacity=".6"/>',
+    instruments: '<rect x="4" y="5" width="12" height="10" rx="2"/><rect x="18" y="5" width="12" height="10" rx="2"/><rect x="4" y="19" width="26" height="10" rx="2"/>',
+    cadran: '<path d="M5 25 a 12 12 0 1 1 24 0"/><path d="M17 25 L 24 15"/>',
+    prise: '<path d="M12 4 v 7 M 22 4 v 7"/><rect x="8" y="11" width="18" height="9" rx="2"/><path d="M17 20 v 5 q 0 5 -6 5"/>',
+    polaire: '<path d="M17 4 v 26" opacity=".5"/><path d="M17 6 C 27 9, 30 18, 25 26 C 22 29, 19 29, 17 28"/><path d="M17 11 C 23 13, 25 19, 22 24" opacity=".6"/>',
+    gps: '<circle cx="17" cy="15" r="5"/><path d="M17 3 v 4 M 17 23 v 4 M 5 15 h 4 M 25 15 h 4"/><path d="M10 30 h 14" opacity=".5"/>',
+    sextant: '<path d="M6 8 L 17 28 L 28 8"/><path d="M6 8 Q 17 3 28 8"/><path d="M17 28 L 23 10"/><circle cx="17" cy="28" r="2" fill="currentColor"/>',
+    etoiles: '<path d="M10 6 l 1.6 3.4 l 3.6 .5 l -2.6 2.5 l .6 3.6 l -3.2 -1.7 l -3.2 1.7 l .6 -3.6 l -2.6 -2.5 l 3.6 -.5 z" fill="currentColor"/><circle cx="24" cy="10" r="1.6" fill="currentColor"/><circle cx="27" cy="22" r="1.4" fill="currentColor"/><circle cx="15" cy="25" r="1.6" fill="currentColor"/><path d="M24 10 L 27 22 L 15 25" opacity=".45"/>',
+    estime: '<circle cx="8" cy="26" r="2.5"/><path d="M10 24 L 26 8" stroke-dasharray="3 3"/><path d="M22 8 h 4 v 4"/>',
+    ais: '<path d="M17 5 l 7 20 l -7 -4 l -7 4 z"/><circle cx="17" cy="17" r="14" stroke-dasharray="2 4" opacity=".6"/>',
+    alarme: '<path d="M9 24 V 15 a 8 8 0 0 1 16 0 v 9 z"/><path d="M6 24 h 22 M 15 28 h 4"/>',
+    bouee: '<circle cx="17" cy="17" r="12"/><circle cx="17" cy="17" r="5"/><path d="M8.5 8.5 l 5 5 M 25.5 8.5 l -5 5 M 8.5 25.5 l 5 -5 M 25.5 25.5 l -5 -5"/>',
+    ancre: '<circle cx="17" cy="7" r="3"/><path d="M17 10 v 19"/><path d="M11 15 h 12"/><path d="M6 21 q 2 8 11 8 q 9 0 11 -8"/>',
+    journal: '<rect x="7" y="4" width="20" height="26" rx="2"/><path d="M12 11 h 10 M 12 16 h 10 M 12 21 h 6"/>',
+    rapport: '<path d="M8 4 h 13 l 6 6 v 20 h -19 z"/><path d="M21 4 v 6 h 6"/><path d="M12 24 v -4 M 16 24 v -7 M 20 24 v -5"/>',
+    traces: '<circle cx="6" cy="27" r="2"/><path d="M8 25 C 12 18, 18 24, 22 15 S 26 8, 28 7" stroke-dasharray="3 2.5"/><circle cx="28" cy="7" r="2"/>',
+    importer: '<path d="M17 4 v 16 M 11 14 l 6 6 l 6 -6"/><path d="M5 22 v 6 h 24 v -6"/>',
+    exporter: '<path d="M17 20 V 4 M 11 10 l 6 -6 l 6 6"/><path d="M5 22 v 6 h 24 v -6"/>',
+    echange: '<path d="M6 12 h 20 M 21 7 l 5 5 l -5 5"/><path d="M28 23 H 8 M 13 18 l -5 5 l 5 5"/>',
+    nuitjour: '<path d="M17 4 a 13 13 0 0 0 0 26 z" fill="currentColor"/><circle cx="17" cy="17" r="13"/>',
+    langue: '<circle cx="17" cy="17" r="13"/><path d="M4 17 h 26 M 17 4 c -5 5 -5 21 0 26 c 5 -5 5 -21 0 -26"/>',
+    unites: '<path d="M4 26 L 26 4 l 4 4 L 8 30 z"/><path d="M10 20 l 3 3 M 14 16 l 2 2 M 18 12 l 3 3 M 22 8 l 2 2"/>',
+    maj: '<path d="M17 5 a 12 12 0 1 0 12 12"/><path d="M17 11 v 9 M 13 16 l 4 4 l 4 -4"/><path d="M24 5 h 5 v 5"/>',
+    reglages: '<circle cx="17" cy="17" r="4"/><path d="M17 4 v 5 M 17 25 v 5 M 4 17 h 5 M 25 17 h 5 M 8 8 l 3.5 3.5 M 22.5 22.5 L 26 26 M 8 26 l 3.5 -3.5 M 22.5 11.5 L 26 8"/>',
+    bateau: '<path d="M17 4 v 20"/><path d="M17 6 L 27 21 H 17 z" fill="currentColor" opacity=".85"/><path d="M15 9 L 8 21 h 7"/><path d="M5 25 h 24 l -3 4 H 8 z"/>',
+    ecran: '<rect x="4" y="6" width="26" height="17" rx="2"/><path d="M13 29 h 8 M 17 23 v 6"/>'
+  };
+  function ico(n) { return '<svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (I[n] || I.route) + '</svg>'; }
+  // typographie française : espaces insécables dans les guillemets et devant : ; ? !
+  function esc(t) { if (SW.lang() === "en") return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/« /g, "« ").replace(/ »/g, " »").replace(/ ([:;?!])/g, " $1"); }
+  function tags(l) { return (l || []).map(function (t) { return '<span class="tag' + (/seulement|Mac|Windows/.test(t) ? " plateforme" : "") + '">' + esc(t) + "</span>"; }).join(""); }
+
+  // le catalogue dans les deux langues ; la page se refait quand la langue change
+  var CAT = { fr: JSON.parse(document.getElementById("catalogue").textContent), en: JSON.parse(document.getElementById("catalogue-en").textContent) };
+  var idx = document.getElementById("index"), out = document.getElementById("catalogue-rendu");
+  function rendre() {
+  var C = CAT[SW.lang()] || CAT.fr, html = ""; idx.innerHTML = "";
+  C.domaines.forEach(function (d) {
+    var n = d.fonctions.length + (d.aussi || []).length;
+    idx.insertAdjacentHTML("beforeend", '<a class="idx" href="#d-' + d.id + '">' + ico(d.icone) + "<span>" + esc(d.nom) + "</span><small>" + n + "</small></a>");
+    html += '<section class="domaine" id="d-' + d.id + '"><div class="wrap">' +
+      '<div class="dom-tete' + (d.image ? "" : " sans-capture") + '"><div><div class="eyebrow">' + d.num + " · " + esc(d.nom) + "</div><h2>" + esc(d.titre) + '</h2><p class="intro">' + esc(d.intro) + "</p></div>" +
+      (d.image ? '<figure class="capture image"><img src="' + d.image + '" alt="' + esc(d.capture) + '" loading="lazy"></figure>' : "") + "</div>" +
+      '<div class="fonctions">' + d.fonctions.map(function (f) {
+        return '<article class="fn" data-pour="' + f.pour.join(" ") + '">' + ico(f.icone) + "<h3>" + esc(f.nom) + "</h3><p>" + esc(f.texte) + "</p>" + (f.tags && f.tags.length ? '<div class="tags">' + tags(f.tags) + "</div>" : "") + "</article>";
+      }).join("") + "</div>" +
+      ((d.aussi && d.aussi.length) ? '<details class="tiroir"><summary>' + SW.t("Et aussi · " + d.aussi.length + " de plus", "And also · " + d.aussi.length + " more") + "</summary><ul>" + d.aussi.map(function (a) {
+        return "<li><span><b>" + esc(a.nom) + "</b> — " + esc(a.texte) + tags(a.tags) + "</span></li>";
+      }).join("") + "</ul></details>" : "") +
+      "</div></section>";
+  });
+  out.innerHTML = html;
+  var compte = document.getElementById("compte");
+  if (compte) compte.textContent = SW.t(C.domaines.length + " domaines, relevés dans l'application", C.domaines.length + " areas, taken from the app");
+  }
+  rendre();
+
+  // le filtre : Tout · Offshore · Coastal — les fonctions de l'autre public s'estompent, rien ne disparaît
+  var filtre = document.getElementById("filtre"), note = document.getElementById("filtre-note");
+  var NOTES = { tous: "Toutes les fonctions, au large comme à la côte.", offshore: "En clair : ce qui sert à préparer et mener une traversée.", coastal: "En clair : ce qui sert à naviguer simplement, à la journée ou d'étape en étape." };
+  var NOTES_EN = { tous: "All features, offshore and coastal.", offshore: "In short: what helps you prepare and sail a crossing.", coastal: "In short: what helps you sail simply, for the day or from one stop to the next." }, courant = "tous";
+  function choisir(p) {
+    courant = p;
+    filtre.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", x.dataset.pour === p ? "true" : "false"); });
+    document.querySelectorAll(".fn[data-pour]").forEach(function (f) {
+      var ok = p === "tous" || f.dataset.pour.split(" ").indexOf(p) >= 0;
+      f.classList.toggle("eteinte", !ok); f.classList.toggle("allumee", ok && p !== "tous");
+    });
+    note.textContent = SW.lang() === "en" ? NOTES_EN[p] : NOTES[p];
+  }
+  filtre.addEventListener("click", function (e) { var x = e.target.closest("button"); if (x) choisir(x.dataset.pour); });
+  choisir("tous");
+  document.addEventListener("langue", function () { rendre(); choisir(courant); });
+  // le filtre colle sous l'en-tête
+  function caler() { var h = document.querySelector("header.top"); filtre.style.top = (h ? h.offsetHeight : 0) + "px"; }
+  caler(); window.addEventListener("resize", caler);
+})();
+</script>
+</body>
+</html>
