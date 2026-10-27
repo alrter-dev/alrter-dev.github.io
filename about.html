@@ -191,9 +191,6 @@ section.bloc > .wrap.duo-ap { padding-block: 72px; }
 .capture { margin: 0; aspect-ratio: 16 / 10; border: 1px dashed var(--line-strong); border-radius: 14px; background: repeating-linear-gradient(135deg, var(--surface) 0 14px, color-mix(in srgb, var(--surface) 72%, var(--bg)) 14px 28px); display: grid; place-items: center; text-align: center; padding: 18px; }
 .capture span { font: 500 12.5px/1.5 var(--mono); color: var(--dim); max-width: 24em; }
 .capture b { display: block; color: var(--muted); font-weight: 600; margin-bottom: 6px; letter-spacing: .12em; text-transform: uppercase; font-size: 11px; }
-.capture.image { background: var(--surface); border-style: solid; padding: 0; overflow: hidden; }
-.capture.image a, .capture.image img { display: block; width: 100%; height: 100%; }
-.capture.image img { object-fit: cover; }
 @media (max-width: 960px) {
   .hero .wrap.ap-hero, .duo-ap, .kit { grid-template-columns: minmax(0, 1fr); }
   .frise-ap, .regles { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 28px; }
@@ -279,7 +276,7 @@ section.bloc > .wrap.duo-ap { padding-block: 72px; }
     <div class="tete">
       <div class="eyebrow" data-en="Press kit">Kit presse</div>
       <h2 data-en="To talk about Sailaware.">Pour parler de Sailaware.</h2>
-      <p data-en="The logo, two ready-to-use texts and screenshots of the app, to present Sailaware.">Le logo, deux textes prêts à reprendre et des captures de l'application, pour présenter Sailaware.</p>
+      <p data-en="The logo and two ready-to-use texts, to present Sailaware.">Le logo et deux textes prêts à reprendre, pour présenter Sailaware.</p>
     </div>
     <div class="kit">
       <article class="kit-logo">
@@ -295,11 +292,7 @@ section.bloc > .wrap.duo-ap { padding-block: 72px; }
         <p id="long" data-en="Sailaware brings together in a single piece of software what you need to prepare and sail a passage. It computes the fastest route with the boat's polar, the wind, the waves and the current, respecting marks to leave to port or starboard; its passage times are held to within a minute in the published tests. It shows the chosen weather on the chart, keeps charts on board without a network, reads the boat's instruments and keeps watch at anchor as well as offshore. Born from Navaway and rebuilt from the ground up, Sailaware runs on Mac and Windows, in French and English.">Sailaware réunit dans un seul logiciel ce qui sert à préparer et à mener une navigation. Il calcule la route la plus rapide avec la polaire du bateau, le vent, les vagues et le courant, en respectant les marques à laisser à bâbord ou à tribord ; ses heures de passage sont tenues à moins d'une minute sur les essais publiés. Il affiche la météo choisie sur la carte, garde les cartes à bord sans réseau, lit les instruments du bord et veille au mouillage comme au large. Né de Navaway et refait de fond en comble, Sailaware fonctionne sur Mac et sur Windows, en français et en anglais.</p>
       </article>
     </div>
-    <div class="captures-kit">
-      <figure class="capture image"><a href="assets/shots/fn-routage.webp" target="_blank" rel="noopener"><img src="assets/shots/fn-routage.webp" alt="Le routage : l'éventail des isochrones et la route retenue." data-en-alt="Routing: the fan of isochrones and the chosen route." loading="lazy"></a></figure>
-      <figure class="capture image"><a href="assets/shots/fn-meteo.webp" target="_blank" rel="noopener"><img src="assets/shots/fn-meteo.webp" alt="La météo : le vent en particules et la frise du temps." data-en-alt="Weather: the wind as particles and the timeline." loading="lazy"></a></figure>
-      <figure class="capture image"><a href="assets/shots/fn-instruments.webp" target="_blank" rel="noopener"><img src="assets/shots/fn-instruments.webp" alt="Les instruments : la grille, de nuit." data-en-alt="Instruments: the grid, at night." loading="lazy"></a></figure>
-    </div>
+    <!-- captures du kit presse (routage, météo, instruments) : posées à la séance des captures -->
   </div>
 </section>
 </main>
