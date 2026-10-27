@@ -14,6 +14,11 @@
 <meta property="og:locale:alternate" content="en_US">
 <link rel="stylesheet" href="assets/site.css">
 <script src="assets/site.js"></script>
+<script src="assets/scenes.js"></script>
+<script src="assets/maquettes/vent-atlantique.js"></script>
+<script src="assets/maquettes.js"></script>
+<script src="assets/maquettes/routage.js"></script>
+<script src="assets/maquettes/instruments.js"></script>
 <style>
 /* page Offshore */
 .duo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 48px; align-items: center; }
@@ -191,6 +196,8 @@ section.bloc > .wrap.duo-ap { padding-block: 72px; }
 .capture { margin: 0; aspect-ratio: 16 / 10; border: 1px dashed var(--line-strong); border-radius: 14px; background: repeating-linear-gradient(135deg, var(--surface) 0 14px, color-mix(in srgb, var(--surface) 72%, var(--bg)) 14px 28px); display: grid; place-items: center; text-align: center; padding: 18px; }
 .capture span { font: 500 12.5px/1.5 var(--mono); color: var(--dim); max-width: 24em; }
 .capture b { display: block; color: var(--muted); font-weight: 600; margin-bottom: 6px; letter-spacing: .12em; text-transform: uppercase; font-size: 11px; }
+.capture.maquette { background: var(--sea); border-style: solid; padding: 0; overflow: hidden; display: block; }
+.capture.maquette svg { display: block; width: 100%; height: 100%; }
 @media (max-width: 960px) {
   .hero .wrap.ap-hero, .duo-ap, .kit { grid-template-columns: minmax(0, 1fr); }
   .frise-ap, .regles { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 28px; }
@@ -276,7 +283,7 @@ section.bloc > .wrap.duo-ap { padding-block: 72px; }
     <div class="tete">
       <div class="eyebrow" data-en="Press kit">Kit presse</div>
       <h2 data-en="To talk about Sailaware.">Pour parler de Sailaware.</h2>
-      <p data-en="The logo and two ready-to-use texts, to present Sailaware.">Le logo et deux textes prêts à reprendre, pour présenter Sailaware.</p>
+      <p data-en="The logo, two ready-to-use texts and three views of the app, to present Sailaware.">Le logo, deux textes prêts à reprendre et trois aperçus de l'application, pour présenter Sailaware.</p>
     </div>
     <div class="kit">
       <article class="kit-logo">
@@ -292,7 +299,7 @@ section.bloc > .wrap.duo-ap { padding-block: 72px; }
         <p id="long" data-en="Sailaware brings together in a single piece of software what you need to prepare and sail a passage. It computes the fastest route with the boat's polar, the wind, the waves and the current, respecting marks to leave to port or starboard; its passage times are held to within a minute in the published tests. It shows the chosen weather on the chart, keeps charts on board without a network, reads the boat's instruments and keeps watch at anchor as well as offshore. Born from Navaway and rebuilt from the ground up, Sailaware runs on Mac and Windows, in French and English.">Sailaware réunit dans un seul logiciel ce qui sert à préparer et à mener une navigation. Il calcule la route la plus rapide avec la polaire du bateau, le vent, les vagues et le courant, en respectant les marques à laisser à bâbord ou à tribord ; ses heures de passage sont tenues à moins d'une minute sur les essais publiés. Il affiche la météo choisie sur la carte, garde les cartes à bord sans réseau, lit les instruments du bord et veille au mouillage comme au large. Né de Navaway et refait de fond en comble, Sailaware fonctionne sur Mac et sur Windows, en français et en anglais.</p>
       </article>
     </div>
-    <!-- captures du kit presse (routage, météo, instruments) : posées à la séance des captures -->
+    <div class="captures-kit" id="kit-maquettes"></div>
   </div>
 </section>
 </main>
@@ -322,6 +329,19 @@ section.bloc > .wrap.duo-ap { padding-block: 72px; }
       else { repli(text); fait(); }
     });
   });
+
+  // le kit presse : trois maquettes de l'application (assets/maquettes.js), celles de la page Fonctionnalités
+  var KIT = [["routage", "Le routage : l'éventail des isochrones et la route retenue.", "Routing: the fan of isochrones and the chosen route."],
+    ["meteo", "La météo : un vrai vent en particules, la frise du temps et le widget Météo.", "Weather: real wind as particles, the timeline and the Weather widget."],
+    ["instruments", "Les instruments : la grille du bord, de nuit.", "Instruments: the onboard grid, at night."]];
+  function kit() {
+    var k = document.getElementById("kit-maquettes"); if (!k || !window.MAQUETTES) return;
+    k.innerHTML = KIT.filter(function (m) { return MAQUETTES[m[0]]; }).map(function (m) {
+      return '<figure class="capture maquette" role="img" aria-label="' + SW.t(m[1], m[2]) + '">' + MAQUETTES[m[0]]() + "</figure>";
+    }).join("");
+    MAQUETTES_ANIMER(k);
+  }
+  kit(); document.addEventListener("langue", kit);
 })();
 </script>
 </body>

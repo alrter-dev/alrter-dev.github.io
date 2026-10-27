@@ -15,6 +15,9 @@
 <link rel="stylesheet" href="assets/site.css">
 <script src="assets/site.js"></script>
 <script src="assets/scenes.js"></script>
+<script src="assets/maquettes/vent-atlantique.js"></script>
+<script src="assets/maquettes.js"></script>
+<script src="assets/maquettes/instruments.js"></script>
 <style>
 /* page Offshore */
 .duo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 48px; align-items: center; }
@@ -22,13 +25,7 @@ section.bloc > .wrap.duo { padding-block: 72px; }
 .duo.inverse { grid-template-columns: minmax(0, .9fr) minmax(0, 1.2fr); }
 .duo h2 { margin-top: 12px; }
 .duo .intro { color: var(--muted); font-size: 18px; margin: 16px 0 22px; }
-.planche { margin: 0; background: var(--surface); border: 1px solid var(--line-strong); border-radius: 14px; overflow: hidden; }
-.planche svg { display: block; width: 100%; height: auto; }
-.frise-meteo { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-top: 1px solid var(--line); font: 500 12px/1 var(--mono); color: var(--dim); }
-.frise-meteo .piste { flex: 1; height: 4px; border-radius: 4px; background: var(--surface-2); position: relative; }
-.frise-meteo .piste b { position: absolute; left: 0; top: 0; bottom: 0; width: 22%; border-radius: 4px; background: var(--accent); animation: avance 12s linear infinite; }
-.frise-meteo .piste u { display: none; }
-@keyframes avance { from { width: 4%; } to { width: 96%; } }
+.planche { margin: 0; aspect-ratio: 16 / 10; background: var(--sea); border: 1px solid var(--line-strong); border-radius: 14px; overflow: hidden; }
 .profils { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-bottom: 22px; }
 .profil { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 16px 14px; display: grid; gap: 10px; align-content: start; }
 .profil.choisi { border-color: var(--accent); }
@@ -43,11 +40,14 @@ section.bloc > .wrap.duo { padding-block: 72px; }
 .ligne-temps { margin: 0 0 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px 8px; }
 .ligne-temps svg { display: block; width: 100%; height: auto; }
 .ligne-temps svg text { font-family: var(--mono); }
-.tableau-route { width: 100%; margin-top: 14px; border-collapse: collapse; font: 500 13px/1.3 var(--mono); font-variant-numeric: tabular-nums; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
-.tableau-route th { text-align: right; font-weight: 600; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); padding: 9px 10px; border-bottom: 1px solid var(--line); }
-.tableau-route td { text-align: right; padding: 8px 10px; color: var(--muted); border-bottom: 1px solid var(--line); }
+/* le tableau de route comme dans l'application (index.css, .mr-diag-head / .mr-diag-title / .mr-diag-table) :
+   bandeau teinté du violet du bateau, titre violet en capitales, en-têtes gris sur fond plus sombre, chiffres à droite */
+.fenetre-route { margin-top: 14px; background: var(--surface); border: 1px solid var(--line-strong); border-radius: 12px; overflow: hidden; }
+.fenetre-route .tete { padding: 9px 13px; background: color-mix(in srgb, #9B59B6 12%, var(--surface)); border-bottom: 1px solid var(--line); font: 600 11px/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: #9B59B6; }
+.tableau-route { width: 100%; border-collapse: collapse; font: 500 12px/1.3 var(--mono); font-variant-numeric: tabular-nums; }
+.tableau-route th { text-align: right; font-weight: 600; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); padding: 8px 8px; background: var(--surface-2); border-bottom: 1px solid var(--line); }
+.tableau-route td { text-align: right; padding: 7px 8px; color: var(--fg); border-bottom: 1px solid var(--line); }
 .tableau-route th:first-child, .tableau-route td:first-child { text-align: left; }
-.tableau-route tr.vire td { color: var(--fg); background: color-mix(in srgb, var(--accent) 10%, transparent); }
 .tableau-route tr:last-child td { border-bottom: 0; }
 @media (max-width: 960px) {
   .duo, .duo.inverse { grid-template-columns: minmax(0, 1fr); gap: 30px; }
@@ -158,10 +158,7 @@ footer a:hover { color: var(--fg); }
         <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="7" width="16" height="16" rx="3"/><rect x="13" y="13" width="16" height="16" rx="3"/></svg><span data-en="Your own GRIB files too">Vos propres fichiers GRIB aussi</span></div>
       </div>
     </div>
-    <figure class="planche">
-      <svg id="champ" viewBox="0 0 520 360" role="img" aria-label="Un champ de vent autour d'une dépression, flèches colorées selon la force" data-en-aria-label="A wind field around a low, arrows coloured by strength"></svg>
-      <div class="frise-meteo"><span data-en="Mon 06:00">Lun 06:00</span><span class="piste"><b></b><u></u></span><span data-en="Fri 18:00">Ven 18:00</span></div>
-    </figure>
+    <figure class="planche" id="planche-meteo" role="img" aria-label="La carte avec un vrai vent en particules autour d'une dépression, la frise du temps en bas et le widget Météo ouvert" data-en-aria-label="The chart with real wind as particles around a low, the timeline at the bottom and the Weather widget open"></figure>
   </div>
 </section>
 
@@ -218,19 +215,19 @@ footer a:hover { color: var(--fg); }
       </div>
     </div>
     <div>
-      <div class="ecran-instr" id="ecran-instr">
-        <canvas id="fond-instr" data-scene="new-york" width="600" height="400" aria-hidden="true"></canvas>
-        <div class="plateau" id="plateau" data-fixe="traversee" aria-label="Les instruments de Sailaware en traversée" data-en-aria-label="Sailaware's instruments on a crossing"></div>
+      <figure class="ecran-maquette" data-maquette="instruments" role="img" aria-label="Les instruments de Sailaware : la polaire, le vent, les vitesses et l'efficacité polaire" data-en-aria-label="Sailaware's instruments: the polar, the wind, the speeds and polar efficiency"></figure>
+      <div class="fenetre-route">
+        <div class="tete" data-en="Route table — IMOCA / 2026-10-26 / 18-00-00">Tableau de route — IMOCA / 2026-10-26 / 18-00-00</div>
+        <table class="tableau-route" aria-label="Extrait d'un tableau de route" data-en-aria-label="Excerpt from a route table">
+          <thead><tr><th>WP</th><th>Date</th><th data-en="Time">Heure</th><th>COG</th><th>HDG m</th><th>TWS</th><th>TWA</th><th>SOG</th></tr></thead>
+          <tbody>
+            <tr><td>12</td><td>26/10</td><td>18:00</td><td>247°</td><td>252°</td><td>16.4</td><td>-118°</td><td>8.1</td></tr>
+            <tr><td>13</td><td>27/10</td><td>00:00</td><td>251°</td><td>255°</td><td>18.0</td><td>-124°</td><td>8.6</td></tr>
+            <tr><td>14</td><td>27/10</td><td>06:00</td><td>232°</td><td>236°</td><td>21.2</td><td>97°</td><td>9.0</td></tr>
+            <tr><td>15</td><td>27/10</td><td>12:00</td><td>229°</td><td>233°</td><td>19.6</td><td>102°</td><td>8.8</td></tr>
+          </tbody>
+        </table>
       </div>
-      <table class="tableau-route" aria-label="Extrait d'un tableau de route" data-en-aria-label="Excerpt from a route table">
-        <thead><tr><th data-en="Time">Heure</th><th>COG</th><th>HDG m</th><th>TWS</th><th>TWA</th><th>SOG</th></tr></thead>
-        <tbody>
-          <tr><td data-en="Mon 18:00">Lun 18:00</td><td>247°</td><td>252°</td><td data-en="16.4">16,4</td><td>118°</td><td data-en="8.1">8,1</td></tr>
-          <tr><td data-en="Tue 00:00">Mar 00:00</td><td>251°</td><td>255°</td><td data-en="18.0">18,0</td><td>124°</td><td data-en="8.6">8,6</td></tr>
-          <tr class="vire"><td data-en="Tue 06:00">Mar 06:00</td><td>232°</td><td>236°</td><td data-en="21.2">21,2</td><td>97°</td><td data-en="9.0">9,0</td></tr>
-          <tr><td data-en="Tue 12:00">Mar 12:00</td><td>229°</td><td>233°</td><td data-en="19.6">19,6</td><td>102°</td><td data-en="8.8">8,8</td></tr>
-        </tbody>
-      </table>
     </div>
   </div>
 </section>
@@ -315,46 +312,12 @@ footer a:hover { color: var(--fg); }
 <script>
 /* Les dessins propres à la page Offshore (repris de la maquette, traduits). */
 (function () {
-  // page Offshore — le champ de vent : une dépression au nord-ouest, flèches colorées selon la force (illustration)
-  function champ() {
-    var s = document.getElementById("champ"); if (!s) return; s.innerHTML = "";
-    var NS = "http://www.w3.org/2000/svg", h = "";
-    function el(n, a) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); s.appendChild(e); return e; }
-    el("rect", { width: 520, height: 360, fill: "var(--sea)" });
-    // isobares autour du creux (150, 120)
-    [40, 80, 125, 175, 230].forEach(function (r, i) {
-      el("ellipse", { cx: 150 + i * 6, cy: 120 + i * 4, rx: r * 1.25, ry: r, fill: "none", stroke: "var(--line-strong)", "stroke-width": 1 });
-    });
-    el("text", { x: 141, y: 126, "font-family": "var(--mono)", "font-size": 18, "font-weight": 700, fill: "var(--fg)" }).textContent = SW.t("D", "L");
-    function couleur(v) { return v < 12 ? "#22d3ee" : v < 20 ? "#4ade80" : v < 28 ? "#fbbf24" : "#f472b6"; }
-    var fl = [];
-    for (var y = 24; y < 360; y += 34) for (var x = 22; x < 520; x += 36) {
-      var dx = x - 150, dy = y - 120, d = Math.hypot(dx, dy) || 1;
-      // rotation cyclonique (sens inverse des aiguilles, hémisphère nord) avec convergence vers le creux
-      var ux = -dy / d * .94 - dx / d * .34, uy = dx / d * .94 - dy / d * .34;
-      var v = 34 * Math.exp(-Math.pow((d - 110) / 120, 2)) + 6;
-      fl.push({ x: x, y: y, ux: ux, uy: uy, v: v });
-    }
-    var g = el("g", {});
-    fl.forEach(function (f) {
-      var L = 8 + f.v * .38, x0 = f.x - f.ux * L / 2, y0 = f.y - f.uy * L / 2, x1 = f.x + f.ux * L / 2, y1 = f.y + f.uy * L / 2;
-      var c = couleur(f.v), a = el("g", { opacity: .9 });
-      g.appendChild(a);
-      var l = document.createElementNS(NS, "line"); [["x1", x0], ["y1", y0], ["x2", x1], ["y2", y1], ["stroke", c], ["stroke-width", 1.8], ["stroke-linecap", "round"]].forEach(function (p) { l.setAttribute(p[0], p[1]); }); a.appendChild(l);
-      var p = document.createElementNS(NS, "polygon"), bx = -f.uy, by = f.ux;
-      p.setAttribute("points", [x1 + f.ux * 4, y1 + f.uy * 4, x1 + bx * 3.5, y1 + by * 3.5, x1 - bx * 3.5, y1 - by * 3.5].map(function (n) { return n.toFixed(1); }).join(","));
-      p.setAttribute("fill", c); a.appendChild(p);
-    });
-    // la route qui contourne le creux par le sud
-    el("path", { d: "M 500 300 C 400 330, 300 300, 230 260 S 90 250, 20 300", fill: "none", stroke: "var(--route)", "stroke-width": 3, "stroke-linecap": "round" });
-    el("circle", { cx: 500, cy: 300, r: 5, fill: "var(--fg)" }); el("circle", { cx: 20, cy: 300, r: 6.5, fill: "none", stroke: "var(--route)", "stroke-width": 2 });
-    var leg = el("g", { "font-family": "var(--mono)", "font-size": 11, fill: "var(--muted)" });
-    [[SW.t("< 12 nds", "< 12 kn"), "#22d3ee"], ["12-20", "#4ade80"], ["20-28", "#fbbf24"], ["> 28", "#f472b6"]].forEach(function (k, i) {
-      var r = document.createElementNS(NS, "rect"); r.setAttribute("x", 280 + i * 62); r.setAttribute("y", 14); r.setAttribute("width", 10); r.setAttribute("height", 10); r.setAttribute("rx", 2); r.setAttribute("fill", k[1]); leg.appendChild(r);
-      var t = document.createElementNS(NS, "text"); t.setAttribute("x", 280 + i * 62); t.setAttribute("y", 38); t.textContent = k[0]; leg.appendChild(t);
-    });
+  // page Offshore — la météo comme dans l'application : la maquette commune (assets/maquettes.js), sur un vrai champ de vent
+  function meteo() {
+    var f = document.getElementById("planche-meteo"); if (!f || !window.MAQUETTES) return;
+    f.innerHTML = MAQUETTES.meteo(); MAQUETTES_ANIMER(f);
   }
-  champ(); document.addEventListener("langue", champ);
+  meteo(); document.addEventListener("langue", meteo);
 
   // page Offshore — les cinq profils (lib/reglagesProfilRoutage.ts : banc du 13/10/2026)
   // noms anglais des profils : ceux de l'application (i18n/locales/en/routages.json, « preset »)

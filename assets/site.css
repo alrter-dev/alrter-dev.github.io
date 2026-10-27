@@ -15,6 +15,7 @@
   --iso: #4ecdc4; --route: #bef264;
   --c-wind: #4ECDC4; --c-speed: #F472B6; --c-heading: #F1C40F; --c-time: #FCA5A5; --c-cap: #E879F9; --c-current: #4FC3F7;
   --banner: #f59e0b;
+  --danger: #f87171; --success: #4ade80; --warning: #fbbf24; /* index.css de l'application, nuit */
   --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   color-scheme: dark;
@@ -28,6 +29,7 @@
   --iso: #0b7d74; --route: #4d7c0f;
   --c-wind: #037063; --c-speed: #BD1E65; --c-heading: #916903; --c-time: #C61908; --c-cap: #a21caf; --c-current: #096B94;
   --banner: #945104;
+  --danger: #dc2626; --success: #0f7033; --warning: #945104; /* index.css de l'application, jour */
   color-scheme: light;
 } }
 :root[data-theme="light"] {
@@ -39,6 +41,7 @@
   --iso: #0b7d74; --route: #4d7c0f;
   --c-wind: #037063; --c-speed: #BD1E65; --c-heading: #916903; --c-time: #C61908; --c-cap: #a21caf; --c-current: #096B94;
   --banner: #945104;
+  --danger: #dc2626; --success: #0f7033; --warning: #945104; /* index.css de l'application, jour */
   color-scheme: light;
 }
 
@@ -277,3 +280,40 @@ footer .reglages { display: flex; gap: 10px; align-items: center; margin-top: 4p
 @media (max-width: 620px) {
   header.top .outils .icon-btn { display: none; }
 }
+
+/* les maquettes dessinées (assets/maquettes.js, assets/maquettes/*.js) : formes et couleurs relevées dans l'application */
+.mq-lieu { font: 500 10px var(--mono); fill: var(--dim); }
+.mq-vecteur { stroke: #E74C3C; stroke-width: 1.5; stroke-opacity: .5; stroke-dasharray: 4 3; }
+.mq-cible { fill: #E74C3C; stroke: rgb(0 0 0 / .4); stroke-width: .6; }
+.mq-clignote { animation: mq-clignote 1s steps(1, end) infinite; }
+@keyframes mq-clignote { 50% { opacity: .25; } }
+@media (prefers-reduced-motion: reduce) { .mq-clignote { animation: none; } }
+.mq-foi { stroke: #A855F7; stroke-width: 1.6; stroke-dasharray: 5 4; }
+.mq-etiq { font-family: var(--mono); paint-order: stroke; stroke: var(--sea); stroke-width: 3px; stroke-linejoin: round; }
+.mq-nom { font-size: 10px; font-weight: 600; fill: var(--fg); }
+.mq-l2 { font-size: 9px; fill: var(--muted); }
+.mq-l2.mq-collision { fill: #ef4444; font-weight: 700; }
+.mq-l2.mq-vigilance { fill: #f39c12; font-weight: 700; }
+.mq-panneau rect { fill: var(--surface); fill-opacity: .95; stroke: var(--line-strong); }
+.mq-panneau text { font-family: var(--mono); }
+.mq-p-tete { font-size: 9.5px; font-weight: 700; fill: var(--accent); text-transform: uppercase; letter-spacing: .06em; }
+.mq-p-filet { stroke: var(--line-strong); }
+.mq-p-nom { font-size: 9.5px; font-weight: 600; fill: var(--fg); }
+.mq-p-meta { font-size: 8.5px; fill: var(--dim); }
+.mq-p-lien { font-size: 9px; fill: var(--accent); text-decoration: underline; }
+.mq-anime { position: relative; width: 100%; height: 100%; }
+.mq-anime canvas, .mq-anime svg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.mq-blanc { fill: var(--fg); }
+.mq-ok { font: 700 8.5px var(--mono); fill: #4ade80; }
+.mq-gris { font: 500 8.5px var(--mono); fill: var(--dim); }
+.mq-gros { font-size: 11px; }
+.mq-heure { font: 700 9.5px var(--mono); fill: var(--accent); }
+.mq-fichier { font: 500 7.6px var(--mono); fill: var(--fg); }
+.mq-ligne { fill: var(--surface-2); }
+.mq-actif { fill: color-mix(in srgb, var(--accent) 18%, transparent); }
+.mq-trait, .mq-trait-acc { fill: none; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
+.mq-trait { stroke: var(--dim); }
+.mq-trait-acc { stroke: var(--accent); }
+/* le cadre d'une maquette posée dans une page (<figure class="ecran-maquette" data-maquette="…">) */
+.ecran-maquette { margin: 0; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; border: 1px solid var(--line-strong); background: var(--sea); box-shadow: 0 30px 80px -40px rgb(0 0 0 / .6); }
+.ecran-maquette svg { display: block; width: 100%; height: 100%; }

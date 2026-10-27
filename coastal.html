@@ -15,6 +15,9 @@
 <link rel="stylesheet" href="assets/site.css">
 <script src="assets/site.js"></script>
 <script src="assets/scenes.js"></script>
+<script src="assets/maquettes/rapport-barcelone.js"></script>
+<script src="assets/maquettes.js"></script>
+<script src="assets/maquettes/instruments.js"></script>
 <style>
 /* page Offshore */
 .duo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 48px; align-items: center; }
@@ -60,21 +63,12 @@ section.bloc > .wrap.duo { padding-block: 72px; }
   .tableau-route th, .tableau-route td { padding: 7px 6px; }
 }
 
-/* page Coastal — le rapport d'étape */
-.planche.rapport { padding: 22px 24px 20px; display: grid; gap: 18px; }
-.rapport-tete { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; }
-.rapport-tete b { font: 700 16px/1.3 var(--mono); }
-.rapport-tete span { font: 500 13px/1 var(--mono); color: var(--dim); }
-.rapport-chiffres { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
-.rapport-chiffres div { background: var(--surface-2); border-radius: 10px; padding: 12px; display: grid; gap: 4px; }
-.rapport-chiffres b { font: 700 22px/1 var(--mono); font-variant-numeric: tabular-nums; }
-.rapport-chiffres span { font-size: 13px; color: var(--muted); line-height: 1.3; }
-.rapport-allures { display: flex; align-items: center; gap: 0; height: 14px; border-radius: 7px; overflow: hidden; }
-.rapport-allures span { font: 600 11px/1 var(--mono); color: var(--dim); text-transform: uppercase; letter-spacing: .1em; margin-right: 12px; }
-.rapport-allures i { display: block; height: 100%; }
-.rapport-leg { display: flex; flex-wrap: wrap; gap: 6px 18px; font: 500 12.5px/1 var(--mono); color: var(--muted); }
-.rapport-leg i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
-@media (max-width: 620px) { .rapport-chiffres { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* page Coastal — la première page d'un vrai rapport PDF (assets/maquettes.js, MAQUETTES.rapport) : une feuille blanche */
+.planche.rapport-pdf { aspect-ratio: 1160 / 820; background: #fff; }
+.planche.rapport-pdf svg { height: 100%; }
+/* page Coastal — le bloc Mouillage de l'écran Alarmes (assets/maquettes.js, MAQUETTES.mouillage) */
+.planche-alarme { margin: 0; }
+.planche-alarme svg { display: block; width: 100%; height: auto; }
 
 /* appel final */
 .fin .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; padding-block: 64px; }
@@ -212,10 +206,7 @@ footer a:hover { color: var(--fg); }
         <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M17 5 l 7 20 l -7 -4 l -7 4 z"/><circle cx="17" cy="17" r="14" stroke-dasharray="2 4" opacity=".6"/></svg><span data-en="AIS ships around you">Les navires AIS autour</span></div>
       </div>
     </div>
-    <div class="ecran-instr" id="ecran-instr">
-      <canvas id="fond-instr" data-scene="corfou" width="600" height="400" aria-hidden="true"></canvas>
-      <div class="plateau" id="plateau" data-fixe="cotier" aria-label="Les instruments de Sailaware en navigation côtière" data-en-aria-label="Sailaware's instruments for coastal sailing"></div>
-    </div>
+    <figure class="ecran-maquette" data-maquette="instruments" role="img" aria-label="Les instruments de Sailaware : la polaire, le vent, les vitesses et l'efficacité polaire" data-en-aria-label="Sailaware's instruments: the polar, the wind, the speeds and polar efficiency"></figure>
   </div>
 </section>
 
@@ -232,20 +223,7 @@ footer a:hover { color: var(--fg); }
         <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="17" cy="17" r="12"/><path d="M17 5 v 6 M 17 23 v 6 M 5 17 h 6 M 23 17 h 6"/><circle cx="17" cy="17" r="2" fill="currentColor"/></svg><span data-en="AIS collision risk">Le risque de collision AIS</span></div>
       </div>
     </div>
-    <figure class="planche">
-      <svg viewBox="0 0 520 360" role="img" aria-label="Le bateau évite autour de son ancre à l'intérieur du rayon ; un dernier point en sort et déclenche l'alarme" data-en-aria-label="The boat swings around its anchor inside the radius; a last point leaves it and sets off the alarm">
-        <rect width="520" height="360" fill="var(--sea)"/>
-        <path d="M0 0 H 520 V 54 C 450 70, 380 40, 300 60 S 120 40, 0 64 Z" fill="var(--land)" stroke="var(--coast)"/>
-        <text x="40" y="34" font-family="var(--mono)" font-size="12" fill="var(--dim)">Port-Navalo</text>
-        <circle cx="250" cy="200" r="104" fill="color-mix(in srgb, var(--accent) 6%, transparent)" stroke="var(--accent)" stroke-width="1.6" stroke-dasharray="6 5"/>
-        <text x="250" y="88" text-anchor="middle" font-family="var(--mono)" font-size="12" fill="var(--accent)" data-en="radius 60 m">rayon 60 m</text>
-        <path d="M250 200 C 300 170, 320 210, 290 240 S 210 260, 200 220 S 240 150, 280 160 S 330 230, 300 262 S 220 290, 196 250" fill="none" stroke="var(--iso)" stroke-width="1.8" opacity=".85"/>
-        <path d="M196 250 C 180 270, 170 300, 150 318" fill="none" stroke="#f87171" stroke-width="2.4" stroke-linecap="round"/>
-        <g transform="translate(250 200)" fill="var(--fg)"><circle r="9" fill="var(--surface-2)" stroke="var(--fg)" stroke-width="1.4"/><path d="M0 -5 v 9 M -4 -1 h 8 M -5 2 q 1 4 5 4 q 4 0 5 -4" stroke="var(--fg)" stroke-width="1.3" fill="none"/></g>
-        <g transform="translate(150 318) rotate(-40)"><path d="M0 -12 C 5 -6, 5 6, 3 11 L -3 11 C -5 6, -5 -6, 0 -12 Z" fill="#f87171"/></g>
-        <g font-family="var(--mono)"><rect x="300" y="290" width="200" height="50" rx="8" fill="var(--surface)" stroke="#f87171"/><text x="316" y="311" font-size="13" font-weight="700" fill="#f87171" data-en="Anchor — dragging">Mouillage — chasse</text><text x="316" y="329" font-size="12" fill="var(--muted)" data-en="out of radius for 00:40">hors du rayon depuis 00:40</text></g>
-      </svg>
-    </figure>
+    <figure class="planche-alarme" id="alarme-mouillage" role="img" aria-label="Le bloc Mouillage de l'écran Alarmes, déclenché : le bateau est à 74 m de son ancre pour un rayon de 60 m" data-en-aria-label="The Anchor block of the Alarms screen, triggered: the boat is 74 m from its anchor for a 60 m radius"></figure>
   </div>
 </section>
 
@@ -276,14 +254,7 @@ footer a:hover { color: var(--fg); }
         <div class="case"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M8 4 h 12 l 6 6 v 20 h -18 z"/><path d="M20 4 v 6 h 6 M 12 18 h 10 M 12 23 h 7"/></svg><span data-en="The leg report as PDF">Le rapport de l'étape en PDF</span></div>
       </div>
     </div>
-    <figure class="planche rapport">
-      <div class="rapport-tete"><b data-en="Leg · Port-Navalo → Le Palais">Étape · Port-Navalo → Le Palais</b><span data-en="Saturday 18 July">samedi 18 juillet</span></div>
-      <div class="rapport-chiffres">
-        <div><b data-en="17.4">17,4</b><span data-en="miles">milles</span></div><div><b>3 h 12</b><span data-en="underway">de route</span></div><div><b data-en="5.4">5,4</b><span data-en="knots on average">nœuds de moyenne</span></div><div><b>14</b><span data-en="knots of average wind">nœuds de vent moyen</span></div>
-      </div>
-      <div class="rapport-allures"><span data-en="Points of sail">Allures</span><i style="flex:22;background:var(--iso)"></i><i style="flex:51;background:var(--accent)"></i><i style="flex:27;background:#fbbf24"></i></div>
-      <div class="rapport-leg"><span data-en="<i style='background:var(--iso)'></i>close-hauled 22%"><i style="background:var(--iso)"></i>près 22 %</span><span data-en="<i style='background:var(--accent)'></i>reaching 51%"><i style="background:var(--accent)"></i>largue 51 %</span><span data-en="<i style='background:#fbbf24'></i>downwind 27%"><i style="background:#fbbf24"></i>portant 27 %</span></div>
-    </figure>
+    <figure class="planche rapport-pdf" id="rapport-pdf" role="img" aria-label="La première page du rapport PDF d'un vrai voyage, Barcelone → Marseille : la trace sur la carte, les chiffres, le vent rencontré et les allures" data-en-aria-label="The first page of the PDF report of a real voyage, Barcelona → Marseille: the track on the chart, the figures, the wind encountered and the points of sail"></figure>
   </div>
 </section>
 
@@ -357,6 +328,13 @@ footer a:hover { color: var(--fg); }
     el("text", { x: x0 + 9 * pas, y: 120, "text-anchor": "middle", "font-family": "var(--mono)", "font-size": 11, fill: "#fbbf24" }, SW.t("brise de l'après-midi", "afternoon breeze"));
   }
   journee(); document.addEventListener("langue", journee);
+
+  // page Coastal — la première page du rapport PDF d'un vrai voyage, comme l'application la compose
+  function rapport() {
+    var f = document.getElementById("rapport-pdf"); if (f && window.MAQUETTES) f.innerHTML = MAQUETTES.rapport();
+    var a = document.getElementById("alarme-mouillage"); if (a && window.MAQUETTES) a.innerHTML = MAQUETTES.mouillage();
+  }
+  rapport(); document.addEventListener("langue", rapport);
 })();
 </script>
 </body>

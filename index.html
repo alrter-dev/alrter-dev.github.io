@@ -15,6 +15,8 @@
 <link rel="stylesheet" href="assets/site.css">
 <script src="assets/site.js"></script>
 <script src="assets/scenes.js"></script>
+<script src="assets/maquettes.js"></script>
+<script src="assets/maquettes/instruments.js"></script>
 <style>
 /* appel final */
 .fin .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; padding-block: 64px; }
@@ -277,17 +279,8 @@ footer a:hover { color: var(--fg); }
       <div class="arg"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="17" cy="17" r="12"/><path d="M17 8 l 4 12 l -4 -3 l -4 3 z" fill="currentColor"/></svg><div><b data-en="The route becomes a heading">La route devient un cap</b><span data-en="The course to steer and the arrival time, taken from the routing and corrected for current.">Le cap à suivre et l'heure d'arrivée, tirés du routage et corrigés du courant.</span></div></div>
       <div class="arg"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 24 l 6 -6 l 5 4 l 7 -10 l 8 6"/><path d="M4 29 h 26" opacity=".5"/></svg><div><b data-en="Trends at a glance">La tendance d'un coup d'œil</b><span data-en="Speed, efficiency, wind: the last hour's curve in the box.">Vitesse, efficacité, vent : la courbe de la dernière heure dans la case.</span></div></div>
     </div>
-    <div class="dispositions" role="group" aria-label="Dispositions d'exemple" data-en-aria-label="Example layouts">
-      <span class="lib" data-en="My layouts">Mes dispositions</span>
-      <button type="button" data-disp="traversee" aria-pressed="true" data-en="Passage">Traversée</button>
-      <button type="button" data-disp="cotier" aria-pressed="false" data-en="Coastal">Côtier</button>
-      <button type="button" data-disp="minimal" aria-pressed="false">Minimal</button>
-    </div>
-    <div class="ecran-instr" id="ecran-instr">
-      <canvas id="fond-instr" width="600" height="400" aria-hidden="true"></canvas>
-      <div class="plateau" id="plateau" aria-label="Les instruments de Sailaware posés sur la carte" data-en-aria-label="Sailaware's instruments laid out on the chart"></div>
-    </div>
-    <p class="legende-instr" data-en="The instruments redrawn from the app (night mode); example values. Each layout is saved and recalled in one click.">Les instruments redessinés d'après l'application (mode nuit) ; valeurs d'exemple. Chaque disposition s'enregistre et se rappelle d'un clic.</p>
+    <figure class="ecran-maquette" data-maquette="instruments" role="img" aria-label="Les instruments de Sailaware posés sur la carte" data-en-aria-label="Sailaware's instruments laid out on the chart"></figure>
+    <p class="legende-instr" data-en="The instruments redrawn from the app, on a real polar; each layout is saved and recalled in one click.">Les instruments redessinés d'après l'application, sur une vraie polaire ; chaque disposition s'enregistre et se rappelle d'un clic.</p>
   </div>
 </section>
 

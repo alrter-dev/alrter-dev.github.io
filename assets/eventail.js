@@ -35,20 +35,22 @@
   function duree(h) { var m = Math.round(h * 60), hh = Math.floor(m / 60), mm = m % 60; return "+" + (h < 10 ? hh + " h " + (mm < 10 ? "0" : "") + mm : hh + " h"); }
   function dessiner(nom, nf, fr) {
     var S = SC[nom], N = S.fronts.length;
-    var c = { sea: couleur("--sea"), iso: couleur("--iso"), route: couleur("--route"), land: couleur("--land"), coast: couleur("--coast"),
-              fg: couleur("--fg"), dim: couleur("--dim"), surface: couleur("--surface"), mono: couleur("--mono") };
+    // les couleurs de la carte de l'application, jour comme nuit : fond Positron par défaut, isochrones noires
+    // (layers/navawayLiveIso.ts), route active rouge à halo blanc, départ vert et arrivée rouge (layers/routagesLayers.ts)
+    var c = { sea: "#C2C8CA", iso: "#000", route: "#C0392B", land: "#F2F3F0", coast: "#d6d8d3",
+              fg: "#2b2f33", dim: "#6b7075", surface: "#ffffff", mono: couleur("--mono") };
     g.setTransform(R, 0, 0, R, 0, 0);
     g.fillStyle = c.sea; g.fillRect(0, 0, W, H);
     g.setTransform(R * W / S.W, 0, 0, R * H / S.H, 0, 0);
     g.lineJoin = "round"; g.lineCap = "round";
     for (var i = 0; i < nf; i++) {
       var neuf = i === nf - 1 && nf < N;
-      g.strokeStyle = c.iso; g.globalAlpha = neuf ? 1 : .2 + .55 * (i + 1) / N; g.lineWidth = neuf ? 2.2 : 1.1;
+      g.strokeStyle = c.iso; g.globalAlpha = neuf ? .9 : .55; g.lineWidth = neuf ? 1.5 : 1;
       S.fronts[i].l.forEach(function (l) { chemin(l, false); g.stroke(); });
       if (S.fronts[i].l2) { g.strokeStyle = c.route; S.fronts[i].l2.forEach(function (l) { chemin(l, false); g.stroke(); }); }
     }
     g.globalAlpha = 1;
-    g.fillStyle = c.land; g.strokeStyle = c.coast; g.lineWidth = .8;
+    g.fillStyle = c.land; g.strokeStyle = c.coast; g.lineWidth = .6;
     S.terre.forEach(function (p) { chemin(p, true); g.fill(); g.stroke(); });
     g.font = "500 11px " + c.mono; g.textAlign = "center"; g.fillStyle = c.dim;
     S.noms.forEach(function (n) { g.fillText(n.t, n.x, n.y); });
@@ -66,10 +68,12 @@
         var u = Math.min(1, reste / lg[k / 2 - 1]);
         g.lineTo(r[k - 2] + u * (r[k] - r[k - 2]), r[k - 1] + u * (r[k + 1] - r[k - 1])); reste -= lg[k / 2 - 1];
       }
+      g.strokeStyle = "rgba(255,255,255,.9)"; g.lineWidth = 6; g.stroke();
       g.strokeStyle = c.route; g.lineWidth = 3; g.stroke();
     }
-    g.fillStyle = c.fg; g.beginPath(); g.arc(S.dep[0], S.dep[1], 4.5, 0, 7); g.fill();
-    g.strokeStyle = c.route; g.lineWidth = 2; g.beginPath(); g.arc(S.arr[0], S.arr[1], 6.5, 0, 7); g.stroke();
+    g.lineWidth = 2; g.strokeStyle = "#fff";
+    g.fillStyle = "#2ECC71"; g.beginPath(); g.arc(S.dep[0], S.dep[1], 6, 0, 7); g.fill(); g.stroke();
+    g.fillStyle = "#E74C3C"; g.beginPath(); g.arc(S.arr[0], S.arr[1], 6, 0, 7); g.fill(); g.stroke();
     // le vent (flèche dans le sens où il souffle) et l'heure du dernier front
     g.setTransform(R, 0, 0, R, 0, 0);
     if (S.vent !== null && S.vent !== undefined) {
