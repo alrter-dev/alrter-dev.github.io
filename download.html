@@ -203,6 +203,8 @@ section.bloc > .wrap.duo-dl { padding-block: 72px; }
 .v-tete { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
 .v-tete b { font: 700 22px/1 var(--mono); color: var(--accent); }
 .v-tete span { font: 500 13px/1 var(--mono); color: var(--dim); }
+.lien-nv { font: 600 13px/1.3 var(--mono); color: var(--accent); text-decoration: none; }
+.lien-nv:hover { text-decoration: underline; }
 @media (max-width: 960px) {
   .hero .wrap.dl-hero, .duo-dl, .installs { grid-template-columns: minmax(0, 1fr); }
   .plateformes { grid-template-columns: minmax(0, 1fr); }
@@ -361,6 +363,7 @@ section.bloc > .wrap.duo-dl { padding-block: 72px; }
         <li data-en="Instruments redone on a grid, laid out as you like.">Les instruments refaits sur une grille, disposée à votre goût.</li>
         <li data-en="Course marks: a buoy to leave to port or starboard.">Les marques de parcours : une bouée à laisser à bâbord ou à tribord.</li>
       </ul>
+      <a class="lien-nv" href="nouveautes.html" data-en="All the changes, version by version →">Toutes les nouveautés, version par version →</a>
     </div>
   </div>
 </section>
@@ -490,6 +493,33 @@ section.bloc > .wrap.duo-dl { padding-block: 72px; }
   btn.addEventListener("click", attempt);
   input.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); attempt(); } });
   document.addEventListener("langue", function () { refreshTarget(); mailAcces(); setMsg("", ""); });
+})();
+</script>
+<script>
+/* La version affichée se lit chez GitHub (dernière publication de Sailaware-Releases) ; celle écrite dans la page sert de
+   secours si GitHub ne répond pas. Une version plus récente que celle écrite masque les nouveautés écrites, qui sont
+   celles de l'ancienne : elles vivent sur la page Nouveautés. */
+(function () {
+  var ECRITE = "0.3.42";
+  function poser(el, fr, en) {
+    if (!el) return;
+    if (el.hasAttribute("data-en")) { el.setAttribute("data-en", en); if (el.hasAttribute("data-fr")) el.setAttribute("data-fr", fr); }
+    el.innerHTML = el.hasAttribute("data-en") && SW.lang() === "en" ? en : fr;
+  }
+  fetch("https://api.github.com/repos/alrter-dev/Sailaware-Releases/releases/latest")
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (rel) {
+      var v = rel && rel.tag_name ? rel.tag_name.replace(/^v/, "") : "";
+      if (!/^\d+\.\d+\.\d+$/.test(v) || v === ECRITE) return;
+      var d = new Date(rel.published_at), opt = { day: "numeric", month: "long", year: "numeric" };
+      var fr = d.toLocaleDateString("fr-FR", opt), en = d.toLocaleDateString("en-GB", opt);
+      poser(document.querySelector(".hero h1"), "Sailaware " + v + ".<br><em>Sur Mac et sur Windows.</em>", "Sailaware " + v + ".<br><em>On Mac and on Windows.</em>");
+      poser(document.querySelector(".faits span"), "version du " + fr, "version of " + en);
+      poser(document.querySelector(".v-tete b"), v, v);
+      poser(document.querySelector(".v-tete span"), fr, en);
+      var notes = document.querySelector(".version .liste-c"); if (notes) notes.hidden = true;
+    })
+    .catch(function () {});
 })();
 </script>
 </body>
