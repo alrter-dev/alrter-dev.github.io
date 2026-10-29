@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title data-en="Legal notice — Sailaware">Mentions légales — Sailaware</title>
+<meta name="description" content="Qui édite le site et le logiciel Sailaware." data-en-content="Who publishes the Sailaware site and software.">
+<meta name="theme-color" content="#0E1822">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23bef264'/%3E%3Cg fill='none' stroke='%230E1822' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' transform='scale(0.72) translate(4.6 4.6)'%3E%3Cpath d='M2 20a2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1'/%3E%3Cpath d='M4 18 2 6l10 6 10-6-2 12'/%3E%3C/g%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mentions légales — Sailaware">
+<meta property="og:description" content="Qui édite le site et le logiciel Sailaware.">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:locale:alternate" content="en_US">
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js"></script>
+<style>
+/* pages Mentions légales et Confidentialité */
+.legal { max-width: 760px; display: grid; gap: 34px; }
+.legal section { display: grid; gap: 12px; }
+.legal h2 { font-size: 22px; }
+.legal p { color: var(--muted); font-size: 16.5px; line-height: 1.6; }
+.legal a { color: var(--accent); }
+.fiche { margin: 0; display: grid; gap: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; }
+.fiche dt { font: 600 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+.fiche dd { margin: 6px 0 0; color: var(--fg); font-size: 16px; line-height: 1.5; }
+.liste-c { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.liste-c li { display: grid; grid-template-columns: 18px 1fr; gap: 8px; color: var(--muted); font-size: 16px; line-height: 1.55; }
+.liste-c li::before { content: "→"; font-family: var(--mono); color: var(--accent); }
+.mise-a-jour { font: 500 13px/1.4 var(--mono); color: var(--dim); }
+
+footer { border-top: 1px solid var(--line); color: var(--dim); font-size: 14px; }
+footer .wrap { padding-block: 34px 44px; display: grid; grid-template-columns: 1.2fr repeat(3, minmax(0, 1fr)); gap: 24px; }
+footer h4 { font: 600 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+footer a { text-decoration: none; }
+footer a:hover { color: var(--fg); }
+
+@media (max-width: 960px) {
+  nav.menu { display: none; }
+  nav.menu.ouvert { display: grid; position: absolute; top: 100%; left: 0; right: 0; gap: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  nav.menu.ouvert a { padding-block: 14px; border-top: 1px solid var(--line); }
+  .burger { display: inline-block; }
+  header.top .langue { display: none; }
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); gap: 34px; padding-block: 40px; }
+  footer .wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  body { font-size: 16px; }
+  header.top .btn-plein { display: none; }
+  section.bloc > .wrap { padding-block: 52px; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="marque" href="index.html"><img alt="" src="assets/logo.png">Sailaware</a>
+    <nav class="menu" id="menu" aria-label="Navigation principale" data-en-aria-label="Main navigation">
+      <a href="offshore.html">Offshore</a>
+      <a href="coastal.html">Coastal</a>
+      <a href="features.html" data-en="Features">Fonctionnalités</a>
+      <a href="routing.html" data-en="Routing">Le routage</a>
+      <a href="sparring-skipper.html">Sparring Skipper</a>
+      <a href="about.html" data-en="About">À propos</a>
+    </nav>
+    <div class="outils" style="display:flex;gap:10px;align-items:center">
+      <div class="pill-toggle" role="group" aria-label="Langue" data-en-aria-label="Language"><button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+      <button class="icon-btn theme-btn" type="button" aria-label="Basculer jour / nuit" data-en-aria-label="Switch day / night" title="Jour / Nuit" data-en-title="Day / Night"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+    </div>
+    <a class="btn btn-plein btn-petit" href="download.html#acces" data-en="Request access">Demander l'accès</a>
+    <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+  </div>
+</header>
+
+<main id="haut">
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow" data-en="Legal notice">Mentions légales</div>
+    <h1 data-en="Who publishes<br><em>this site.</em>">Qui édite<br><em>ce site.</em></h1>
+    <p class="chapeau" data-en="Sailaware is navigation software for macOS and Windows, developed and published by Arnaud Laroche.">Sailaware est un logiciel de navigation pour macOS et Windows, développé et édité par Arnaud Laroche.</p>
+  </div>
+</section>
+<section class="bloc">
+  <div class="wrap">
+    <div class="legal">
+      <dl class="fiche">
+        <div><dt data-en="Publisher">Éditeur</dt><dd>Arnaud Laroche</dd></div>
+        <div><dt data-en="Publication director">Directeur de la publication</dt><dd>Arnaud Laroche</dd></div>
+        <div><dt>Contact</dt><dd><a href="mailto:alrter@gmail.com">alrter@gmail.com</a></dd></div>
+        <div><dt data-en="Site hosting">Hébergement du site</dt><dd data-en="GitHub, Inc. (GitHub Pages service), 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, United States">GitHub, Inc. (service GitHub Pages), 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis</dd></div>
+        <div><dt data-en="Weather service of the application">Service météo de l'application</dt><dd data-en="OVH SAS, 2 rue Kellermann, 59100 Roubaix, France — server located in France">OVH SAS, 2 rue Kellermann, 59100 Roubaix, France — serveur situé en France</dd></div>
+      </dl>
+      <section>
+        <h2 data-en="Intellectual property">Propriété intellectuelle</h2>
+        <p data-en="The texts, illustrations and software of Sailaware belong to their publisher. Any reproduction, even partial, requires the publisher's written consent.">Les textes, les illustrations et le logiciel Sailaware appartiennent à leur éditeur. Toute reproduction, même partielle, demande son accord écrit.</p>
+      </section>
+      <section>
+        <h2 data-en="Personal data">Données personnelles</h2>
+        <p data-en="What the site and the application collect, and your rights, are described on the <a href='confidentialite.html'>Privacy</a> page.">Ce que le site et l'application recueillent, et vos droits, sont décrits à la page <a href="confidentialite.html">Confidentialité</a>.</p>
+      </section>
+      <p class="mise-a-jour" data-en="Last updated: 29 October 2026.">Mise à jour : 29 octobre 2026.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><a class="marque" href="index.html" style="font-size:16px"><img alt="" src="assets/logo.png" style="width:24px;height:24px;border-radius:6px">Sailaware</a><p style="margin-top:12px" data-en="Navigation software for macOS and Windows.">Logiciel de navigation pour macOS et Windows.</p></div>
+    <div><h4 data-en="Explore">Naviguer</h4><ul><li><a href="offshore.html">Offshore</a></li><li><a href="coastal.html">Coastal</a></li><li><a href="features.html" data-en="Features">Fonctionnalités</a></li><li><a href="routing.html" data-en="Routing">Le routage</a></li></ul></div>
+    <div><h4 data-en="Get started">Commencer</h4><ul><li><a href="download.html#acces" data-en="Request access">Demander l'accès</a></li><li><a href="download.html" data-en="Download">Télécharger</a></li><li><a href="sparring-skipper.html">Sparring Skipper</a></li></ul></div>
+    <div><h4>Sailaware</h4><ul><li><a href="about.html" data-en="About and contact">À propos et contact</a></li><li><a href="mentions-legales.html" data-en="Legal notice">Mentions légales</a></li><li><a href="confidentialite.html" data-en="Privacy">Confidentialité</a></li><li class="reglages"><div class="pill-toggle" role="group" aria-label="Langue" data-en-aria-label="Language"><button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div><button class="icon-btn theme-btn" type="button" aria-label="Basculer jour / nuit" data-en-aria-label="Switch day / night"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button></li></ul></div>
+  </div>
+</footer>
+
+</body>
+</html>

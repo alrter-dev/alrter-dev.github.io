@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title data-en="Privacy — Sailaware">Confidentialité — Sailaware</title>
+<meta name="description" content="Ce que le site et l'application Sailaware recueillent, et vos droits." data-en-content="What the Sailaware site and application collect, and your rights.">
+<meta name="theme-color" content="#0E1822">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23bef264'/%3E%3Cg fill='none' stroke='%230E1822' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' transform='scale(0.72) translate(4.6 4.6)'%3E%3Cpath d='M2 20a2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1'/%3E%3Cpath d='M4 18 2 6l10 6 10-6-2 12'/%3E%3C/g%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Confidentialité — Sailaware">
+<meta property="og:description" content="Ce que le site et l'application Sailaware recueillent, et vos droits.">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:locale:alternate" content="en_US">
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js"></script>
+<style>
+/* pages Mentions légales et Confidentialité */
+.legal { max-width: 760px; display: grid; gap: 34px; }
+.legal section { display: grid; gap: 12px; }
+.legal h2 { font-size: 22px; }
+.legal p { color: var(--muted); font-size: 16.5px; line-height: 1.6; }
+.legal a { color: var(--accent); }
+.fiche { margin: 0; display: grid; gap: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; }
+.fiche dt { font: 600 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+.fiche dd { margin: 6px 0 0; color: var(--fg); font-size: 16px; line-height: 1.5; }
+.liste-c { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.liste-c li { display: grid; grid-template-columns: 18px 1fr; gap: 8px; color: var(--muted); font-size: 16px; line-height: 1.55; }
+.liste-c li::before { content: "→"; font-family: var(--mono); color: var(--accent); }
+.mise-a-jour { font: 500 13px/1.4 var(--mono); color: var(--dim); }
+
+footer { border-top: 1px solid var(--line); color: var(--dim); font-size: 14px; }
+footer .wrap { padding-block: 34px 44px; display: grid; grid-template-columns: 1.2fr repeat(3, minmax(0, 1fr)); gap: 24px; }
+footer h4 { font: 600 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+footer a { text-decoration: none; }
+footer a:hover { color: var(--fg); }
+
+@media (max-width: 960px) {
+  nav.menu { display: none; }
+  nav.menu.ouvert { display: grid; position: absolute; top: 100%; left: 0; right: 0; gap: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  nav.menu.ouvert a { padding-block: 14px; border-top: 1px solid var(--line); }
+  .burger { display: inline-block; }
+  header.top .langue { display: none; }
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); gap: 34px; padding-block: 40px; }
+  footer .wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  body { font-size: 16px; }
+  header.top .btn-plein { display: none; }
+  section.bloc > .wrap { padding-block: 52px; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="marque" href="index.html"><img alt="" src="assets/logo.png">Sailaware</a>
+    <nav class="menu" id="menu" aria-label="Navigation principale" data-en-aria-label="Main navigation">
+      <a href="offshore.html">Offshore</a>
+      <a href="coastal.html">Coastal</a>
+      <a href="features.html" data-en="Features">Fonctionnalités</a>
+      <a href="routing.html" data-en="Routing">Le routage</a>
+      <a href="sparring-skipper.html">Sparring Skipper</a>
+      <a href="about.html" data-en="About">À propos</a>
+    </nav>
+    <div class="outils" style="display:flex;gap:10px;align-items:center">
+      <div class="pill-toggle" role="group" aria-label="Langue" data-en-aria-label="Language"><button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+      <button class="icon-btn theme-btn" type="button" aria-label="Basculer jour / nuit" data-en-aria-label="Switch day / night" title="Jour / Nuit" data-en-title="Day / Night"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+    </div>
+    <a class="btn btn-plein btn-petit" href="download.html#acces" data-en="Request access">Demander l'accès</a>
+    <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+  </div>
+</header>
+
+<main id="haut">
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow" data-en="Privacy">Confidentialité</div>
+    <h1 data-en="Your data<br><em>stays on board.</em>">Vos données<br><em>restent à bord.</em></h1>
+    <p class="chapeau" data-en="Sailaware shows no advertising, measures no audience and sells nothing. Here is, plainly, what goes through the site and the application.">Sailaware ne fait ni publicité ni mesure d'audience, et ne revend rien. Voici, sans détour, ce qui passe par le site et par l'application.</p>
+  </div>
+</section>
+<section class="bloc">
+  <div class="wrap">
+    <div class="legal">
+      <section>
+        <h2 data-en="On this site">Sur ce site</h2>
+        <ul class="liste-c">
+          <li data-en="No cookies, no audience measurement.">Aucun cookie, aucune mesure d'audience.</li>
+          <li data-en="Your choice of language and of day or night mode is kept in your browser. It is sent nowhere.">Votre choix de langue et du mode jour ou nuit est gardé dans votre navigateur. Il n'est envoyé nulle part.</li>
+          <li data-en="The key you type on the Download page is checked in your browser. It is sent nowhere.">La clé saisie sur la page Télécharger est vérifiée dans votre navigateur. Elle n'est envoyée nulle part.</li>
+          <li data-en="The site is hosted by GitHub, and the Download page asks GitHub for the number of the latest version: like any host, GitHub receives the IP address of visitors.">Le site est hébergé par GitHub, et la page Télécharger lui demande le numéro de la dernière version : comme tout hébergeur, GitHub reçoit l'adresse IP des visiteurs.</li>
+          <li data-en="« Request access » opens your e-mail software: your message and your address reach the publisher, who keeps them to manage your access.">« Demander l'accès » ouvre votre messagerie : votre message et votre adresse parviennent à l'éditeur, qui les garde pour gérer votre accès.</li>
+        </ul>
+      </section>
+      <section>
+        <h2 data-en="In the application">Dans l'application</h2>
+        <ul class="liste-c">
+          <li data-en="Your routes, tracks, voyages, polars and settings stay on your computer.">Vos routes, traces, voyages, polaires et réglages restent sur votre ordinateur.</li>
+          <li data-en="To serve you the weather, the application sends the Sailaware server (in France, at OVH) your access key, its version, your system (macOS or Windows) and what you ask for: the weather model and the area. The server keeps a log of these accesses, with the date, to run the service and manage access; its technical log also keeps the IP address and the area requested.">Pour vous servir la météo, l'application envoie au serveur de Sailaware (en France, chez OVH) votre clé d'accès, sa version, votre système (macOS ou Windows) et ce que vous demandez : le modèle météo et la zone. Le serveur garde un journal de ces accès, avec la date, pour faire fonctionner le service et gérer les accès ; son journal technique garde aussi l'adresse IP et la zone demandée.</li>
+          <li data-en="At launch, then every six hours, the application asks GitHub whether a new version exists: GitHub then receives your IP address.">Au lancement, puis toutes les six heures, l'application demande à GitHub s'il existe une nouvelle version : GitHub reçoit alors votre adresse IP.</li>
+          <li data-en="Base maps come from the provider you choose (for example OpenFreeMap, MapTiler or OpenSeaMap): it receives your IP address and the map areas displayed.">Les fonds de carte viennent du fournisseur que vous choisissez (par exemple OpenFreeMap, MapTiler ou OpenSeaMap) : il reçoit votre adresse IP et les zones de carte affichées.</li>
+        </ul>
+      </section>
+      <section>
+        <h2 data-en="How long">Combien de temps</h2>
+        <p data-en="The access log is kept for 12 months, and the technical log (IP addresses and areas requested) for 3 months, backup copies included; they are then erased.">Le journal des accès est gardé 12 mois, et le journal technique (adresses IP et zones demandées) 3 mois, copies de sauvegarde comprises ; ils sont ensuite effacés.</p>
+      </section>
+      <section>
+        <h2 data-en="Your rights">Vos droits</h2>
+        <p data-en="You can ask to see, correct or erase what concerns you by writing to <a href='mailto:alrter@gmail.com'>alrter@gmail.com</a>. You can also lodge a complaint with the CNIL, the French data protection authority (<a href='https://www.cnil.fr'>cnil.fr</a>).">Vous pouvez demander à voir, corriger ou effacer ce qui vous concerne, en écrivant à <a href="mailto:alrter@gmail.com">alrter@gmail.com</a>. Vous pouvez aussi saisir la CNIL (<a href="https://www.cnil.fr">cnil.fr</a>).</p>
+      </section>
+      <p class="mise-a-jour" data-en="Last updated: 29 October 2026.">Mise à jour : 29 octobre 2026.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><a class="marque" href="index.html" style="font-size:16px"><img alt="" src="assets/logo.png" style="width:24px;height:24px;border-radius:6px">Sailaware</a><p style="margin-top:12px" data-en="Navigation software for macOS and Windows.">Logiciel de navigation pour macOS et Windows.</p></div>
+    <div><h4 data-en="Explore">Naviguer</h4><ul><li><a href="offshore.html">Offshore</a></li><li><a href="coastal.html">Coastal</a></li><li><a href="features.html" data-en="Features">Fonctionnalités</a></li><li><a href="routing.html" data-en="Routing">Le routage</a></li></ul></div>
+    <div><h4 data-en="Get started">Commencer</h4><ul><li><a href="download.html#acces" data-en="Request access">Demander l'accès</a></li><li><a href="download.html" data-en="Download">Télécharger</a></li><li><a href="sparring-skipper.html">Sparring Skipper</a></li></ul></div>
+    <div><h4>Sailaware</h4><ul><li><a href="about.html" data-en="About and contact">À propos et contact</a></li><li><a href="mentions-legales.html" data-en="Legal notice">Mentions légales</a></li><li><a href="confidentialite.html" data-en="Privacy">Confidentialité</a></li><li class="reglages"><div class="pill-toggle" role="group" aria-label="Langue" data-en-aria-label="Language"><button type="button" data-lang="fr" aria-pressed="true">FR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div><button class="icon-btn theme-btn" type="button" aria-label="Basculer jour / nuit" data-en-aria-label="Switch day / night"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button></li></ul></div>
+  </div>
+</footer>
+
+</body>
+</html>
