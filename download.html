@@ -237,9 +237,9 @@ section.bloc > .wrap.duo-dl { padding-block: 72px; }
   <div class="wrap dl-hero">
     <div>
       <div class="eyebrow" data-en="Download">Télécharger</div>
-      <h1 data-en="Sailaware 0.3.42.<br><em>On Mac and on Windows.</em>">Sailaware 0.3.42.<br><em>Sur Mac et sur Windows.</em></h1>
+      <h1 data-en="Sailaware 0.4.1.<br><em>On Mac and on Windows.</em>">Sailaware 0.4.1.<br><em>Sur Mac et sur Windows.</em></h1>
       <p class="chapeau" data-en="Sailaware is in private beta: access is by key. Got yours? Choose your system, enter it, and the download of the latest version starts.">Sailaware est en bêta privée : l'accès se fait par clé. Vous avez reçu la vôtre ? Choisissez votre système, saisissez-la, et le téléchargement de la dernière version démarre.</p>
-      <div class="faits"><span data-en="version of 25 October 2026">version du 25 octobre 2026</span><span data-en="built-in updates">mises à jour intégrées</span><span>français · English</span></div>
+      <div class="faits"><span data-en="version of 30 October 2026">version du 30 octobre 2026</span><span data-en="built-in updates">mises à jour intégrées</span><span>français · English</span></div>
     </div>
 
     <!-- Téléchargement par clé : le mécanisme du site actuel, repris tel quel -->
@@ -357,11 +357,12 @@ section.bloc > .wrap.duo-dl { padding-block: 72px; }
       <p class="intro" data-en="The app looks for a new version at launch, then every six hours. It offers it to you, and only installs it with your consent.">L'application cherche une nouvelle version à son lancement, puis toutes les six heures. Elle vous la propose, et ne l'installe qu'avec votre accord.</p>
     </div>
     <div class="version">
-      <div class="v-tete"><b>0.3.42</b><span data-en="25 October 2026">25 octobre 2026</span></div>
+      <div class="v-tete"><b>0.4.1</b><span data-en="30 October 2026">30 octobre 2026</span></div>
       <ul class="liste-c">
-        <li data-en="The new routing engine: passage times held to within a minute.">Le nouveau moteur de routage : des heures de passage tenues à moins d'une minute.</li>
-        <li data-en="Instruments redone on a grid, laid out as you like.">Les instruments refaits sur une grille, disposée à votre goût.</li>
-        <li data-en="Course marks: a buoy to leave to port or starboard.">Les marques de parcours : une bouée à laisser à bâbord ou à tribord.</li>
+        <li data-en="Routes straightened in every case, with no gaps on the chart when zoomed out.">Des routes redressées dans tous les cas, et sans trous sur la carte vue de loin.</li>
+        <li data-en="A click on Routings or Polars opens their management; real-time routing also starts from a right-click on the chart.">Un clic sur Routages ou Polaires ouvre leur gestion ; le routage temps réel se lance aussi au clic droit sur la carte.</li>
+        <li data-en="Harmonised, coloured instruments: wind angle from 0 to 180, wind strength in colour.">Des instruments harmonisés et colorés : l'angle du vent de 0 à 180, la force du vent en couleur.</li>
+        <li data-en="On Windows, the installer refuses a protected folder such as Program Files.">Sous Windows, l'installeur refuse un dossier protégé comme Program Files.</li>
       </ul>
       <a class="lien-nv" href="nouveautes.html" data-en="All the changes, version by version →">Toutes les nouveautés, version par version →</a>
     </div>
@@ -500,7 +501,7 @@ section.bloc > .wrap.duo-dl { padding-block: 72px; }
    secours si GitHub ne répond pas. Une version plus récente que celle écrite masque les nouveautés écrites, qui sont
    celles de l'ancienne : elles vivent sur la page Nouveautés. */
 (function () {
-  var ECRITE = "0.3.42";
+  var ECRITE = "0.4.1";
   function poser(el, fr, en) {
     if (!el) return;
     if (el.hasAttribute("data-en")) { el.setAttribute("data-en", en); if (el.hasAttribute("data-fr")) el.setAttribute("data-fr", fr); }
