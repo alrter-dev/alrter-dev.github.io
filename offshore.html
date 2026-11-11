@@ -186,17 +186,17 @@ footer a:hover { color: var(--fg); }
       <p data-en="Each route was sailed by a simulated boat, on the same weather, to compare the promised time with the actual time. On an Atlantic crossing of more than 200 hours, the gap stays under a minute.">Chaque route a été suivie par un bateau simulé, sur la même météo, pour comparer l'heure promise à l'heure réelle. Sur une traversée de l'Atlantique de plus de 200 heures, l'écart reste sous la minute.</p>
     </div>
     <div class="chiffres">
-      <div class="chiffre"><b>161 / 161</b><span data-en="routes reached port">routes arrivées au port</span></div>
+      <div class="chiffre"><b>24 / 24</b><span data-en="passages brought to port">voyages menés au port</span></div>
       <div class="chiffre"><b>&lt; 1 min</b><span data-en="off the promised time, all along each route">d'écart à l'heure promise, tout au long de chaque route</span></div>
-      <div class="chiffre"><b>3</b><span data-en="boats, from cruiser to 60-foot racer">bateaux, du croiseur au 60 pieds de course</span></div>
+      <div class="chiffre"><b>4</b><span data-en="boats, from cruiser to 60-foot racer">bateaux, du croiseur au 60 pieds de course</span></div>
       <div class="chiffre"><b data-en="2,960">2 960</b><span data-en="miles for the longest, Lorient → New York">milles pour le plus long, Lorient → New York</span></div>
     </div>
     <figure class="ligne-temps" aria-label="Lorient → New York : l'heure promise et l'heure courue se confondent" data-en-aria-label="Lorient → New York: the promised time and the sailed time coincide">
       <svg id="ligne-temps" viewBox="0 0 1000 120"></svg>
     </figure>
     <div class="pied">
-      <a class="btn btn-trait" href="routing.html" data-en="See all 161 tests, passage by passage">Voir les 161 essais, trajet par trajet</a>
-      <p data-en="Twenty real passages, from Breton channels to ocean crossings, including 48 tests with current.">Vingt trajets réels, des chenaux bretons aux traversées océaniques, dont 48 essais avec courant.</p>
+      <a class="btn btn-trait" href="routing.html#resultats" data-en="See all 130 routes, passage by passage">Voir les 130 routes, voyage par voyage</a>
+      <p data-en="Twenty-four real passages, from Breton channels to ocean crossings, including 35 routes with tidal current.">Vingt-quatre voyages réels, des chenaux bretons aux traversées océaniques, dont 35 routes avec courant de marée.</p>
     </div>
   </div>
 </section>
@@ -319,22 +319,21 @@ footer a:hover { color: var(--fg); }
   }
   meteo(); document.addEventListener("langue", meteo);
 
-  // page Offshore — les cinq profils (lib/reglagesProfilRoutage.ts : banc du 13/10/2026)
+  // page Offshore — les cinq profils (banc du 11/11/2026, essais/n581/banc-resultats : écart moyen à la meilleure des cinq routes, calcul médian rapporté à Standard)
   // noms anglais des profils : ceux de l'application (i18n/locales/en/routages.json, « preset »)
   function profils() {
     var b = document.getElementById("profils"); if (!b) return;
-    var P = [[SW.t("Aperçu", "Overview"), SW.t("rapide", "fast"), 2.7, .45], [SW.t("Hauturier", "Offshore"), SW.t("large", "open sea"), 1.6, .6], ["Standard", SW.t("équilibré", "balanced"), 1.1, 1],
-             [SW.t("Côtier", "Coastal"), SW.t("côtes", "coasts"), .5, 1.6], [SW.t("Régate", "Racing"), SW.t("précis", "precise"), .3, 3.25]];
+    var P = [[SW.t("Aperçu", "Overview"), SW.t("rapide", "fast"), 1.1, 0.6], [SW.t("Hauturier", "Offshore"), SW.t("large", "open sea"), 0.7, 0.7], ["Standard", SW.t("équilibré", "balanced"), 0.4, 1.0], [SW.t("Côtier", "Coastal"), SW.t("côtes", "coasts"), 0.3, 1.6], [SW.t("Régate", "Racing"), SW.t("précis", "precise"), 0.0, 4.0]];
     function nb(x) { return SW.lang() === "en" ? String(x) : String(x).replace(".", ","); }
     b.innerHTML = P.map(function (p) {
-      return '<div class="profil' + (p[2] === 1.6 ? " choisi" : "") + '"><div><div class="nom">' + p[0] + '</div><div class="sous">' + p[1] + '</div></div>' +
-        '<div class="jauge">' + SW.t("à " + nb(p[2]) + " % de la meilleure route", "within " + nb(p[2]) + "% of the best route") + '<div class="barre"><i style="width:' + Math.max(8, 100 - p[2] * 30) + '%"></i></div></div>' +
-        '<div class="jauge">' + SW.t("calcul ×", "computation ×") + nb(p[3]) + '<div class="barre temps"><i style="width:' + (p[3] / 3.25 * 100) + '%"></i></div></div></div>';
+      return '<div class="profil' + (p === P[1] ? " choisi" : "") + '"><div><div class="nom">' + p[0] + '</div><div class="sous">' + p[1] + '</div></div>' +
+        '<div class="jauge">' + (p[2] < 0.05 ? SW.t("la meilleure route, ou presque", "the best route, or nearly") : SW.t("à " + nb(p[2]) + " % de la meilleure route", "within " + nb(p[2]) + "% of the best route")) + '<div class="barre"><i style="width:' + Math.max(8, 100 - p[2] * 30) + '%"></i></div></div>' +
+        '<div class="jauge">' + SW.t("calcul ×", "computation ×") + nb(p[3]) + '<div class="barre temps"><i style="width:' + (p[3] / 4.0 * 100) + '%"></i></div></div></div>';
     }).join("");
   }
   profils(); document.addEventListener("langue", profils);
 
-  // page Offshore — l'heure promise et l'heure courue, Lorient → New York (bilan n522 : 17 s au plus sur les trois essais)
+  // page Offshore — l'heure promise et l'heure courue, Lorient → New York (banc du 11/11/2026 : 34 s au plus sur les cinq profils ; durée du profil Standard)
   function ligneTemps() {
     var s = document.getElementById("ligne-temps"); if (!s) return; s.innerHTML = "";
     var NS = "http://www.w3.org/2000/svg", X0 = 20, X1 = 980, T = 216;
@@ -342,9 +341,9 @@ footer a:hover { color: var(--fg); }
     function el(n, a, t) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); if (t) e.textContent = t; s.appendChild(e); return e; }
     el("line", { x1: X0, x2: X1, y1: 62, y2: 62, stroke: "var(--line-strong)", "stroke-width": 2 });
     for (var j = 0; j <= 9; j++) { el("line", { x1: x(j * 24), x2: x(j * 24), y1: 56, y2: 68, stroke: "var(--dim)" }); el("text", { x: x(j * 24), y: 92, "text-anchor": j === 0 ? "start" : "middle", "font-size": 13, fill: "var(--dim)" }, j === 0 ? SW.t("départ", "start") : SW.t("J+", "D+") + j); }
-    el("line", { x1: X0, x2: x(206.2), y1: 62, y2: 62, stroke: "var(--route)", "stroke-width": 4, "stroke-linecap": "round" });
-    el("circle", { cx: x(206.2), cy: 62, r: 7, fill: "none", stroke: "var(--route)", "stroke-width": 2.5 });
-    el("text", { x: x(206.2), y: 30, "text-anchor": "end", "font-size": 14, "font-weight": 600, fill: "var(--fg)" }, SW.t("heure promise · heure courue : moins d'une minute d'écart", "promised time · sailed time: less than a minute apart"));
+    el("line", { x1: X0, x2: x(204.0), y1: 62, y2: 62, stroke: "var(--route)", "stroke-width": 4, "stroke-linecap": "round" });
+    el("circle", { cx: x(204.0), cy: 62, r: 7, fill: "none", stroke: "var(--route)", "stroke-width": 2.5 });
+    el("text", { x: x(204.0), y: 30, "text-anchor": "end", "font-size": 14, "font-weight": 600, fill: "var(--fg)" }, SW.t("heure promise · heure courue : moins d'une minute d'écart", "promised time · sailed time: less than a minute apart"));
     el("text", { x: X0, y: 30, "font-size": 14, "font-weight": 600, fill: "var(--accent)" }, "Lorient → New York");
   }
   ligneTemps(); document.addEventListener("langue", ligneTemps);

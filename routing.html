@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title data-en="Sailaware — routing">Sailaware — le routage</title>
-<meta name="description" content="Le moteur de routage de Sailaware : ses principes, ses subtilités et la preuve sur 161 essais, 20 trajets réels, du chenal breton à la traversée du Pacifique." data-en-content="Sailaware's routing engine: its principles, its subtleties and the proof over 161 tests, 20 real passages, from Breton channels to crossing the Pacific.">
+<meta name="description" content="Le moteur de routage de Sailaware : ses principes, ses subtilités et la preuve sur 130 routes, 24 voyages réels, du chenal breton à la traversée du Pacifique." data-en-content="Sailaware's routing engine: its principles, its subtleties and the proof over 130 routes, 24 real passages, from Breton channels to crossing the Pacific.">
 <meta name="theme-color" content="#0E1822">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23bef264'/%3E%3Cg fill='none' stroke='%230E1822' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' transform='scale(0.72) translate(4.6 4.6)'%3E%3Cpath d='M2 20a2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1'/%3E%3Cpath d='M4 18 2 6l10 6 10-6-2 12'/%3E%3C/g%3E%3C/svg%3E">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Sailaware — le routage">
-<meta property="og:description" content="Le moteur de routage de Sailaware : ses principes, ses subtilités et la preuve sur 161 essais, 20 trajets réels, du chenal breton à la traversée du Pacifique.">
+<meta property="og:description" content="Le moteur de routage de Sailaware : ses principes, ses subtilités et la preuve sur 130 routes, 24 voyages réels, du chenal breton à la traversée du Pacifique.">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:locale:alternate" content="en_US">
 <link rel="stylesheet" href="assets/site.css">
@@ -194,6 +194,27 @@ html[lang="en"] .lang-fr { display: none; }
   .brique .zones { flex-direction: column; }
   .brique .zones > div + div { border-left: 0; border-top: 1px solid var(--line); }
 }
+
+/* N+581 (4.15) — les résultats du banc du 11/11/2026 : vue d'ensemble, échelle des profils, un clic par voyage */
+#resultats .sous-bloc { margin: 46px 0 16px; display: grid; gap: 8px; }
+#resultats-complets, #note-technique { scroll-margin-top: 92px; }
+/* les quatre boutons de l'ouverture : deux colonnes de même largeur (demande du PO, N+581 : « Il faut que les boutons soient bien alignés ») */
+.hero .actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: max-content; max-width: 100%; gap: 12px; }
+.hero .actions .btn { justify-content: center; text-align: center; }
+.note-pdf .boutons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.note-pdf .boutons .btn { justify-content: center; text-align: center; }
+@media (max-width: 620px) { .hero .actions { grid-template-columns: minmax(0, 1fr); width: 100%; } .note-pdf .boutons { grid-template-columns: minmax(0, 1fr); width: 100%; } }
+#resultats .sous-bloc h3 { font-size: 21px; }
+#resultats .sous-bloc p { color: var(--muted); max-width: 46em; margin: 0; }
+#resultats .chiffre small { display: block; color: var(--dim); font-size: 13.5px; margin-top: 2px; }
+.profil .arrivees { font: 500 12px/1.3 var(--mono); color: var(--dim); }
+.profil .arrivees.manque { color: var(--warning); }
+svg .marque { fill: var(--warning); stroke: var(--bg); stroke-width: 1.5; }
+.tableau-route td.terre-ko { color: var(--warning); }
+.tableau-route td.sans-route { text-align: left; color: var(--dim); font-style: italic; }
+#d-table td small, #d-table td:nth-child(3), #d-table td:nth-child(4) { white-space: nowrap; }
+#d-table td.sans-route { white-space: normal; }
+.detail-tete .qui { color: var(--dim); font: 500 13px/1.4 var(--mono); margin-top: 4px; }
 </style>
 </head>
 <body>
@@ -223,11 +244,12 @@ html[lang="en"] .lang-fr { display: none; }
     <div>
       <div class="eyebrow" data-en="Routing">Le routage</div>
       <h1 data-en="Complex routes.<br>Computed fast.<br><em>And held.</em>">Des routes complexes.<br>Vite calculées.<br><em>Et tenues.</em></h1>
-      <p class="chapeau" data-en="Sailaware's engine looks for the fastest route where a simple router gives up: between islands, in straits, around marks. And the time it announces, the boat keeps. Here is how, with the proof over 161 tests.">Le moteur de Sailaware cherche la route la plus rapide là où un routeur simple renonce : entre les îles, dans les détroits, autour des marques. Et l'heure qu'il annonce, le bateau la tient. Voici comment, et la preuve sur 161 essais.</p>
+      <p class="chapeau" data-en="Sailaware's engine looks for the fastest route where a simple router gives up: between islands, in straits, around marks. And the time it announces, the boat keeps. Here is how, with the proof over 130 routes.">Le moteur de Sailaware cherche la route la plus rapide là où un routeur simple renonce : entre les îles, dans les détroits, autour des marques. Et l'heure qu'il annonce, le bateau la tient. Voici comment, et la preuve sur 130 routes.</p>
       <div class="actions">
         <a class="btn btn-plein" href="#principes" data-en="How it computes">Comment il calcule</a>
         <a class="btn btn-trait" href="#resultats" data-en="See the results">Voir les résultats</a>
         <a class="btn btn-trait" href="#note-technique" data-en="Technical note (PDF)">Note technique (PDF)</a>
+        <a class="btn btn-trait" href="#resultats-complets" data-en="Results (PDF)">Résultats (PDF)</a>
       </div>
     </div>
     <div class="scene">
@@ -1702,7 +1724,7 @@ html[lang="en"] .lang-fr { display: none; }
       <div class="subtilite"><b data-en="The wind re-read every five minutes">Le vent relu toutes les cinq minutes</b><span data-en="One heading per step, a distance integrated slice by slice: the promised time is the one the boat will keep.">Un cap par pas, une distance intégrée tranche par tranche : l'heure promise est celle que le bateau tiendra.</span></div>
       <div class="subtilite"><b data-en="A final route that is never slower">Une route finale jamais plus lente</b><span data-en="Straightening is kept only if it costs nothing, and each new leg is checked to be holdable.">Le redressement n'est gardé que s'il ne coûte rien, et chaque nouveau trait est vérifié pour être tenable.</span></div>
       <div class="subtilite"><b data-en="Fast on every core, the same every time">Rapide sur tous les cœurs, identique à chaque fois</b><span data-en="The computation spreads over all the processor's cores, and returns exactly the same route as a step-by-step computation: run it again, it doesn't change its mind.">Le calcul se répartit sur tous les cœurs du processeur, et rend exactement la même route qu'un calcul fait pas à pas : relancé, il ne change pas d'avis.</span></div>
-      <div class="subtilite"><b data-en="Checked over 161 tests">Vérifié sur 161 essais</b><span data-en="From Breton channels to Pacific crossings, each route was sailed by a simulated boat: all arrive, within a minute of the promised time.">Des chenaux bretons aux traversées du Pacifique, chaque route a été suivie par un bateau simulé : toutes arrivent, à moins d'une minute de l'heure promise.</span></div>
+      <div class="subtilite"><b data-en="Checked over 130 routes">Vérifié sur 130 routes</b><span data-en="From Breton channels to Pacific crossings, each route was sailed by a simulated boat: it arrives within a minute of the promised time.">Des chenaux bretons aux traversées du Pacifique, chaque route a été suivie par un bateau simulé : il arrive à une minute au plus de l'heure promise.</span></div>
     </div>
   </div>
 </section>
@@ -1711,49 +1733,52 @@ html[lang="en"] .lang-fr { display: none; }
   <div class="wrap">
     <div class="tete">
       <div class="eyebrow" data-en="The results">Les résultats</div>
-      <h2 data-en="161 tests, 20 real passages, all on screen.">161 essais, 20 trajets réels, tous à l'écran.</h2>
-      <p data-en="Each computed route was then sailed by a simulated boat, on the same weather, re-reading the wind every five minutes to the end of each leg. We compare the time the engine promised with the time the boat actually arrives. Choose a passage to see its routes and the detail of each test.">Chaque route calculée a ensuite été suivie par un bateau simulé, sur la même météo, en relisant le vent toutes les cinq minutes jusqu'au bout de chaque trait. On compare l'heure que le moteur a promise à l'heure à laquelle le bateau arrive vraiment. Choisissez un trajet pour voir ses routes et le détail de chaque essai.</p>
+      <h2 data-en="The fastest route, on time, in seconds.">La route la plus rapide, l'heure tenue, en quelques secondes.</h2>
+      <p data-en="24 real passages, from Breton channels to crossing the Pacific, each computed with the five profiles: 130 routes. Each route was then sailed by a simulated boat, on the same weather, re-reading the wind every five minutes: the time the engine announces is the time the boat arrives.">24 voyages réels, du chenal breton à la traversée du Pacifique, calculés chacun avec les cinq profils : 130 routes. Chaque route a ensuite été suivie par un bateau simulé, sur la même météo, en relisant le vent toutes les cinq minutes : l'heure qu'annonce le moteur est celle à laquelle le bateau arrive.</p>
+    </div>
+    <div class="note-pdf" id="resultats-complets">
+      <svg viewBox="0 0 40 48" aria-hidden="true"><path d="M4 2 h22 l10 10 v34 h-32 z" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linejoin="round"/><path d="M26 2 v10 h10" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linejoin="round"/><text x="20" y="36" text-anchor="middle" font-family="var(--mono)" font-size="10" font-weight="700" fill="var(--accent)">PDF</text></svg>
+      <div class="txt"><b data-en="All the results, passage by passage">Tous les résultats, voyage par voyage</b><span data-en="One page per passage: the map, the five routes and every figure. For readers who want to know more.">Une page par voyage : la carte, les cinq routes et tous les chiffres. Pour qui veut en savoir plus.</span></div>
+      <div class="boutons"><a class="btn btn-plein" href="docs/sailaware-resultats-du-routage.pdf" download data-en="French · PDF, 2.0 MB">Français · PDF, 2,0 Mo</a><a class="btn btn-plein" href="docs/sailaware-routing-results.pdf" download data-en="English · PDF, 2.0 MB">English · PDF, 2,0 Mo</a></div>
     </div>
     <div class="chiffres">
-      <div class="chiffre"><b>161 / 161</b><span data-en="routes reached port">routes arrivées au port</span></div>
-      <div class="chiffre"><b>&lt; 1 min</b><span data-en="off the promised time, all along each route">d'écart à l'heure promise, tout au long de chaque route</span></div>
-      <div class="chiffre"><b>1 s</b><span data-en="of computation for half of the tests; 73 s at most">de calcul pour la moitié des essais ; 73 s au plus</span></div>
-      <div class="chiffre"><b>3 · 5</b><span data-en="boats · precision profiles">bateaux · profils de précision</span></div>
+      <div class="chiffre"><b>24 / 24</b><span data-en="passages brought to port">voyages menés au port</span><small data-en="the Overview quick look leaves the narrow way out of the Gulf of Morbihan to the Offshore profile, which the application suggests">le coup d'œil Aperçu laisse la sortie étroite du golfe du Morbihan au profil Hauturier, que l'application propose</small></div>
+      <div class="chiffre"><b data-en="3 s">3 s</b><span data-en="the largest gap to the promised time, over a 237 h crossing">d'écart au plus avec l'heure promise, sur une traversée de 237 heures</span><small data-en="Canaries → Antigua, the five profiles; 1 min at most on any route">Canaries → Antigua, les cinq profils ; 1 min au plus sur toutes les routes</small></div>
+      <div class="chiffre"><b data-en="12 s">12 s</b><span data-en="to compute Lorient → New York, 2,960 miles, with the Standard profile">pour calculer Lorient → New York, 2 960 milles, en profil Standard</span><small data-en="1.5 s for half of the routes">1,5 s pour la moitié des routes</small></div>
+      <div class="chiffre"><b data-en="0.4%">0,4 %</b><span data-en="from the best route, on average, with the Standard profile">de la meilleure route, en moyenne, en profil Standard</span><small data-en="for a computation 4 times shorter than Racing">pour un calcul 4 fois plus court qu'en Régate</small></div>
     </div>
-    <div class="filtres" role="group" aria-label="Filtrer les trajets" data-en-aria-label="Filter the passages">
-      <button type="button" data-f="-1" aria-pressed="true" data-en="All">Tous</button>
-      <button type="button" data-f="0" aria-pressed="false" data-en="Very coastal">Très côtier</button>
-      <button type="button" data-f="1" aria-pressed="false" data-en="Coastal">Côtier</button>
-      <button type="button" data-f="2" aria-pressed="false" data-en="Offshore">Au large</button>
-      <button type="button" data-f="3" aria-pressed="false">Bluewater</button>
+    <div class="sous-bloc">
+      <div class="eyebrow" data-en="The five profiles">Les cinq profils</div>
+      <h3 data-en="What each profile costs, and what it brings.">Ce que coûte chaque profil, et ce qu'il rapporte.</h3>
+      <p data-en="The finer the profile, the closer the route gets to the best, and the longer the computation. Even the finest computes Lorient → New York, 2,960 miles, in 70 s.">Plus le profil est fin, plus la route approche la meilleure, et plus le calcul est long. Même le plus fin calcule Lorient → New York, 2 960 milles, en 70 s.</p>
+    </div>
+    <div class="profils" id="profils"></div>
+    <div class="sous-bloc">
+      <div class="eyebrow" data-en="The 26 routes">Les 26 routes</div>
+      <h3 data-en="Passage by passage, the five routes on the map.">Voyage par voyage, les cinq routes sur la carte.</h3>
+      <p data-en="Choose a passage to see its five routes and the detail of each.">Choisissez un voyage pour voir ses cinq routes et le détail de chacune.</p>
+    </div>
+    <div class="filtres" role="group" aria-label="Filtrer les voyages" data-en-aria-label="Filter the passages">
+      <button type="button" data-f="-1" aria-pressed="true" data-en="All · 26">Tous · 26</button>
+      <button type="button" data-f="0" aria-pressed="false" data-en="Very coastal · 7">Très côtier · 7</button>
+      <button type="button" data-f="1" aria-pressed="false" data-en="Coastal · 7">Côtier · 7</button>
+      <button type="button" data-f="2" aria-pressed="false" data-en="Offshore · 6">Au large · 6</button>
+      <button type="button" data-f="3" aria-pressed="false">Bluewater · 6</button>
     </div>
     <div class="trajets" id="trajets"></div>
     <div class="detail" id="detail" hidden>
-      <div class="detail-tete"><div><div class="eyebrow" id="d-fam"></div><h3 id="d-nom"></h3></div><button type="button" class="btn btn-trait btn-petit" id="d-fermer" data-en="Close">Fermer</button></div>
+      <div class="detail-tete"><div><div class="eyebrow" id="d-fam"></div><h3 id="d-nom"></h3><div class="qui" id="d-qui"></div></div><button type="button" class="btn btn-trait btn-petit" id="d-fermer" data-en="Close">Fermer</button></div>
       <div class="detail-corps">
         <figure class="detail-carte" id="d-carte"></figure>
         <div class="detail-table">
-          <table class="tableau-route" id="d-table" aria-label="Les essais du trajet" data-en-aria-label="The tests for this passage">
-            <thead><tr><th data-en="Profile">Profil</th><th data-en="Boat">Bateau</th><th data-en="Departure">Départ</th><th data-en="Promised duration">Durée promise</th><th data-en="Gap">Écart</th><th data-en="Computation">Calcul</th></tr></thead>
+          <table class="tableau-route" id="d-table" aria-label="Les cinq routes du voyage" data-en-aria-label="The five routes of this passage">
+            <thead><tr><th data-en="Profile">Profil</th><th data-en="Duration">Durée</th><th data-en="Gap">Écart</th><th data-en="Computation">Calcul</th></tr></thead>
             <tbody></tbody>
           </table>
-          <p class="legende-instr" data-en="Gap: the largest difference between the promised time and the simulated boat's time, along the whole route. Computation: computation time on an Apple-silicon Mac.">Écart : le plus grand écart entre l'heure promise et l'heure du bateau simulé, sur toute la route. Calcul : temps de calcul sur un Mac à puce Apple.</p>
+          <p class="legende-instr" data-en="Duration: the duration the engine announces; below, the simulated boat's. Gap: the largest difference between the two, all along the route. Computation: on a Mac with an Apple M5 chip.">Durée : la durée annoncée par le moteur ; dessous, celle du bateau simulé. Écart : le plus grand écart entre les deux, tout au long de la route. Calcul : sur un Mac à puce Apple M5.</p>
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-
-
-<section class="bloc" id="profils-bloc">
-  <div class="wrap">
-    <div class="tete">
-      <div class="eyebrow" data-en="The five profiles">Les cinq profils</div>
-      <h2 data-en="From a quick look to racing precision.">Du coup d'œil rapide à la précision de régate.</h2>
-      <p data-en="Each profile sets how fine the computation is. The finer it is, the closer the route gets to the best possible, and the longer the computation takes. Measurements from the test bench of 13/10/2026.">Chaque profil règle la finesse du calcul. Plus il est fin, plus la route approche la meilleure possible, et plus le calcul prend de temps. Mesures du banc d'essai du 13/10/2026.</p>
-    </div>
-    <div class="profils" id="profils"></div>
   </div>
 </section>
 
@@ -1779,86 +1804,97 @@ html[lang="en"] .lang-fr { display: none; }
 
 <script src="assets/eventail.js"></script>
 <script>
-/* Les 161 essais et les cinq profils (repris de la maquette, traduits). */
+/* N+581 (4.15) — les résultats du banc du 11/11/2026 : 24 voyages, 26 routes × 5 profils (essais/n581/banc-resultats). */
 (function () {
-  // page Le routage — les 161 essais du bilan (essais/n524/site/routage_donnees.py ⇐ n522/bilan), nouveau moteur seul
-  (function () {
-    var grille = document.getElementById("trajets"); if (!window.RESULTATS || !grille) return;
-    var T = window.RESULTATS, FAM = ["Très côtier, contraint", "Côtier", "Au large", "Bluewater"], FAM_EN = ["Very coastal, constrained", "Coastal", "Offshore", "Bluewater"];
-    // l'anglais des noms, des profils (ceux de l'application) et des bateaux
-    var MOTS = [["Passage du Fromveur", "Fromveur passage"], ["Large d'Ouessant", "Off Ushant"], ["nord de Belle-Île", "north of Belle-Île"], ["Lisbonne", "Lisbon"], ["Galice", "Galicia"],
-                ["Gênes", "Genoa"], ["Barcelone", "Barcelona"], ["Malte", "Malta"], ["Corfou", "Corfu"], ["Nouvelle-Zélande", "New Zealand"]];
-    var PROFILS = { "Aperçu": "Overview", "Hauturier": "Offshore", "Côtier": "Coastal", "Régate": "Racing" };
-    var BATEAUX = { "Zelenine, croisière": "Zelenine, cruising", "Class 60, rapide": "Class 60, fast" };
-    function en() { return SW.lang() === "en"; }
-    function nom(n) { if (en()) MOTS.forEach(function (m) { n = n.replace(m[0], m[1]); }); return n; }
-    function famille(f) { return (en() ? FAM_EN : FAM)[f]; }
-    function milles(m) { return m.toLocaleString(en() ? "en-GB" : "fr-FR") + SW.t(" milles", " miles"); }
-    var detail = document.getElementById("detail"), filtre = -1, ouvert = null;
-    function duree(s) { var m = Math.round(s / 60), h = Math.floor(m / 60), mm = m % 60; return h ? h + " h " + (mm < 10 ? "0" : "") + mm : mm + " min"; }
-    function sec(s) { s = Math.abs(s); return s < 1 ? "< 1 s" : s < 60 ? Math.round(s) + " s" : SW.n(s / 60, 1) + " min"; }
-    function calc(s) { return s < 10 ? SW.n(s, 1) + " s" : Math.round(s) + " s"; }
-    function dessiner() {
-      grille.innerHTML = "";
-      T.forEach(function (t, i) {
-        if (filtre >= 0 && t.famille !== filtre) return;
-        var b = document.createElement("button"); b.type = "button"; b.className = "trajet"; b.setAttribute("aria-expanded", ouvert === i ? "true" : "false");
-        b.innerHTML = '<div class="vig">' + t.svg + '</div><div class="txt"><b>' + nom(t.nom) + '</b><span>' + milles(t.milles) + " · " + t.essais.length + (t.essais.length > 1 ? SW.t(" essais", " tests") : SW.t(" essai", " test")) + "</span></div>";
-        b.querySelectorAll("svg defs path").forEach(function (p) { p.id = p.id + "-v" + i; });
-        b.querySelectorAll("svg use").forEach(function (u) { u.setAttribute("href", u.getAttribute("href") + "-v" + i); });
-        b.addEventListener("click", function () { montrer(i); });
-        grille.appendChild(b);
-      });
-    }
-    function montrer(i, surPlace) {
-      ouvert = i; var t = T[i];
-      document.getElementById("d-nom").textContent = nom(t.nom);
-      document.getElementById("d-fam").textContent = famille(t.famille) + " · " + milles(t.milles);
-      var carte = document.getElementById("d-carte"); carte.innerHTML = t.svg;
-      var corps = document.querySelector("#d-table tbody"); corps.innerHTML = "";
-      t.essais.forEach(function (e, k) {
-        var tr = document.createElement("tr");
-        tr.innerHTML = "<td>" + (en() ? PROFILS[e.profil] || e.profil : e.profil) + "</td><td>" + (en() ? BATEAUX[e.bateau] || e.bateau : e.bateau) + (e.courant ? "<small>" + SW.t("avec courant", "with current") + "</small>" : "") + "</td><td>" + e.depart + "</td><td>" + duree(e.promise_s) +
-          "<small>" + SW.t("bateau : ", "boat: ") + duree(e.courue_s) + "</small></td><td>" + sec(e.ecart_route_s) + "</td><td>" + calc(e.calcul_s) + "</td>";
-        tr.addEventListener("click", function () { choisir(k); });
-        corps.appendChild(tr);
-      });
-      choisir(0); detail.hidden = false; dessiner();
-      if (!surPlace) detail.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }
-    function choisir(k) {
-      document.querySelectorAll("#d-carte .rt").forEach(function (p) { p.classList.toggle("vue", +p.getAttribute("data-i") === k); });
-      var vue = document.querySelector('#d-carte .rt[data-i="' + k + '"]'); if (vue) vue.parentNode.appendChild(vue);
-      document.querySelectorAll("#d-table tbody tr").forEach(function (r, j) { r.classList.toggle("vue", j === k); });
-    }
-    document.getElementById("d-fermer").addEventListener("click", function () { detail.hidden = true; ouvert = null; dessiner(); });
-    document.querySelectorAll(".filtres button").forEach(function (b) {
-      b.addEventListener("click", function () {
-        filtre = +b.getAttribute("data-f");
-        document.querySelectorAll(".filtres button").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
-        dessiner();
-      });
-    });
-    dessiner();
-    document.addEventListener("langue", function () { if (ouvert !== null) montrer(ouvert, true); else dessiner(); });
-  })();
-
-  // page Offshore — les cinq profils (lib/reglagesProfilRoutage.ts : banc du 13/10/2026)
+  var T = window.RESULTATS, S = window.RESULTATS_SYNTHESE;
+  var FAM = ["Très côtier", "Côtier", "Au large", "Bluewater"], FAM_EN = ["Very coastal", "Coastal", "Offshore", "Bluewater"];
   // noms anglais des profils : ceux de l'application (i18n/locales/en/routages.json, « preset »)
+  var PROFILS = { "Aperçu": "Overview", "Hauturier": "Offshore", "Standard": "Standard", "Côtier": "Coastal", "Régate": "Racing" };
+  function en() { return SW.lang() === "en"; }
+  function nom(v) { return en() ? v.nom_en : v.nom; }
+  function profil(p) { return en() ? PROFILS[p] || p : p; }
+  function milles(m) { return m.toLocaleString(en() ? "en-GB" : "fr-FR") + SW.t(" milles", " miles"); }
+  function duree(s) { var m = Math.round(s / 60), h = Math.floor(m / 60), mm = m % 60; return h ? h + " h " + (mm < 10 ? "0" : "") + mm : mm + " min"; }
+  function sec(s) { s = Math.abs(s); return s < 1 ? "< 1 s" : s < 60 ? Math.round(s) + " s" : SW.n(s / 60, 1) + " min"; }
+  function calc(s) { return s < 10 ? SW.n(s, 1) + " s" : Math.round(s) + " s"; }
+  function metres(m) { return Math.round(m).toLocaleString(en() ? "en-GB" : "fr-FR") + " m"; }
+
+  // l'échelle des profils : écart moyen à la meilleure des cinq routes, et le calcul de Lorient → New York
   function profils() {
-    var b = document.getElementById("profils"); if (!b) return;
-    function nb(x) { return SW.lang() === "en" ? String(x) : String(x).replace(".", ","); }
-    // + le balayage des caps du catalogue (wr-engine presets.rs, `dcap_deg`)
-    var P = [[SW.t("Aperçu", "Overview"), SW.t("rapide", "fast"), 2.7, .45, 10], [SW.t("Hauturier", "Offshore"), SW.t("large", "open sea"), 1.6, .6, 8], ["Standard", SW.t("équilibré", "balanced"), 1.1, 1, 6],
-             [SW.t("Côtier", "Coastal"), SW.t("côtes", "coasts"), .5, 1.6, 4], [SW.t("Régate", "Racing"), SW.t("précis", "precise"), .3, 3.25, 2]];
-    b.innerHTML = P.map(function (p) {
-      return '<div class="profil' + (p[2] === 1.6 ? " choisi" : "") + '"><div><div class="nom">' + p[0] + '</div><div class="sous">' + p[1] + '</div></div>' +
-        '<div class="jauge">' + SW.t("à " + nb(p[2]) + " % de la meilleure route", "within " + nb(p[2]) + "% of the best route") + '<div class="barre"><i style="width:' + Math.max(8, 100 - p[2] * 30) + '%"></i></div></div>' +
-        '<div class="jauge">' + SW.t("calcul ×", "computation ×") + nb(p[3]) + '<div class="barre temps"><i style="width:' + (p[3] / 3.25 * 100) + '%"></i></div></div>' +
-        (p[4] ? '<div class="jauge" style="color:var(--dim)">' + SW.t("caps tous les ", "headings every ") + p[4] + '°</div>' : "") + '</div>';
+    var b = document.getElementById("profils"); if (!b || !S) return;
+    var SOUS = { "Aperçu": ["rapide", "fast"], "Hauturier": ["large", "open sea"], "Standard": ["équilibré", "balanced"], "Côtier": ["côtes", "coasts"], "Régate": ["précis", "precise"] };
+    var CAPS = { "Aperçu": 10, "Hauturier": 8, "Standard": 6, "Côtier": 4, "Régate": 2 };
+    var max = Math.max.apply(null, S.echelle.map(function (e) { return e.calcul_new_york_s; }));
+    b.innerHTML = S.echelle.map(function (e) {
+      var pct = e.ecart_meilleure_pct;
+      return '<div class="profil"><div><div class="nom">' + profil(e.profil) + '</div><div class="sous">' + SW.t(SOUS[e.profil][0], SOUS[e.profil][1]) + '</div></div>' +
+        '<div class="jauge">' + (pct < 0.05 ? SW.t("la meilleure route, ou presque", "the best route, or nearly") : SW.t("à " + SW.n(pct, 1) + " % de la meilleure route", "within " + SW.n(pct, 1) + "% of the best route")) +
+        '<div class="barre"><i style="width:' + Math.max(8, 100 - pct * 30) + '%"></i></div></div>' +
+        '<div class="jauge">' + SW.t("New York : ", "New York: ") + calc(e.calcul_new_york_s) + SW.t(" de calcul", " of computation") +
+        '<div class="barre temps"><i style="width:' + Math.max(3, e.calcul_new_york_s / max * 100) + '%"></i></div></div>' +
+        '<div class="jauge" style="color:var(--dim)">' + SW.t("caps tous les ", "headings every ") + CAPS[e.profil] + '°</div></div>';
     }).join("");
   }
-  profils(); document.addEventListener("langue", profils);
+
+  var grille = document.getElementById("trajets"), detail = document.getElementById("detail"), filtre = -1, ouvert = null;
+  function sousTitre(v) {
+    var s = (en() ? v.bateau_en : v.bateau);
+    if (v.courant) s += SW.t(", avec courant", ", with current");
+    if (v.marque) s += SW.t(", marque à laisser à " + (v.marque === "babord" ? "bâbord" : "tribord"), ", mark to leave to " + (v.marque === "babord" ? "port" : "starboard"));
+    return s;
+  }
+  function dessiner() {
+    if (!grille || !T) return;
+    grille.innerHTML = "";
+    T.forEach(function (t, i) {
+      if (filtre >= 0 && t.famille !== filtre) return;
+      var b = document.createElement("button"); b.type = "button"; b.className = "trajet"; b.setAttribute("aria-expanded", ouvert === i ? "true" : "false");
+      b.innerHTML = '<div class="vig">' + t.svg + '</div><div class="txt"><b>' + nom(t) + '</b><span>' + milles(t.milles) + " · " + (en() ? t.bateau_en : t.bateau) + "</span></div>";
+      b.querySelectorAll("svg defs path").forEach(function (p) { p.id = p.id + "-v" + i; });
+      b.querySelectorAll("svg use").forEach(function (u) { u.setAttribute("href", u.getAttribute("href") + "-v" + i); });
+      b.addEventListener("click", function () { montrer(i); });
+      grille.appendChild(b);
+    });
+  }
+  function montrer(i, surPlace) {
+    ouvert = i; var t = T[i];
+    document.getElementById("d-nom").textContent = nom(t);
+    document.getElementById("d-fam").textContent = (en() ? FAM_EN : FAM)[t.famille] + " · " + milles(t.milles);
+    document.getElementById("d-qui").textContent = sousTitre(t);
+    document.getElementById("d-carte").innerHTML = t.svg;
+    var corps = document.querySelector("#d-table tbody"); corps.innerHTML = "";
+    var premier = -1;
+    t.essais.forEach(function (e, k) {
+      var tr = document.createElement("tr");
+      if (!e.arrive) {
+        tr.innerHTML = "<td>" + profil(e.profil) + '</td><td class="sans-route" colspan="3">' +
+          SW.t("passage trop étroit pour le coup d'œil rapide : l'application propose Hauturier, qui le franchit", "passage too narrow for the quick look: the application suggests Offshore, which gets through") + "</td>";
+      } else {
+        if (premier < 0) premier = k;
+        tr.innerHTML = "<td>" + profil(e.profil) + "</td><td>" + duree(e.promise_s) + "<small>" + SW.t("bateau : ", "boat: ") + duree(e.courue_s) + "</small>" +
+          (e.secours ? "<small>" + SW.t("par le secours des passages étroits", "by the narrow-passage fallback") + "</small>" : "") + "</td><td>" + sec(e.ecart_route_s) + "</td><td>" + calc(e.calcul_s) + "</td>";
+        tr.addEventListener("click", function () { choisir(k); });
+      }
+      corps.appendChild(tr);
+    });
+    choisir(premier < 0 ? 0 : premier); detail.hidden = false; dessiner();
+    if (!surPlace) detail.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+  function choisir(k) {
+    document.querySelectorAll("#d-carte .rt").forEach(function (p) { p.classList.toggle("vue", +p.getAttribute("data-i") === k); });
+    var vue = document.querySelector('#d-carte .rt[data-i="' + k + '"]'); if (vue) vue.parentNode.appendChild(vue);
+    document.querySelectorAll("#d-table tbody tr").forEach(function (r, j) { r.classList.toggle("vue", j === k); });
+  }
+  document.getElementById("d-fermer").addEventListener("click", function () { detail.hidden = true; ouvert = null; dessiner(); });
+  document.querySelectorAll("#resultats .filtres button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      filtre = +b.getAttribute("data-f");
+      document.querySelectorAll("#resultats .filtres button").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      dessiner();
+    });
+  });
+  profils(); dessiner();
+  document.addEventListener("langue", function () { profils(); if (ouvert !== null) montrer(ouvert, true); else dessiner(); });
 })();
 </script>
 </body>
